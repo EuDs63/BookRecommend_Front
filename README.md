@@ -4,6 +4,7 @@
 
 ## 小组成员
 - 吴铕达
+- 孙一函
 
 ## 多人协作时的流程(可供参考)
 ```bash
@@ -23,3 +24,4 @@ git remote prune origin #当华为云上显示远程分支已经删除，但git 
 git checkout master #切回master分支（一次任务完成后，建议切回master分支，这样pull的时候可以避免自己写的代码丢失的问题）
 git branch -d 本地分支名 #删除本次任务所用的本地分支（也可以不删，当作备份）
 ```·····
+
