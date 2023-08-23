@@ -23,7 +23,7 @@ git push #将代码推送到远程分支，开发过程中这个操作可以频�
 # 在华为云中新建合并请求（可设置检视人，评审人，让别人帮忙看看）
 # 合并完成后（默认设置是分支合并后，源分支是删除的）
 git remote prune origin #当华为云上显示远程分支已经删除，但git branch -r仍然看到所删除的分支，执行该命令
-git checkout master #切回master分支（一次任务完成后，建议切回master分支，这样pull的时候可以避免自己写的代码丢失的问题）
+git checkout main #切回master分支（一次任务完成后，建议切回master分支，这样pull的时候可以避免自己写的代码丢失的问题）
 git branch -d 本地分支名 #删除本次任务所用的本地分支（也可以不删，当作备份）
 ```·····
 
