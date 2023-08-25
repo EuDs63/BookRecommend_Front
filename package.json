@@ -1,7 +1,7 @@
 {
-  "name": "material-tailwind-dashboard-react",
+  "name": "book_recommend_front",
   "private": true,
-  "version": "2.0.1",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
