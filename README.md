@@ -5,6 +5,12 @@
 ## 项目说明
 - 项目使用[material-tailwind-dashboard-react](https://github.com/creativetimofficial/material-tailwind-dashboard-react)为基础模板
 - [模板的相关文档](https://www.material-tailwind.com/docs/react/theming)
+- 运行
+  ```bash
+  npm install
+  npm run dev
+  ```
+
 
 ## 小组成员
 - 吴铕达
