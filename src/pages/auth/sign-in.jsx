@@ -9,8 +9,28 @@ import {
   Button,
   Typography,
 } from "@material-tailwind/react";
+import { useState } from "react";
+
+
 
 export function SignIn() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+
+  function handleSignIn() {
+    console.log(email + " signed in");
+    console.log("password: " + password)
+  }
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  }
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  }
+
   return (
     <>
       <img
@@ -30,14 +50,14 @@ export function SignIn() {
             </Typography>
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
-            <Input type="email" label="Email" size="lg" />
-            <Input type="password" label="Password" size="lg" />
+            <Input type="email" label="Email" size="lg"  onChange={handleEmailChange} />
+            <Input type="password" label="Password" size="lg" onChange={handlePasswordChange} />
             <div className="-ml-2.5">
               <Checkbox label="Remember Me" />
             </div>
           </CardBody>
           <CardFooter className="pt-0">
-            <Button variant="gradient" fullWidth>
+            <Button variant="gradient" fullWidth onClick={handleSignIn}>
               Sign In
             </Button>
             <Typography variant="small" className="mt-6 flex justify-center">
