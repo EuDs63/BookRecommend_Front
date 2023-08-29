@@ -21,6 +21,8 @@ export function SignIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigateTo = useNavigate();
+
+  // 登录
   function handleSignIn() {
     //const history = useHistory(); 
     console.log(username + " try to sign in");
