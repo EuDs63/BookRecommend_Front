@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { useState } from "react";
-
+import { userLogin,userInfo } from "@/utils/api"
 
 
 export function SignIn() {
@@ -19,8 +19,22 @@ export function SignIn() {
 
 
   function handleSignIn() {
-    console.log(email + " signed in");
-    console.log("password: " + password)
+    console.log(email + " try to sign in");
+    userLogin({
+      username: email,
+      password: password,
+    }).then((resp) => {
+      var code = resp.data;
+      if(code === "0"){
+        //getUserInfo(form.email);
+        router.push("/profile");
+        alert("success");
+      }else{
+        alert("fail");
+      }
+      //console.log(resp);
+    });
+
   }
 
   const handleEmailChange = (e) => {
