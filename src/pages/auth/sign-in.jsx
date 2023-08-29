@@ -10,35 +10,44 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { useState } from "react";
-import { userLogin,userInfo } from "@/utils/api"
+import { useNavigate } from 'react-router-dom';
+import { userLogin, userInfo } from "@/utils/api"
+
+
 
 
 export function SignIn() {
-  const [email, setEmail] = useState("");
+
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-
+  const navigateTo = useNavigate();
   function handleSignIn() {
-    console.log(email + " try to sign in");
+    //const history = useHistory(); 
+    console.log(username + " try to sign in");
     userLogin({
-      username: email,
+      username: username,
       password: password,
     }).then((resp) => {
-      var code = resp.data;
-      if(code === "0"){
+      var code = resp.data['code'].toString();
+      var message = resp.data['msg'];
+      console.log(message);
+      if (code === '0') {
         //getUserInfo(form.email);
-        router.push("/profile");
-        alert("success");
-      }else{
-        alert("fail");
+        //router.push("/profile");
+        alert(message);
+        navigateTo('/home');
+      } else {
+        console.log(email + " try to sign in, but fail");
+        alert(message);
       }
       //console.log(resp);
     });
 
   }
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
   }
 
   const handlePasswordChange = (e) => {
@@ -64,7 +73,7 @@ export function SignIn() {
             </Typography>
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
-            <Input type="email" label="Email" size="lg"  onChange={handleEmailChange} />
+            <Input type="email" label="Email" size="lg" onChange={handleUsernameChange} />
             <Input type="password" label="Password" size="lg" onChange={handlePasswordChange} />
             <div className="-ml-2.5">
               <Checkbox label="Remember Me" />
