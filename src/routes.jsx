@@ -6,7 +6,8 @@ import {
   ArrowRightOnRectangleIcon,
   UserPlusIcon,
 } from "@heroicons/react/24/solid";
-import { Home, Profile, Tables, Notifications } from "@/pages/dashboard";
+import { DashBoard, Tables, Notifications } from "@/pages/dashboard";
+import {Profile} from "@/pages/profile";
 import { SignIn, SignUp } from "@/pages/auth";
 
 const icon = {
@@ -18,16 +19,16 @@ export const routes = [
     layout: "dashboard",
     pages: [
       {
+        icon: <UserCircleIcon {...icon} />,
+        name: "homepage",
+        path: "/home",
+        element: <Profile />,  
+      },
+      {
         icon: <HomeIcon {...icon} />,
         name: "dashboard",
         path: "/home",
-        element: <Home />,
-      },
-      {
-        icon: <UserCircleIcon {...icon} />,
-        name: "profile",
-        path: "/profile",
-        element: <Profile />,
+        element: <DashBoard />,
       },
       {
         icon: <TableCellsIcon {...icon} />,
