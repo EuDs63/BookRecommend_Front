@@ -15,19 +15,20 @@ import { useNavigate } from 'react-router-dom';
 import { userRegister, userInfo } from "@/utils/api"
 export function SignUp() {
 
-  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
   const navigateTo = useNavigate();
-
   //注册
   function handleSignUp(){
     //const history = useHistory();
-    console.log(username + " try to sign up");
+    console.log(name + " try to sign up");
+    const now = new Date();
+    const formattedTime = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+    console.log("当前注册时间是:"+formattedTime)
     userRegister({
-        username: username,
+        name: name,
         password: password,
-        email: email,
+        register_time: formattedTime,
     }).then((resp)=>{
       var code = resp.data['code'].toString();
       var message = resp.data['msg'];
@@ -37,24 +38,23 @@ export function SignUp() {
         //router.push("/profile");
         alert(message);
         navigateTo('/home');//这里应该打开一个标签推荐页面
+        // const now = new Date();
+        // setRegister_time(formattedTime)
+        console.log("当前注册时间是:" + register_time)
       } else {
-        console.log(email + " try to sign up, but fail");
+        console.log(name + " try to sign up, but fail");
         alert(message);
       }
       //console.log(resp);
     });
 }
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
+  const handleNameChange = (e) => {
+    setName(e.target.value);
   }
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
-  }
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
   }
 
   return (
@@ -76,15 +76,11 @@ export function SignUp() {
             </Typography>
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
-            <Input label="Name" size="lg" />
-            <Input type="email" label="Email" size="lg" />
-            <Input type="password" label="Password" size="lg" />
-            <div className="-ml-2.5">
-              <Checkbox label="I agree the Terms and Conditions" />
-            </div>
+            <Input label="Name" size="lg" onChange={handleNameChange}/>
+            <Input type="password" label="Password" size="lg" onChange={handlePasswordChange} />
           </CardBody>
           <CardFooter className="pt-0">
-            <Button variant="gradient" fullWidth>
+            <Button variant="gradient" fullWidth onClick={handleSignUp}>
               Sign Up
             </Button>
             <Typography variant="small" className="mt-6 flex justify-center">

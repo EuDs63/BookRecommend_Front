@@ -13,10 +13,9 @@ export function userRegister(userData) {
         url: '/register',
         method: 'post',
         data: {
-            email: userData.email,
             password: userData.password,
             name: userData.name,
-            level: userData.level
+            register_time: userData.register_time
         }
     })
 }
