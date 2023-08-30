@@ -10,11 +10,11 @@ export function userLogin(data) {
 
 export function userRegister(userData) {
     return service({
-        url: '/register',
+        url: '/user/register',
         method: 'post',
         data: {
             password: userData.password,
-            name: userData.name,
+            username: userData.username,
             register_time: userData.register_time
         }
     })

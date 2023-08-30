@@ -15,18 +15,18 @@ import { useNavigate } from 'react-router-dom';
 import { userRegister, userInfo } from "@/utils/api"
 export function SignUp() {
 
-  const [name, setName] = useState("");
+  const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const navigateTo = useNavigate();
   //注册
   function handleSignUp(){
     //const history = useHistory();
-    console.log(name + " try to sign up");
+    console.log(username + " try to sign up");
     const now = new Date();
     const formattedTime = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
     console.log("当前注册时间是:"+formattedTime)
     userRegister({
-        name: name,
+        username: username,
         password: password,
         register_time: formattedTime,
     }).then((resp)=>{
@@ -41,16 +41,18 @@ export function SignUp() {
         // const now = new Date();
         // setRegister_time(formattedTime)
         console.log("当前注册时间是:" + register_time)
+
       } else {
-        console.log(name + " try to sign up, but fail");
+        console.log(username + " try to sign up, but fail");
         alert(message);
+        console.log(username)
       }
       //console.log(resp);
     });
 }
 
-  const handleNameChange = (e) => {
-    setName(e.target.value);
+  const handleUserNameChange = (e) => {
+    setUserName(e.target.value);
   }
 
   const handlePasswordChange = (e) => {
@@ -76,7 +78,7 @@ export function SignUp() {
             </Typography>
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
-            <Input label="Name" size="lg" onChange={handleNameChange}/>
+            <Input label="Name" size="lg" onChange={handleUserNameChange}/>
             <Input type="password" label="Password" size="lg" onChange={handlePasswordChange} />
           </CardBody>
           <CardFooter className="pt-0">
