@@ -9,27 +9,26 @@ import {
   Button,
   Typography,
 } from "@material-tailwind/react";
+
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import { userLogin, userInfo } from "@/utils/api"
-
-
-
-
-export function SignIn() {
+import { userRegister, userInfo } from "@/utils/api"
+export function SignUp() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const navigateTo = useNavigate();
 
-  // 登录
-  function handleSignIn() {
-    //const history = useHistory(); 
-    console.log(username + " try to sign in");
-    userLogin({
-      username: username,
-      password: password,
-    }).then((resp) => {
+  //注册
+  function handleSignUp(){
+    //const history = useHistory();
+    console.log(username + " try to sign up");
+    userRegister({
+        username: username,
+        password: password,
+        email: email,
+    }).then((resp)=>{
       var code = resp.data['code'].toString();
       var message = resp.data['msg'];
       console.log(message);
@@ -37,17 +36,15 @@ export function SignIn() {
         //getUserInfo(form.email);
         //router.push("/profile");
         alert(message);
-        navigateTo('/home');
+        navigateTo('/home');//这里应该打开一个标签推荐页面
       } else {
         console.log(email + " try to sign in, but fail");
         alert(message);
       }
       //console.log(resp);
     });
+}
 
-  }
-
-                  
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
   }
@@ -56,6 +53,9 @@ export function SignIn() {
     setPassword(e.target.value);
   }
 
+  const handleEmailChange = (e) => {
+    setEmailword(e.target.value);
+  }
   return (
     <>
       <img
@@ -71,30 +71,31 @@ export function SignIn() {
             className="mb-4 grid h-28 place-items-center"
           >
             <Typography variant="h3" color="white">
-              Sign In
+              Sign Up
             </Typography>
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
-            <Input type="email" label="Email" size="lg" onChange={handleUsernameChange} />
-            <Input type="password" label="Password" size="lg" onChange={handlePasswordChange} />
+            <Input label="Name" size="lg" />
+            <Input type="email" label="Email" size="lg" />
+            <Input type="password" label="Password" size="lg" />
             <div className="-ml-2.5">
-              <Checkbox label="Remember Me" />
+              <Checkbox label="I agree the Terms and Conditions" />
             </div>
           </CardBody>
           <CardFooter className="pt-0">
-            <Button variant="gradient" fullWidth onClick={handleSignIn}>
-              Sign In
+            <Button variant="gradient" fullWidth>
+              Sign Up
             </Button>
             <Typography variant="small" className="mt-6 flex justify-center">
-              Don't have an account?
-              <Link to="/auth/sign-up">
+              Already have an account?
+              <Link to="/auth/sign-in">
                 <Typography
                   as="span"
                   variant="small"
                   color="blue"
                   className="ml-1 font-bold"
                 >
-                  Sign up
+                  Sign in
                 </Typography>
               </Link>
             </Typography>
@@ -105,4 +106,4 @@ export function SignIn() {
   );
 }
 
-export default SignIn;
+export default SignUp;
