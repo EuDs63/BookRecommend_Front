@@ -14,49 +14,6 @@ import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { userRegister, userInfo } from "@/utils/api"
 export function SignUp() {
-
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const navigateTo = useNavigate();
-
-  //注册
-  function handleSignUp(){
-    //const history = useHistory();
-    console.log(username + " try to sign up");
-    userRegister({
-        username: username,
-        password: password,
-        email: email,
-    }).then((resp)=>{
-      var code = resp.data['code'].toString();
-      var message = resp.data['msg'];
-      console.log(message);
-      if (code === '0') {
-        //getUserInfo(form.email);
-        //router.push("/profile");
-        alert(message);
-        navigateTo('/home');//这里应该打开一个标签推荐页面
-      } else {
-        console.log(email + " try to sign up, but fail");
-        alert(message);
-      }
-      //console.log(resp);
-    });
-}
-
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-  }
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  }
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  }
-
   return (
     <>
       <img

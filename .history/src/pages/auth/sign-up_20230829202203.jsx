@@ -36,26 +36,14 @@ export function SignUp() {
         //getUserInfo(form.email);
         //router.push("/profile");
         alert(message);
-        navigateTo('/home');//这里应该打开一个标签推荐页面
+        navigateTo('/home');//这里应该
       } else {
-        console.log(email + " try to sign up, but fail");
+        console.log(email + " try to sign in, but fail");
         alert(message);
       }
       //console.log(resp);
     });
 }
-
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-  }
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  }
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  }
 
   return (
     <>
