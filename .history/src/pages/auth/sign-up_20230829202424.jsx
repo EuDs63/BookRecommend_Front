@@ -38,7 +38,7 @@ export function SignUp() {
         alert(message);
         navigateTo('/home');//这里应该打开一个标签推荐页面
       } else {
-        console.log(email + " try to sign up, but fail");
+        console.log(email + " try to sign in, but fail");
         alert(message);
       }
       //console.log(resp);
@@ -54,9 +54,8 @@ export function SignUp() {
   }
 
   const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+    setPassword(e.target.value);
   }
-
   return (
     <>
       <img
