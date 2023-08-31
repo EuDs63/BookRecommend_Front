@@ -43,16 +43,14 @@ export function ProfileInfoCard({ title, description, details, action }) {
                 >
                   {el}:
                 </Typography>
-                {typeof details[el] === "string" ? (
+                {
                   <Typography
                     variant="small"
                     className="font-normal text-blue-gray-500"
                   >
                     {details[el]}
                   </Typography>
-                ) : (
-                  details[el]
-                )}
+                }
               </li>
             ))}
           </ul>

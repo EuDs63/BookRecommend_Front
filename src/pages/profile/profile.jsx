@@ -33,73 +33,69 @@ export function Profile() {
           <div className="mb-10 flex items-center justify-between gap-6">
             <div className="flex items-center gap-6">
               {bookDetailsData.map(
-                ({
-                  book_id,
-                  isbn,
-                  cover_image,
-                  title,
-                  author,
-                  publisher,
-                  rating_avg,
-                  publish_date,
-                  page_num,
-                  category,
-                  description,
-                  rating_num,
-                  comment_count,
-                }) => (
-                  <>
-                    <>
-                      <img
-                        src={cover_image}
-                        alt={title}
-                        className="h-48 w-48 rounded-lg shadow-lg shadow-blue-gray-500/40"
-                      />
-                    </>
-                    <div key={book_id}></div>
-                    <div>
-                      <Typography
-                        variant="h5"
-                        color="blue-gray"
-                        className="mb-1"
-                      >
-                        {title}
-                      </Typography>
-                      <Typography
-                        variant="medium"
-                        className="font-normal text-blue-gray-600"
-                      >
-                        {publisher}
-                      </Typography>
-                      <Typography
-                        variant="medium"
-                        className="font-normal text-blue-gray-600"
-                      >
-                        {rating_avg} / 10.0分 {rating_num}人评分
-                      </Typography>
-                      <Typography
-                        variant="small"
-                        className="font-normal text-blue-gray-600"
-                      >
-                        "{description}"
-                      </Typography>
-                    </div>
-                  </>
+                (
+                  {
+                    book_id,
+                    isbn,
+                    cover_image,
+                    title,
+                    author,
+                    publisher,
+                    rating_avg,
+                    publish_date,
+                    page_num,
+                    category,
+                    description,
+                    rating_num,
+                    comment_count,
+                  },
+                  index // 添加索引参数
+                ) => (
+                  <div key={book_id} className="flex items-center">
+                    {index === 0 && ( // 仅在索引为0（即第一个对象）时渲染
+                      <>
+                        <img
+                          //   src={cover_image}
+                          src="https://images.weserv.nl/?url=https://img1.doubanio.com/view/subject/l/public/s8869768.jpg"
+                          alt={title}
+                          className="h-48 w-36 rounded-lg shadow-lg shadow-blue-gray-500/40"
+                        />
+                        <div className="ml-10">
+                          <Typography
+                            variant="h3"
+                            color="blue-gray"
+                            className="mb-1"
+                          >
+                            {title}
+                          </Typography>
+                          <Typography
+                            variant="lead"
+                            className="font-normal text-blue-gray-600"
+                          >
+                            {author}
+                          </Typography>
+                          <Typography
+                            variant="lead"
+                            className="font-normal text-blue-gray-600"
+                          >
+                            {rating_avg} / 10.0分 {rating_num}人评分{" "}
+                            {comment_count}个评论
+                          </Typography>
+                          <Typography
+                            variant="paragraph"
+                            className="font-normal text-blue-gray-600"
+                          >
+                            "{description}"
+                          </Typography>
+                        </div>
+                      </>
+                    )}
+                  </div>
                 )
               )}
-              {/* <div>
-                <Typography variant="h5" color="blue-gray" className="mb-1">
-                  {bookDetailsData.title}
-                </Typography>
-                <Typography
-                  variant="small"
-                  className="font-normal text-blue-gray-600"
-                >
-                  {bookDetailsData.publisher}
-                </Typography>
-              </div> */}
             </div>
-            <div className="w-96">
+
+            {/* <div className="w-96">
               <Tabs value="app">
                 <TabsHeader>
                   <Tab value="app">
@@ -116,53 +112,32 @@ export function Profile() {
                   </Tab>
                 </TabsHeader>
               </Tabs>
-            </div>
+            </div> */}
           </div>
-          <div className="gird-cols-1 mb-12 grid gap-12 px-4 lg:grid-cols-2 xl:grid-cols-3">
-            <ProfileInfoCard
-              title="Profile Information"
-              description="Hi, I'm Alec Thompson, Decisions: If you can't decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
-              details={{
-                "first name": "Alec M. Thompson",
-                mobile: "(44) 123 1234 123",
-                email: "alecthompson@mail.com",
-                location: "USA",
-                social: (
-                  <div className="flex items-center gap-4">
-                    <i className="fa-brands fa-facebook text-blue-700" />
-                    <i className="fa-brands fa-twitter text-blue-400" />
-                    <i className="fa-brands fa-instagram text-purple-500" />
-                  </div>
-                ),
-              }}
-              action={
-                <Tooltip content="Edit Profile">
-                  <PencilIcon className="h-4 w-4 cursor-pointer text-blue-gray-500" />
-                </Tooltip>
-              }
-            />
-            {/* <div>
-                <Typography variant="h6" color="blue-gray" className="mb-3">
-                  Platform Settings
-                </Typography>
-                <ul className="flex flex-col gap-6">
-                  {conversationsData.map((props) => (
-                    <MessageCard
-                      key={props.name}
-                      {...props}
-                      action={
-                        <Button variant="text" size="sm">
-                          reply
-                        </Button>
-                      }
-                    />
-                  ))}
-                </ul>
-              </div> */}
+          <div className="">
+            {bookDetailsData.length > 0 && ( // 确保数组不为空
+              <ProfileInfoCard
+                //                title="Profile Information"
+                //                description="Hi, I'm Alec Thompson, Decisions: If you can't decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
+                details={{
+                  出版社: bookDetailsData[0].publisher,
+                  ISBN: bookDetailsData[0].isbn,
+                  出版日期: bookDetailsData[0].publish_date,
+                  类别: bookDetailsData[0].category,
+                  页数: bookDetailsData[0].page_num,
+                }}
+                action={
+                  <Tooltip content="Edit Profile">
+                    <PencilIcon className="h-4 w-4 cursor-pointer text-blue-gray-500" />
+                  </Tooltip>
+                }
+              />
+            )}
           </div>
+
           <div className="px-4 pb-4">
             <Typography variant="h6" color="blue-gray" className="mb-2">
-              Projects
+              您可能会感兴趣
             </Typography>
             <Typography
               variant="small"
