@@ -24,8 +24,6 @@ export function SignIn() {
 
   // 登录
   function handleSignIn() {
-    //const history = useHistory(); 
-    console.log(username + " try to sign in");
     userLogin({
       username: username,
       password: password,
@@ -35,14 +33,12 @@ export function SignIn() {
       console.log(message);
       if (code === '0') {
         //getUserInfo(form.email);
-        //router.push("/profile");
         alert(message);
         navigateTo('/home');
       } else {
         console.log(email + " try to sign in, but fail");
         alert(message);
       }
-      //console.log(resp);
     });
 
   }
@@ -75,7 +71,7 @@ export function SignIn() {
             </Typography>
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
-            <Input type="email" label="Email" size="lg" onChange={handleUsernameChange} />
+            <Input  label="Name" size="lg" onChange={handleUsernameChange} />
             <Input type="password" label="Password" size="lg" onChange={handlePasswordChange} />
             <div className="-ml-2.5">
               <Checkbox label="Remember Me" />
