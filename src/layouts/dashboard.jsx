@@ -24,7 +24,7 @@ export function Dashboard() {
   const navbarRoutes = [
     {
       name: "dashboard",
-      path: "/dashboard/home",
+      path: "/dashboard/dashboard",
       icon: ChartPieIcon,
     },
     {
@@ -33,23 +33,13 @@ export function Dashboard() {
       icon: UserIcon,
     },
     {
-      name: "sign up",
-      path: "/auth/sign-up",
-      icon: UserPlusIcon,
-    },
-    {
-      name: "sign in",
-      path: "/auth/sign-in",
-      icon: ArrowRightOnRectangleIcon,
-    },
-    {
       name: "tables",
       path: "/dashboard/tables",
       icon: ArrowRightOnRectangleIcon,
     },
     {
       name: "notifications",
-      path: "/dashboard/notifications",
+      path: "/dashboard/notifactions",
       icon: ArrowRightOnRectangleIcon,
     },
   ];
@@ -57,13 +47,7 @@ export function Dashboard() {
 
   return (
     <div className="min-h-screen bg-blue-gray-50/50">
-      <Sidenav
-        routes={routes}
-        brandImg={
-          sidenavType === "dark" ? "/img/logo-ct.png" : "/img/logo-ct-dark.png"
-        }
-      />
-      <div className="p-4 xl:ml-80">
+      <div className="p-4 xl:mr-80">
         <DashboardNavbar />
         <Configurator />
         <IconButton
