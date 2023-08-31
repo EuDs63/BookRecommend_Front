@@ -2,7 +2,7 @@ import axios from "axios";
 
 let service = axios.create({
     // baseURL: 'http://127.0.0.1:5000',
-    baseURL: 'http://10.203.202.158:5000',
+    baseURL: 'http://10.203.155.125:5000',
     timeout: 3000,
     headers: {
       'Content-Type': 'application/json;charset=UTF-8',
