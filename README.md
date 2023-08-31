@@ -121,3 +121,5 @@ git branch -d 本地分支名 #删除本次任务所用的本地分支（也可�
 - 评分人数(rating_num):整数,表示评分人数
 - 平均评分(rating_avg):小数,decimal(2,1),评分平均值
 - 评论数(comment_count):整数,记录评论数
+
+### 8月29日 tailwind学习

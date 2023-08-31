@@ -15,51 +15,47 @@ import { useNavigate } from 'react-router-dom';
 import { userRegister, userInfo } from "@/utils/api"
 export function SignUp() {
 
-  const [username, setUserName] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [password_confirmation, setPassword_confirmation] = useState("");
+  const [email, setEmail] = useState("");
   const navigateTo = useNavigate();
+
   //注册
   function handleSignUp(){
-    // 验证两次密码输入是否一致
-    if (password !== password_confirmation) {
-      alert("两次密码输入不一致");
-      return;
-    }
-    // 两次密码输入一致，准备发送注册请求
-    const now = new Date();
-    const formattedTime = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+    //const history = useHistory();
+    console.log(username + " try to sign up");
     userRegister({
         username: username,
         password: password,
-        register_time: formattedTime,
+        email: email,
     }).then((resp)=>{
       var code = resp.data['code'].toString();
       var message = resp.data['msg'];
+      console.log(message);
       if (code === '0') {
         //getUserInfo(form.email);
+        //router.push("/profile");
         alert(message);
         navigateTo('/home');//这里应该打开一个标签推荐页面
       } else {
-        console.log(username + " try to sign up, but fail");
+        console.log(email + " try to sign in, but fail");
         alert(message);
-        console.log(username)
       }
+      //console.log(resp);
     });
 }
 
-  const handleUserNameChange = (e) => {
-    setUserName(e.target.value);
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
   }
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   }
 
-  const handlePassword_confirmationChange = (e) => {
-    setPassword_confirmation(e.target.value);
+  const handleEmailChange = (e) => {
+    setEword(e.target.value);
   }
-
   return (
     <>
       <img
@@ -79,12 +75,15 @@ export function SignUp() {
             </Typography>
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
-            <Input label="Name" size="lg" onChange={handleUserNameChange}/>
-            <Input type="password" label="Password" size="lg" onChange={handlePasswordChange} />
-            <Input type="password" label="Confirm your password" size="lg" onChange={handlePassword_confirmationChange} /> 
+            <Input label="Name" size="lg" />
+            <Input type="email" label="Email" size="lg" />
+            <Input type="password" label="Password" size="lg" />
+            <div className="-ml-2.5">
+              <Checkbox label="I agree the Terms and Conditions" />
+            </div>
           </CardBody>
           <CardFooter className="pt-0">
-            <Button variant="gradient" fullWidth onClick={handleSignUp}>
+            <Button variant="gradient" fullWidth>
               Sign Up
             </Button>
             <Typography variant="small" className="mt-6 flex justify-center">
