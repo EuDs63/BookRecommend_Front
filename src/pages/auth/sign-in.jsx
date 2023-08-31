@@ -43,7 +43,7 @@ export function SignIn() {
 
   }
 
-                  
+
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
   }
@@ -71,7 +71,7 @@ export function SignIn() {
             </Typography>
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
-            <Input  label="Name" size="lg" onChange={handleUsernameChange} />
+            <Input label="Name" size="lg" onChange={handleUsernameChange} />
             <Input type="password" label="Password" size="lg" onChange={handlePasswordChange} />
             <div className="-ml-2.5">
               <Checkbox label="Remember Me" />
