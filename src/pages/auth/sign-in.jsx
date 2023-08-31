@@ -36,7 +36,7 @@ export function SignIn() {
         alert(message);
         navigateTo('/home');
       } else {
-        console.log(email + " try to sign in, but fail");
+        console.log(username + " try to sign in, but fail");
         alert(message);
       }
     });
