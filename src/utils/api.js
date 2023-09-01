@@ -52,5 +52,18 @@ export function userInfo(email) {
         }
     })
 }
+//info_type 为1 ：对应bookDetailsData
+//info_type 为0 ,对应recommendedBooksData
+export function bookInfo(book_id, info_type){
+    return service({
+        url:`/book/${book_id}/${info_type}`,
+        method: 'get',
+    })
+}
 
+export function commentInfo(){
+    return service({
+
+    })
+}
 

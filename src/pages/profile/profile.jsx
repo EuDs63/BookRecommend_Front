@@ -19,13 +19,20 @@ import {
   PencilIcon,
 } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
-import {
-  ProfileInfoCard,
-  BookCommentsCard,
-} from "@/widgets/cards";
-import { bookDetailsData } from "@/data";
-import { recommendedBooksData } from "@/data";
-import { bookCommentsData } from "@/data";
+import { ProfileInfoCard, BookCommentsCard } from "@/widgets/cards";
+import { bookDetailsData, recommendedBooksData, bookCommentsData} from "@/data";
+import { bookInfo, commentInfo } from "@/utils/api";
+import React, { useState, useEffect } from "react";
+
+
+//点击一个“详情”页面将给出Info_type=1,bookId=X;
+//经过推荐系统将返回四个bookId,Info_type=0;
+//需要在useEffect函数里fetch这4个bookId，Info_type=0;
+//需要在userEffect函数里fetch评论
+//useEffect函数需要四个操作:1. fetch一个详细信息 2. 推荐算法 3. fetch四个推荐信息 4. fectch评论
+export function handleGetBookDetailsData(){
+    bookInfo()
+}
 export function Profile() {
   return (
     <>

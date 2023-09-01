@@ -7,7 +7,7 @@ export const recommendedBooksData = [// 经由书籍信息推荐的书籍目录
     rating_avg: 9.3,
     description:
       "于是乎中国人失了世界；却暂时仍要在这世界上住！——这便是我的大恐惧。",
-    route: "/dashboard/profile",
+    route: "/dashboard/dashboard",
     members: [
       { img: "/img/team-1.jpeg", name: "Romina Hadid" },
       { img: "/img/team-2.jpeg", name: "Ryan Tompson" },
@@ -63,6 +63,7 @@ export const recommendedBooksData = [// 经由书籍信息推荐的书籍目录
       { img: "/img/team-1.jpeg", name: "Romina Hadid" },
     ],
   },
+
 ];
 
 export default recommendedBooksData;
