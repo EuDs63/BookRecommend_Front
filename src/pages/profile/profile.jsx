@@ -22,13 +22,14 @@ import { Link } from "react-router-dom";
 import { ProfileInfoCard, MessageCard } from "@/widgets/cards";
 import { platformSettingsData, conversationsData, projectsData } from "@/data";
 import { bookDetailsData } from "@/data";
+import { recommendedBooksData } from "@/data";
 export function Profile() {
   return (
     <>
       <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url(https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80)] bg-cover	bg-center">
         <div className="absolute inset-0 h-full w-full bg-blue-500/50" />
       </div>
-      <Card className="mx-3 -mt-16 mb-6 lg:mx-4">
+      <Card className="mx-3 -mt-16 mb-6 lg:mx-4 ">
         <CardBody className="p-4">
           <div className="mb-10 flex items-center justify-between gap-6">
             <div className="flex items-center gap-6">
@@ -55,8 +56,7 @@ export function Profile() {
                     {index === 0 && ( // 仅在索引为0（即第一个对象）时渲染
                       <>
                         <img
-                          //   src={cover_image}
-                          src="https://images.weserv.nl/?url=https://img1.doubanio.com/view/subject/l/public/s8869768.jpg"
+                          src={`https://images.weserv.nl/?url=${cover_image}`}
                           alt={title}
                           className="h-48 w-36 rounded-lg shadow-lg shadow-blue-gray-500/40"
                         />
@@ -134,28 +134,32 @@ export function Profile() {
               />
             )}
           </div>
-
-          <div className="px-4 pb-4">
-            <Typography variant="h6" color="blue-gray" className="mb-2">
+          <div className="my-12"></div>{" "}
+          {/* 使用 my-12 类来添加垂直间距，也可以根据需要调整数字部分 */}
+          <div className="px-4 pb-4 ">
+            <Typography variant="h4" color="blue-gray" className="mb-2">
               您可能会感兴趣
             </Typography>
-            <Typography
-              variant="small"
-              className="font-normal text-blue-gray-500"
-            >
-              Architects design houses
-            </Typography>
+            <hr className="border-t border-gray-300" /> {/* 分隔线 */}
             <div className="mt-6 grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-4">
-              {projectsData.map(
-                ({ img, title, description, tag, route, members }) => (
-                  <Card key={title} color="transparent" shadow={false}>
+              {recommendedBooksData.map(
+                ({
+                  book_id,
+                  cover_image,
+                  title,
+                  description,
+                  rating_avg,
+                  route,
+                  members,
+                }) => (
+                  <Card key={book_id} color="transparent" shadow={false}>
                     <CardHeader
                       floated={false}
                       color="gray"
                       className="mx-0 mt-0 mb-4 h-64 xl:h-40"
                     >
                       <img
-                        src={img}
+                        src={`https://images.weserv.nl/?url=${cover_image}`}
                         alt={title}
                         className="h-full w-full object-cover"
                       />
@@ -165,7 +169,7 @@ export function Profile() {
                         variant="small"
                         className="font-normal text-blue-gray-500"
                       >
-                        {tag}
+                        {rating_avg}分 
                       </Typography>
                       <Typography
                         variant="h5"
@@ -182,9 +186,10 @@ export function Profile() {
                       </Typography>
                     </CardBody>
                     <CardFooter className="mt-6 flex items-center justify-between py-0 px-1">
+                      <div className="flex items-center justify-between">
                       <Link to={route}>
                         <Button variant="outlined" size="sm">
-                          view project
+                          查看详情
                         </Button>
                       </Link>
                       <div>
@@ -201,6 +206,7 @@ export function Profile() {
                             />
                           </Tooltip>
                         ))}
+                        </div>
                       </div>
                     </CardFooter>
                   </Card>
