@@ -19,10 +19,13 @@ import {
   PencilIcon,
 } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
-import { ProfileInfoCard, MessageCard } from "@/widgets/cards";
-import { platformSettingsData, conversationsData, projectsData } from "@/data";
+import {
+  ProfileInfoCard,
+  BookCommentsCard,
+} from "@/widgets/cards";
 import { bookDetailsData } from "@/data";
 import { recommendedBooksData } from "@/data";
+import { bookCommentsData } from "@/data";
 export function Profile() {
   return (
     <>
@@ -214,6 +217,25 @@ export function Profile() {
                 )
               )}
             </div>
+          </div>
+          <div className="my-12"></div>{" "}
+          {/* 使用 my-12 类来添加垂直间距，也可以根据需要调整数字部分 */}
+          <div>
+            <Typography variant="h4" color="blue-gray" className="mb-3">
+              热门评论
+            </Typography>
+            <ul className="flex flex-col gap-10">
+              {bookCommentsData.map((props, index) => (
+                <div className="max-h-50 w-full overflow-y-auto">
+                  <div key={props.comment_id} className="mb-4">
+                    <BookCommentsCard {...props} />
+                    {index < bookCommentsData.length - 1 && (
+                      <hr className="mt-4 border-t border-gray-300" />
+                    )}
+                  </div>
+                </div>
+              ))}
+            </ul>
           </div>
         </CardBody>
       </Card>
