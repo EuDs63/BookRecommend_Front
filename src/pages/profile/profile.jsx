@@ -144,6 +144,7 @@ export function Profile() {
             <div className="mt-6 grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-4">
               {recommendedBooksData.map(
                 ({
+                  author,
                   book_id,
                   cover_image,
                   title,
@@ -169,7 +170,7 @@ export function Profile() {
                         variant="small"
                         className="font-normal text-blue-gray-500"
                       >
-                        {rating_avg}分 
+                        {rating_avg}分 {author}
                       </Typography>
                       <Typography
                         variant="h5"
@@ -187,25 +188,25 @@ export function Profile() {
                     </CardBody>
                     <CardFooter className="mt-6 flex items-center justify-between py-0 px-1">
                       <div className="flex items-center justify-between">
-                      <Link to={route}>
-                        <Button variant="outlined" size="sm">
-                          查看详情
-                        </Button>
-                      </Link>
-                      <div>
-                        {members.map(({ img, name }, key) => (
-                          <Tooltip key={name} content={name}>
-                            <Avatar
-                              src={img}
-                              alt={name}
-                              size="xs"
-                              variant="circular"
-                              className={`cursor-pointer border-2 border-white ${
-                                key === 0 ? "" : "-ml-2.5"
-                              }`}
-                            />
-                          </Tooltip>
-                        ))}
+                        <Link to={route}>
+                          <Button variant="outlined" size="sm">
+                            查看详情
+                          </Button>
+                        </Link>
+                        <div>
+                          {members.map(({ img, name }, key) => (
+                            <Tooltip key={name} content={name}>
+                              <Avatar
+                                src={img}
+                                alt={name}
+                                size="xs"
+                                variant="circular"
+                                className={`cursor-pointer border-2 border-white ${
+                                  key === 0 ? "" : "-ml-2.5"
+                                }`}
+                              />
+                            </Tooltip>
+                          ))}
                         </div>
                       </div>
                     </CardFooter>

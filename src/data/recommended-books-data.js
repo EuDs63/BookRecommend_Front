@@ -1,7 +1,7 @@
 export const recommendedBooksData = [// 经由书籍信息推荐的书籍目录
   {
     book_id: 3,
-    author: 鲁迅,
+    author: "鲁迅",
     cover_image: "https://img1.doubanio.com/view/subject/s/public/s2127990.jpg",
     title: "热风",
     rating_avg: 9.3,
@@ -17,7 +17,7 @@ export const recommendedBooksData = [// 经由书籍信息推荐的书籍目录
   },
   {
     book_id: 4,
-    author: 鲁迅,
+    author: "鲁迅",
     cover_image: "https://img9.doubanio.com/view/subject/s/public/s34099304.jpg",
     title: "华盖集",
     rating_avg: 9.3,
@@ -33,7 +33,7 @@ export const recommendedBooksData = [// 经由书籍信息推荐的书籍目录
   },
   {
     book_id: 5,
-    author: 鲁迅,
+    author: "鲁迅",
     cover_image: "https://img1.doubanio.com/view/subject/s/public/s34099307.jpg",
     title: "而已集",
     rating_avg: 9.3,
@@ -49,7 +49,7 @@ export const recommendedBooksData = [// 经由书籍信息推荐的书籍目录
   },
   {
     book_id: 6,
-    author: 鲁迅,
+    author: "鲁迅",
     cover_image: "https://img2.doubanio.com/view/subject/s/public/s34099301.jpg",
     title: "野草",
     rating_avg: 9.5,
