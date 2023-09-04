@@ -1,5 +1,5 @@
-import { useLocation, Link } from "react-router-dom";
-import {
+import { useLocation, Link, useNavigate} from "react-router-dom";
+import React,{
   Navbar,
   Typography,
   Button,
@@ -12,6 +12,7 @@ import {
   MenuItem,
   Avatar,
 } from "@material-tailwind/react";
+import { useState } from "react";
 import {
   UserCircleIcon,
   Cog6ToothIcon,
@@ -32,10 +33,22 @@ export function DashboardNavbar() {
   const { pathname } = useLocation();
   const [layout, page] = pathname.split("/").filter((el) => el !== "");
   const { isLoggedIn, setIsLoggedIn } = useUser(); // 使用useUser钩子来获取用户状态
+  
   const handleLogout = () => {
     // 在用户点击登出按钮时更新用户状态
     setIsLoggedIn(false);
   };
+
+  const navigate = useNavigate();
+  const [searchText, setSearchText] = useState("");
+  const handleInputChange = (e) => {
+    setSearchText(e.target.value);
+  };    
+  const handleSearchClick = () => {
+    navigate(`/dashboard/search?query=${searchText}`);
+  };
+  
+
   return (
     <Navbar
       color={fixedNavbar ? "white" : "transparent"}
@@ -76,9 +89,20 @@ export function DashboardNavbar() {
           </Typography>
         </div>
         <div className="flex items-center">
-          <div className="mr-auto md:mr-4 md:w-56">
-            <Input label="Type here" />
-          </div>
+            
+        <div className="mr-auto md:mr-0 md:w-56">
+            <Input label="Type here" onChange={handleInputChange}  value={searchText} />
+        </div>
+
+        <Button
+            variant="solid"
+            color="blue-gray"
+            className="hidden md:flex"
+            onClick={handleSearchClick}
+        >
+            搜索
+        </Button>
+
           <IconButton
             variant="text"
             color="blue-gray"
