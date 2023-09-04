@@ -10,16 +10,22 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { useState } from "react";
-import { useNavigate } from 'react-router-dom';
-import { userLogin, userInfo } from "@/utils/api"
-
-
-
+import { useNavigate } from "react-router-dom";
+import { userLogin, userInfo } from "@/utils/api";
+import { useUser } from "../../UserContext";
 
 export function SignIn() {
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { isLoggedIn, setIsLoggedIn } = useUser(); // 使用useUser钩子来获取用户状态
+  const handleLogout = () => {
+    // 在用户点击登出按钮时更新用户状态
+    setIsLoggedIn(false);
+  };
+  const handleSignInContext = () => {
+    // 在用户点击登出按钮时更新用户状态
+    setIsLoggedIn(true);
+  };
   const navigateTo = useNavigate();
 
   // 登录
@@ -28,29 +34,28 @@ export function SignIn() {
       username: username,
       password: password,
     }).then((resp) => {
-      var code = resp.data['code'].toString();
-      var message = resp.data['msg'];
+      var code = resp.data["code"].toString();
+      var message = resp.data["msg"];
       console.log(message);
-      if (code === '0') {
+      if (code === "0") {
         //getUserInfo(form.email);
         alert(message);
-        navigateTo('/home');
+        navigateTo("/home");
+        handleSignInContext();
       } else {
         console.log(username + " try to sign in, but fail");
         alert(message);
       }
     });
-
   }
-
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
-  }
+  };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
-  }
+  };
 
   return (
     <>
@@ -72,7 +77,12 @@ export function SignIn() {
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
             <Input label="Name" size="lg" onChange={handleUsernameChange} />
-            <Input type="password" label="Password" size="lg" onChange={handlePasswordChange} />
+            <Input
+              type="password"
+              label="Password"
+              size="lg"
+              onChange={handlePasswordChange}
+            />
             <div className="-ml-2.5">
               <Checkbox label="Remember Me" />
             </div>
@@ -102,4 +112,3 @@ export function SignIn() {
 }
 
 export default SignIn;
-

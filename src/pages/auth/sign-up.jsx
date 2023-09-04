@@ -13,11 +13,21 @@ import {
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { userRegister, userInfo } from "@/utils/api"
+import { useUser } from "../../UserContext";
 export function SignUp() {
 
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [password_confirmation, setPassword_confirmation] = useState("");
+    const { isLoggedIn, setIsLoggedIn } = useUser(); // 使用useUser钩子来获取用户状态
+    const handleLogout = () => {
+      // 在用户点击登出按钮时更新用户状态
+      setIsLoggedIn(false);
+    };
+    const handleSignInContext = () => {
+      // 在用户点击登出按钮时更新用户状态
+      setIsLoggedIn(true);
+    };
   const navigateTo = useNavigate();
   //注册
   function handleSignUp(){
@@ -40,6 +50,7 @@ export function SignUp() {
         //getUserInfo(form.email);
         alert(message);
         navigateTo('/home');//这里应该打开一个标签推荐页面
+        handleSignInContext();
       } else {
         console.log(username + " try to sign up, but fail");
         alert(message);
@@ -81,7 +92,7 @@ export function SignUp() {
           <CardBody className="flex flex-col gap-4">
             <Input label="Name" size="lg" onChange={handleUserNameChange}/>
             <Input type="password" label="Password" size="lg" onChange={handlePasswordChange} />
-            <Input type="password" label="Confirm your password" size="lg" onChange={handlePassword_confirmationChange} /> 
+            <Input type="password" label="Confirm your password" size="lg" onChange={handlePassword_confirmationChange} />
           </CardBody>
           <CardFooter className="pt-0">
             <Button variant="gradient" fullWidth onClick={handleSignUp}>
