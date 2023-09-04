@@ -93,7 +93,6 @@ export function DashboardNavbar() {
         <div className="mr-auto md:mr-0 md:w-56">
             <Input label="Type here" onChange={handleInputChange}  value={searchText} />
         </div>
-
         <Button
             variant="solid"
             color="blue-gray"
