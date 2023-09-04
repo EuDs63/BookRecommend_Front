@@ -25,28 +25,34 @@ import {
   setOpenConfigurator,
   setOpenSidenav,
 } from "@/context";
-
+import { useUser } from "../../UserContext";
 export function DashboardNavbar() {
   const [controller, dispatch] = useMaterialTailwindController();
   const { fixedNavbar, openSidenav } = controller;
   const { pathname } = useLocation();
   const [layout, page] = pathname.split("/").filter((el) => el !== "");
-
+  const { isLoggedIn, setIsLoggedIn } = useUser(); // 使用useUser钩子来获取用户状态
+  const handleLogout = () => {
+    // 在用户点击登出按钮时更新用户状态
+    setIsLoggedIn(false);
+  };
   return (
     <Navbar
       color={fixedNavbar ? "white" : "transparent"}
-      className={`rounded-xl transition-all ${fixedNavbar
+      className={`rounded-xl transition-all ${
+        fixedNavbar
           ? "sticky top-4 z-40 py-3 shadow-md shadow-blue-gray-500/5"
           : "px-0 py-1"
-        }`}
+      }`}
       fullWidth
       blurred={fixedNavbar}
     >
       <div className="flex flex-col-reverse justify-between gap-6 md:flex-row md:items-center">
         <div className="capitalize">
           <Breadcrumbs
-            className={`bg-transparent p-0 transition-all ${fixedNavbar ? "mt-1" : ""
-              }`}
+            className={`bg-transparent p-0 transition-all ${
+              fixedNavbar ? "mt-1" : ""
+            }`}
           >
             <Link to={`/${layout}`}>
               <Typography
@@ -65,7 +71,7 @@ export function DashboardNavbar() {
               {page}
             </Typography>
           </Breadcrumbs>
-          <Typography variant="h6" color="blue-gray">
+          <Typography variant="h" color="blue-gray">
             {page}
           </Typography>
         </div>
@@ -81,7 +87,11 @@ export function DashboardNavbar() {
           >
             <Bars3Icon strokeWidth={3} className="h-6 w-6 text-blue-gray-500" />
           </IconButton>
-          <Link to="/auth/sign-in">
+          {isLoggedIn ? (
+            <button onClick={handleLogout}>userProfile</button>//简单的写一下
+          ) :
+
+          (<Link to="/auth/sign-in">
             <Button
               variant="text"
               color="blue-gray"
@@ -98,6 +108,7 @@ export function DashboardNavbar() {
               <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
             </IconButton>
           </Link>
+          )}
           <IconButton
             variant="text"
             color="blue-gray"
