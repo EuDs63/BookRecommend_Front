@@ -20,20 +20,41 @@ import {
 } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 import { ProfileInfoCard, BookCommentsCard } from "@/widgets/cards";
-import { bookDetailsData, recommendedBooksData, bookCommentsData} from "@/data";
+import {
+  bookDetailsData,
+  recommendedBooksData,
+  bookCommentsData,
+} from "@/data";
 import { bookInfo, commentInfo } from "@/utils/api";
 import React, { useState, useEffect } from "react";
-
+// const [bookDetailsData, setBookDetailsData] = useState(null);
+// const [recommendedBooksData, setRecommendedBooksData] = useState([]);
 
 //点击一个“详情”页面将给出Info_type=1,bookId=X;
 //经过推荐系统将返回四个bookId,Info_type=0;
-//需要在useEffect函数里fetch这4个bookId，Info_type=0;
 //需要在userEffect函数里fetch评论
 //useEffect函数需要四个操作:1. fetch一个详细信息 2. 推荐算法 3. fetch四个推荐信息 4. fectch评论
-export function handleGetBookDetailsData(){
-    bookInfo()
-}
+
 export function Profile() {
+  //   useEffect(() => {
+  //     // 使用 fetch 执行相同的请求
+  //     fetch(`/book/${book_id}/${info_type}`, {
+  //       method: "GET",
+  //     })
+  //       .then((response) => {
+  //         if (!response.ok) {
+  //           throw new Error("Network response was not ok");
+  //         }
+  //         return response.json(); // 解析 JSON 响应
+  //       })
+  //       .then((data) => {
+  //         // 处理获取的数据
+  //         console.log(data);
+  //       })
+  //       .catch((error) => {
+  //         console.error("There was a problem with the fetch operation:", error);
+  //       });
+  //   }, []); // 仅在组件挂载时加载数据
   return (
     <>
       <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url(https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80)] bg-cover	bg-center">
@@ -104,8 +125,9 @@ export function Profile() {
                 )
               )}
             </div>
-
-            {/* <div className="w-96">
+          </div>
+          {/*
+            <div className="w-96">
               <Tabs value="app">
                 <TabsHeader>
                   <Tab value="app">
@@ -122,27 +144,45 @@ export function Profile() {
                   </Tab>
                 </TabsHeader>
               </Tabs>
-            </div> */}
-          </div>
-          <div className="">
-            {bookDetailsData.length > 0 && ( // 确保数组不为空
-              <ProfileInfoCard
-                //                title="Profile Information"
-                //                description="Hi, I'm Alec Thompson, Decisions: If you can't decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
-                details={{
-                  出版社: bookDetailsData[0].publisher,
-                  ISBN: bookDetailsData[0].isbn,
-                  出版日期: bookDetailsData[0].publish_date,
-                  类别: bookDetailsData[0].category,
-                  页数: bookDetailsData[0].page_num,
-                }}
-                action={
-                  <Tooltip content="Edit Profile">
-                    <PencilIcon className="h-4 w-4 cursor-pointer text-blue-gray-500" />
-                  </Tooltip>
-                }
-              />
-            )}
+            </div>
+          </div> */}
+          <div className="flex">
+            <div className="flex-1">
+              {bookDetailsData.length > 0 && (
+                <ProfileInfoCard
+                  details={{
+                    出版社: bookDetailsData[0].publisher,
+                    ISBN: bookDetailsData[0].isbn,
+                    出版日期: bookDetailsData[0].publish_date,
+                    类别: bookDetailsData[0].category,
+                    页数: bookDetailsData[0].page_num,
+                  }}
+                  action={
+                    <Tooltip content="Edit Profile">
+                      <PencilIcon className="h-4 w-4 cursor-pointer text-blue-gray-500" />
+                    </Tooltip>
+                  }
+                />
+              )}
+            </div>
+            <div className="">
+              <Tabs value="app">
+                <TabsHeader>
+                  <Tab value="app">
+                    <HomeIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
+                    想看
+                  </Tab>
+                  <Tab value="message">
+                    <ChatBubbleLeftEllipsisIcon className="-mt-0.5 mr-2 inline-block h-5 w-5" />
+                    在看
+                  </Tab>
+                  <Tab value="settings">
+                    <Cog6ToothIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
+                    看过
+                  </Tab>
+                </TabsHeader>
+              </Tabs>
+            </div>
           </div>
           <div className="my-12"></div>{" "}
           {/* 使用 my-12 类来添加垂直间距，也可以根据需要调整数字部分 */}
@@ -167,7 +207,7 @@ export function Profile() {
                     <CardHeader
                       floated={false}
                       color="gray"
-                      className="mx-0 mt-0 mb-4 h-64 xl:h-40"
+                      className="aspect-w-4 aspect-h-3 relative mx-0 mt-0 mb-4 overflow-hidden"
                     >
                       <img
                         src={`https://images.weserv.nl/?url=${cover_image}`}

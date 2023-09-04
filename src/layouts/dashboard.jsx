@@ -42,6 +42,11 @@ export function Dashboard() {
       path: "/dashboard/notifactions",
       icon: ArrowRightOnRectangleIcon,
     },
+    {
+      name: "userProfile",
+      path: "/user/:userid",
+      icon: UserPlusIcon,
+    },
   ];
 
 

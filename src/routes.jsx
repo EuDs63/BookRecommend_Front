@@ -7,7 +7,7 @@ import {
   UserPlusIcon,
 } from "@heroicons/react/24/solid";
 import { DashBoard, Tables, Notifications } from "@/pages/dashboard";
-import {Profile} from "@/pages/profile";
+import {Profile, userProfile} from "@/pages/profile";
 import { SignIn, SignUp } from "@/pages/auth";
 
 const icon = {
@@ -22,7 +22,7 @@ export const routes = [
         icon: <UserCircleIcon {...icon} />,
         name: "homepage",
         path: "/home",
-        element: <Profile />,  
+        element: <Profile />,
       },
       {
         icon: <HomeIcon {...icon} />,
@@ -59,6 +59,18 @@ export const routes = [
         name: "sign up",
         path: "/sign-up",
         element: <SignUp />,
+      },
+    ],
+  },
+  {
+    title: "user pages",
+    layout: "user",
+    pages: [
+      {
+        icon: <UserPlusIcon {...icon} />,
+        name: "user profile",
+        path: "/user/:userid",
+        element: <userProfile />,
       },
     ],
   },
