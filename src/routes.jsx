@@ -7,7 +7,7 @@ import {
   UserPlusIcon,
 } from "@heroicons/react/24/solid";
 import { DashBoard, Tables, Notifications } from "@/pages/dashboard";
-import {Profile, userProfile} from "@/pages/profile";
+import {Profile, UserProfile} from "@/pages/profile";
 import { SignIn, SignUp } from "@/pages/auth";
 
 const icon = {
@@ -41,6 +41,12 @@ export const routes = [
         name: "notifactions",
         path: "/notifactions",
         element: <Notifications />,
+      },
+      {
+        icon: <UserPlusIcon {...icon} />,
+        name: "user profile",
+        path: "/:userid",
+        element: <UserProfile />,
       },
     ],
   },
