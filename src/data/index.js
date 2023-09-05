@@ -9,3 +9,7 @@ export * from "@/data/authors-table-data";
 export * from "@/data/book-details-data";
 export * from "@/data/recommended-books-data";
 export * from "@/data/book-comments-data";
+export * from "@/data/have-read-book-data";
+export * from "@/data/reading-book-data";
+export * from "@/data/will-read-book-data";
+export * from "@/data/user-profile-data";

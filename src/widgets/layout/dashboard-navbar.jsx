@@ -84,7 +84,7 @@ export function DashboardNavbar() {
               {page}
             </Typography>
           </Breadcrumbs>
-          <Typography variant="h" color="blue-gray">
+          <Typography variant="paragraph" color="blue-gray">
             {page}
           </Typography>
         </div>

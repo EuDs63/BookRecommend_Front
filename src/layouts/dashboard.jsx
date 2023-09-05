@@ -23,13 +23,13 @@ export function Dashboard() {
 
   const navbarRoutes = [
     {
-      name: "dashboard",
-      path: "/dashboard/dashboard",
+      name: "userMainPage",
+      path: "/dashboard/main",
       icon: ChartPieIcon,
     },
     {
       name: "profile",
-      path: "/home",
+      path: "/dashboard/home",
       icon: UserIcon,
     },
     {
@@ -45,6 +45,11 @@ export function Dashboard() {
     {
       name: "userProfile",
       path: "/dashboard/:userid",
+      icon: UserPlusIcon,
+    },
+    {
+      name: "userProfile",
+      path: "/dashboard/:userid/will-read",
       icon: UserPlusIcon,
     },
   ];
