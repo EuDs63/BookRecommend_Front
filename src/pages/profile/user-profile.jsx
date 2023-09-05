@@ -159,47 +159,11 @@ export function UserProfile() {
             </div>
           </div>
           <div>
-            <Routes>
-              <Route
-                path="/dashboard/:userid"
-                element={
-                  <React.Fragment>
-                    <BookFilter
-                      willReadBookNum={willReadBookNum}
-                      readingBookNum={readingBookNum}
-                      haveReadBookNum={haveReadBookNum}
-                    />
-                    {/* 其他路由 */}
-                  </React.Fragment>
-                }
-              />
-              <Switch>
-                <Route
-                  path="/dashboard/:userid/will-read"
-                  render={(props) => (
-                    <WillReadPage
-                      willReadBookData={willReadBookData}
-                      {...props}
-                    />
-                  )}
-                />
-                <Route
-                  path="/dashboard/:userid/currently-reading"
-                  render={(props) => (
-                    <ReadingPage readingBookData={readingBookData} {...props} />
-                  )}
-                />
-                <Route
-                  path="/dashboard/:userid/have-read"
-                  render={(props) => (
-                    <HaveReadPage
-                      haveReadBookData={haveReadBookData}
-                      {...props}
-                    />
-                  )}
-                />
-              </Switch>
-            </Routes>
+            <BookFilter
+              willReadBookNum={willReadBookNum}
+              readingBookNum={readingBookNum}
+              haveReadBookNum={haveReadBookNum}
+            />
           </div>
           <div>
             <div className="mb-4 border-b border-blue-gray-200 p-4 pb-4">
