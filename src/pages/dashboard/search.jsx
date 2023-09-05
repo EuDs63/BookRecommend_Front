@@ -20,7 +20,7 @@ import {
     }, [query]); 
     function getBookInfo()
     {
-        bookInfo(query,0).then((resp) => 
+        bookInfo(query,1).then((resp) => 
         {
             var code = resp.data['code'].toString();
             if (code === '0') {
@@ -31,12 +31,16 @@ import {
                 const bookimage = book.cover_image_url
                 const bookrate = book.rating_avg
                 const bookdes = book.description
+                const bookpublisher = book.publisher
+                const bookdate = book.publish_date
                 const book_info = {
                     bookauthor,
                     bookname,
                     bookimage,
                     bookrate,
                     bookdes,
+                    bookpublisher,
+                    bookdate,
                 }
                 console.log(book_info)
                 setBookInfoData(book_info);
@@ -48,40 +52,37 @@ import {
     }
 
     return (
-      <div className="mt-0  mb-8 flex flex-col gap-2" style={{ marginLeft: "35px" }}>
+      <div>
             <Typography variant="h6" color="black">
                搜索结果
             </Typography>
-        <Card style={{ overflow: "hidden", marginRight: "35px"}}>
+        <Card>
 
-          <CardBody className="overflow-x-scroll px-0 pt-0 pb-2 grid grid-cols-2 gap-4" style={{ overflow: "hidden", height: "210px", }}>
-            <div style={{ overflow: "hidden"}}>
-              <img src={`https://images.weserv.nl/?url=${bookInfoData.bookimage}`} className="h-48 w-36 rounded-lg shadow-lg shadow-blue-gray-500/40" style={{ marginLeft: "10px", marginTop: "8px" }}/>
-            </div>
-            <div style={{ marginTop: "10px"}}>
-              <Typography>书名：{bookInfoData.bookname}</Typography>
-              <Typography>作者：{bookInfoData.bookauthor}</Typography>
-              <Typography>评分：{bookInfoData.bookrate}</Typography>
-              <Typography>{bookInfoData.bookdes}{bookInfoData.bookdes}</Typography> 
+          <CardBody style={{ overflow: "hidden", height: "235px", display: "flex"}}>
+                <div>
+                    <img src={`https://images.weserv.nl/?url=${bookInfoData.bookimage}`} className="h-48 w-36 rounded-lg shadow-lg shadow-blue-gray-500/40"/>
+                </div>
+              <div style={{ marginLeft: "20px", flex: 1}}>
+                <div>
+                    <Typography style={{ color: "black", fontSize: "22px", fontWeight: "bold"}}>{bookInfoData.bookname}</Typography>
+                </div>
+                <div>
+                    <Typography>{bookInfoData.bookpublisher}</Typography>
+                </div>
+                <div>
+                    <Typography style={{ color: "blue"}}>{bookInfoData.bookauthor}</Typography>
+                </div>
+                <div style={{ display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 3, overflow: 'hidden' }}>
+                    <Typography>
+                    {bookInfoData.bookdes}
+                    </Typography>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'flex-end' }}> 
+                    <Typography>年:{bookInfoData.bookdate}&nbsp;&nbsp;&nbsp;&nbsp;评分:{bookInfoData.bookrate}/10.00</Typography>
+                </div>
             </div>
           </CardBody>
-
           <hr style={{ borderTop: "1px solid #ccc" }} /> {/* 分割横线 */}
-
-<CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
-  <div className="flex items-center">
-    <div>
-      <img src={`https://images.weserv.nl/?url=${bookInfoData.bookimage}`} className="h-48 w-36 rounded-lg shadow-lg shadow-blue-gray-500/40" style={{ flexShrink: 0, width: 200, marginLeft: "10px", marginTop: "8px"}}/>
-    </div>
-    <div className="ml-4"> {/* 使用ml-4来添加左边距 */}
-      <Typography>书名：{bookInfoData.bookname}</Typography>
-      <Typography>作者：{bookInfoData.bookauthor}</Typography>
-      <Typography>评分：{bookInfoData.bookrate}</Typography>
-      <Typography>{bookInfoData.bookdes}</Typography>
-    </div>
-  </div>
-</CardBody>
-
 
         </Card>
       </div>
