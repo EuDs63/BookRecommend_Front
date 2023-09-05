@@ -9,6 +9,9 @@ import {
 import { DashBoard, Tables, Notifications } from "@/pages/dashboard";
 import {Profile, UserProfile} from "@/pages/profile";
 import { SignIn, SignUp } from "@/pages/auth";
+import WillReadPage from "./pages/profile/willReadPage";
+import ReadingPage from "./pages/profile/readingPage";
+import HaveReadPage from "./pages/profile/haveReadPage";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -48,6 +51,24 @@ export const routes = [
         path: "/:userid",
         element: <UserProfile />,
       },
+      {
+        icon: <UserPlusIcon {...icon} />,
+        name: "WillReadPage",
+        path: "/:userid/will-read",
+        element: <WillReadPage />,
+      },
+      {
+        icon: <UserPlusIcon {...icon} />,
+        name: "ReadingPage",
+        path: "/:userid/currently-reading",
+        element: <ReadingPage />,
+      },
+      {
+        icon: <UserPlusIcon {...icon} />,
+        name: "HaveReadPage",
+        path: "/:userid/have-read",
+        element: <HaveReadPage />,
+      },
     ],
   },
   {
@@ -68,18 +89,18 @@ export const routes = [
       },
     ],
   },
-  {
-    title: "user pages",
-    layout: "user",
-    pages: [
-      {
-        icon: <UserPlusIcon {...icon} />,
-        name: "user profile",
-        path: "/user/:userid",
-        element: <userProfile />,
-      },
-    ],
-  },
+  //   {
+  //     title: "user pages",
+  //     layout: "user",
+  //     pages: [
+  //       {
+  //         icon: <UserPlusIcon {...icon} />,
+  //         name: "user profile",
+  //         path: "/user/:userid",
+  //         element: <userProfile />,
+  //       },
+  //     ],
+  //   },
 ];
 
 export default routes;

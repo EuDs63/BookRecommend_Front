@@ -47,6 +47,11 @@ export function Dashboard() {
       path: "/dashboard/:userid",
       icon: UserPlusIcon,
     },
+    {
+      name: "userProfile",
+      path: "/dashboard/:userid/will-read",
+      icon: UserPlusIcon,
+    },
   ];
 
 

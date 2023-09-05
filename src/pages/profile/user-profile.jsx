@@ -19,9 +19,11 @@ import {
   PencilIcon,
 } from "@heroicons/react/24/solid";
 import React, { useState, useEffect } from "react";
-import { Link, BrowserRouter, Route } from "react-router-dom";
+import { Link, BrowserRouter, Route, Routes } from "react-router-dom";
 import { ProfileInfoCard, MessageCard } from "@/widgets/cards";
-import { platformSettingsData, conversationsData, projectsData } from "@/data";
+import WillReadPage from "./willReadPage.jsx";
+import ReadingPage from "./readingPage.jsx";
+import HaveReadPage from "./haveReadPage.jsx";
 import {
   willReadBookData,
   readingBookData,
@@ -32,7 +34,7 @@ import {
 function BookFilter({ willReadBookNum, readingBookNum, haveReadBookNum }) {
   return (
     <div className="space-x-4">
-      <Link to="/want-to-read">
+      <Link to="/will-read">
         <button className="rounded-md bg-blue-500 py-2 px-4 text-white">
           <HomeIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
           想读 ({willReadBookNum} 本)
@@ -146,7 +148,7 @@ export function UserProfile() {
                             variant="paragraph"
                             className="font-normal text-blue-gray-600"
                           >
-                            "{register_time}加入了我们"
+                            "{register_time}加入"
                           </Typography>
                         </div>
                       </>
@@ -157,184 +159,70 @@ export function UserProfile() {
             </div>
           </div>
           <div>
-            <div className="space-x-4">
-              <button className="rounded-md bg-blue-500 py-2 px-4 text-white">
-                <HomeIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
-                想读 ({willReadBookNum} 本)
-              </button>
-              <button className="rounded-md bg-green-500 py-2 px-4 text-white">
-                <ChatBubbleLeftEllipsisIcon className="-mt-0.5 mr-2 inline-block h-5 w-5" />
-                在读 ({readingBookNum} 本)
-              </button>
-              <button className="rounded-md bg-yellow-500 py-2 px-4 text-white">
-                <Cog6ToothIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
-                读过 ({haveReadBookNum} 本)
-              </button>
-            </div>
-            <div>
-              <div className="mb-4 border-b border-blue-gray-200 p-4 pb-4">
-                <Typography variant="h4" className="mb-2 text-blue-gray-300">
-                  想读
-                </Typography>
-                <BookList books={willReadBookData.slice(0, 6)} />
-              </div>
-
-              <div className="mb-4 border-b border-blue-gray-200 p-4 pb-4">
-                <Typography variant="h4" className="mb-2 text-blue-gray-300">
-                  在读
-                </Typography>
-                <BookList books={readingBookData.slice(0, 6)} />
-              </div>
-
-              <div className="p-4">
-                <Typography variant="h4" className="mb-2 text-blue-gray-300">
-                  已读
-                </Typography>
-                <BookList books={haveReadBookData.slice(0, 6)} />
-              </div>
-            </div>
-
-            {/* <div>
-              <Typography variant="h6" color="blue-gray" className="mb-3">
-                Platform Settings
-              </Typography>
-              <div className="flex flex-col gap-12">
-                {platformSettingsData.map(({ title, options }) => (
-                  <div key={title}>
-                    <Typography className="mb-4 block text-xs font-semibold uppercase text-blue-gray-500">
-                      {title}
-                    </Typography>
-                    <div className="flex flex-col gap-6">
-                      {options.map(({ checked, label }) => (
-                        <Switch
-                          key={label}
-                          id={label}
-                          label={label}
-                          defaultChecked={checked}
-                          labelProps={{
-                            className: "text-sm font-normal text-blue-gray-500",
-                          }}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div> */}
-            {/* <ProfileInfoCard
-              title="Profile Information"
-              description="Hi, I'm Alec Thompson, Decisions: If you can't decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
-              details={{
-                "first name": "Alec M. Thompson",
-                mobile: "(44) 123 1234 123",
-                email: "alecthompson@mail.com",
-                location: "USA",
-                social: (
-                  <div className="flex items-center gap-4">
-                    <i className="fa-brands fa-facebook text-blue-700" />
-                    <i className="fa-brands fa-twitter text-blue-400" />
-                    <i className="fa-brands fa-instagram text-purple-500" />
-                  </div>
-                ),
-              }}
-              action={
-                <Tooltip content="Edit Profile">
-                  <PencilIcon className="h-4 w-4 cursor-pointer text-blue-gray-500" />
-                </Tooltip>
-              }
-            /> */}
-            {/* <div>
-              <Typography variant="h6" color="blue-gray" className="mb-3">
-                Platform Settings
-              </Typography>
-              <ul className="flex flex-col gap-6">
-                {conversationsData.map((props) => (
-                  <MessageCard
-                    key={props.name}
-                    {...props}
-                    action={
-                      <Button variant="text" size="sm">
-                        reply
-                      </Button>
-                    }
-                  />
-                ))}
-              </ul>
-            </div> */}
+            <Routes>
+              <Route
+                path="/dashboard/:userid"
+                element={
+                  <React.Fragment>
+                    <BookFilter
+                      willReadBookNum={willReadBookNum}
+                      readingBookNum={readingBookNum}
+                      haveReadBookNum={haveReadBookNum}
+                    />
+                    {/* 其他路由 */}
+                  </React.Fragment>
+                }
+              />
+              <Switch>
+                <Route
+                  path="/dashboard/:userid/will-read"
+                  render={(props) => (
+                    <WillReadPage
+                      willReadBookData={willReadBookData}
+                      {...props}
+                    />
+                  )}
+                />
+                <Route
+                  path="/dashboard/:userid/currently-reading"
+                  render={(props) => (
+                    <ReadingPage readingBookData={readingBookData} {...props} />
+                  )}
+                />
+                <Route
+                  path="/dashboard/:userid/have-read"
+                  render={(props) => (
+                    <HaveReadPage
+                      haveReadBookData={haveReadBookData}
+                      {...props}
+                    />
+                  )}
+                />
+              </Switch>
+            </Routes>
           </div>
-          {/* <div className="px-4 pb-4">
-            <Typography variant="h6" color="blue-gray" className="mb-2">
-              Projects
-            </Typography>
-            <Typography
-              variant="small"
-              className="font-normal text-blue-gray-500"
-            >
-              Architects design houses
-            </Typography>
-            <div className="mt-6 grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-4">
-              {projectsData.map(
-                ({ img, title, description, tag, route, members }) => (
-                  <Card key={title} color="transparent" shadow={false}>
-                    <CardHeader
-                      floated={false}
-                      color="gray"
-                      className="mx-0 mt-0 mb-4 h-64 xl:h-40"
-                    >
-                      <img
-                        src={img}
-                        alt={title}
-                        className="h-full w-full object-cover"
-                      />
-                    </CardHeader>
-                    <CardBody className="py-0 px-1">
-                      <Typography
-                        variant="small"
-                        className="font-normal text-blue-gray-500"
-                      >
-                        {tag}
-                      </Typography>
-                      <Typography
-                        variant="h5"
-                        color="blue-gray"
-                        className="mt-1 mb-2"
-                      >
-                        {title}
-                      </Typography>
-                      <Typography
-                        variant="small"
-                        className="font-normal text-blue-gray-500"
-                      >
-                        {description}
-                      </Typography>
-                    </CardBody>
-                    <CardFooter className="mt-6 flex items-center justify-between py-0 px-1">
-                      <Link to={route}>
-                        <Button variant="outlined" size="sm">
-                          view project
-                        </Button>
-                      </Link>
-                      <div>
-                        {members.map(({ img, name }, key) => (
-                          <Tooltip key={name} content={name}>
-                            <Avatar
-                              src={img}
-                              alt={name}
-                              size="xs"
-                              variant="circular"
-                              className={`cursor-pointer border-2 border-white ${
-                                key === 0 ? "" : "-ml-2.5"
-                              }`}
-                            />
-                          </Tooltip>
-                        ))}
-                      </div>
-                    </CardFooter>
-                  </Card>
-                )
-              )}
+          <div>
+            <div className="mb-4 border-b border-blue-gray-200 p-4 pb-4">
+              <Typography variant="h4" className="mb-2 text-blue-gray-300">
+                想读
+              </Typography>
+              <BookList books={willReadBookData.slice(0, 6)} />
             </div>
-          </div> */}
+
+            <div className="mb-4 border-b border-blue-gray-200 p-4 pb-4">
+              <Typography variant="h4" className="mb-2 text-blue-gray-300">
+                在读
+              </Typography>
+              <BookList books={readingBookData.slice(0, 6)} />
+            </div>
+
+            <div className="p-4">
+              <Typography variant="h4" className="mb-2 text-blue-gray-300">
+                已读
+              </Typography>
+              <BookList books={haveReadBookData.slice(0, 6)} />
+            </div>
+          </div>
         </CardBody>
       </Card>
     </>
