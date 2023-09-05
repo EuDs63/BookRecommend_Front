@@ -6,7 +6,7 @@ import {
   ArrowRightOnRectangleIcon,
   UserPlusIcon,
 } from "@heroicons/react/24/solid";
-import {Profile, UserProfile} from "@/pages/profile";
+import { Profile, UserMainPage, UserProfile } from "@/pages/profile";
 import { DashBoard, Tables, Notifications, Search } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
 import WillReadPage from "./pages/profile/willReadPage";
@@ -68,10 +68,24 @@ export const routes = [
         name: "HaveReadPage",
         path: "/:userid/have-read",
         element: <HaveReadPage />,
+      },
+      {
         icon: <BellIcon {...icon} />,
         name: "search",
         path: "/search",
         element: <Search />,
+      },
+      {
+        icon: <BellIcon {...icon} />,
+        name: "search",
+        path: "/search",
+        element: <Search />,
+      },
+      {
+        icon: <BellIcon {...icon} />,
+        name: "userMainPage",
+        path: "/main",
+        element: <UserMainPage />,
       },
     ],
   },

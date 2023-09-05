@@ -63,7 +63,7 @@ function BookList({ books }) {
       {/* 添加 justify-between 类 */}
       {books.map((book, index) => (
         <div key={index} className="flex flex-col items-center">
-          <Link to={`/book/${book.id}`}>
+          <Link to={`/dashboard/home?query=${book.id}`}>
             <img
               src={`https://images.weserv.nl/?url=${book.cover_image}`}
               alt={book.title}
