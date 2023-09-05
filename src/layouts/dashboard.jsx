@@ -23,12 +23,12 @@ export function Dashboard() {
 
   const navbarRoutes = [
     {
-      name: "userMainPage",
+      name: "首页",
       path: "/dashboard/main",
       icon: ChartPieIcon,
     },
     {
-      name: "profile",
+      name: "图书详情页",
       path: "/dashboard/home",
       icon: UserIcon,
     },
@@ -43,12 +43,12 @@ export function Dashboard() {
       icon: ArrowRightOnRectangleIcon,
     },
     {
-      name: "userProfile",
+      name: "个人主页",
       path: "/dashboard/:userid",
       icon: UserPlusIcon,
     },
     {
-      name: "userProfile",
+      name: "想读",
       path: "/dashboard/:userid/will-read",
       icon: UserPlusIcon,
     },
