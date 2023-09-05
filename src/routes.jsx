@@ -6,8 +6,8 @@ import {
   ArrowRightOnRectangleIcon,
   UserPlusIcon,
 } from "@heroicons/react/24/solid";
-import { DashBoard, Tables, Notifications } from "@/pages/dashboard";
 import {Profile, UserProfile} from "@/pages/profile";
+import { DashBoard, Tables, Notifications, Search } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
 
 const icon = {
@@ -47,6 +47,12 @@ export const routes = [
         name: "user profile",
         path: "/:userid",
         element: <UserProfile />,
+      },
+      {
+        icon: <BellIcon {...icon} />,
+        name: "search",
+        path: "/search",
+        element: <Search />,
       },
     ],
   },
