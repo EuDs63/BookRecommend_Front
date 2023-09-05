@@ -33,16 +33,6 @@ export function Dashboard() {
       icon: UserIcon,
     },
     {
-      name: "tables",
-      path: "/dashboard/tables",
-      icon: ArrowRightOnRectangleIcon,
-    },
-    {
-      name: "notifications",
-      path: "/dashboard/notifactions",
-      icon: ArrowRightOnRectangleIcon,
-    },
-    {
       name: "个人主页",
       path: "/dashboard/:userid",
       icon: UserPlusIcon,
@@ -52,6 +42,11 @@ export function Dashboard() {
       path: "/dashboard/:userid/will-read",
       icon: UserPlusIcon,
     },
+    {
+      name: "游客首页",
+      path: "/tourist/main",
+      icon: UserPlusIcon,
+    }
   ];
 
 
