@@ -18,7 +18,7 @@ import {
   Cog6ToothIcon,
   PencilIcon,
 } from "@heroicons/react/24/solid";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ProfileInfoCard, BookCommentsCard } from "@/widgets/cards";
 import {
   bookDetailsData,
@@ -26,7 +26,9 @@ import {
   bookCommentsData,
 } from "@/data";
 import { bookInfo, commentInfo } from "@/utils/api";
+
 import React, { useState, useEffect } from "react";
+
 // const [bookDetailsData, setBookDetailsData] = useState(null);
 // const [recommendedBooksData, setRecommendedBooksData] = useState([]);
 
@@ -36,6 +38,48 @@ import React, { useState, useEffect } from "react";
 //useEffect函数需要四个操作:1. fetch一个详细信息 2. 推荐算法 3. fetch四个推荐信息 4. fectch评论
 
 export function Profile() {
+    const [bookInfoData, setBookInfoData] = useState("");
+    const navigate = useNavigate();
+    const handleDetailsClick = () => {
+      navigate(`/dashboard/home?query=${bookInfoData.book_id}`);
+    };
+     const { bookProfile } = useLocation();
+     const queryParams = new URLSearchParams(bookProfile);
+     const query = queryParams.get("query") || 100;
+
+     useEffect(() => {
+       // 在组件加载后执行的代码
+       getBookInfo();
+     }, [query]);
+     function getBookInfo() {
+       bookInfo(query, 1).then((resp) => {
+         var code = resp.data["code"].toString();
+         if (code === "0") {
+           console.log("success");
+           const book = resp.data["book"];
+           const bookauthor = book.author;
+           const bookname = book.title;
+           const bookimage = book.cover_image_url;
+           const bookrate = book.rating_avg;
+           const bookdes = book.description;
+           const bookpublisher = book.publisher;
+           const bookdate = book.publish_date;
+           const book_info = {
+             bookauthor,
+             bookname,
+             bookimage,
+             bookrate,
+             bookdes,
+             bookpublisher,
+             bookdate,
+           };
+           console.log(book_info);
+           setBookInfoData(book_info);
+         } else {
+           console.log("fail");
+         }
+       });
+     }
   //   useEffect(() => {
   //     // 使用 fetch 执行相同的请求
   //     fetch(`/book/${book_id}/${info_type}`, {
@@ -126,26 +170,6 @@ export function Profile() {
               )}
             </div>
           </div>
-          {/*
-            <div className="w-96">
-              <Tabs value="app">
-                <TabsHeader>
-                  <Tab value="app">
-                    <HomeIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
-                    想看
-                  </Tab>
-                  <Tab value="message">
-                    <ChatBubbleLeftEllipsisIcon className="-mt-0.5 mr-2 inline-block h-5 w-5" />
-                    在看
-                  </Tab>
-                  <Tab value="settings">
-                    <Cog6ToothIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
-                    看过
-                  </Tab>
-                </TabsHeader>
-              </Tabs>
-            </div>
-          </div> */}
           <div className="flex">
             <div className="flex-1">
               {bookDetailsData.length > 0 && (
@@ -238,11 +262,9 @@ export function Profile() {
                     </CardBody>
                     <CardFooter className="mt-6 flex items-center justify-between py-0 px-1">
                       <div className="flex items-center justify-between">
-                        <Link to={route}>
-                          <Button variant="outlined" size="sm">
+                          <Button variant="outlined" size="sm" onClick={handleDetailsClick}>
                             查看详情
                           </Button>
-                        </Link>
                         <div>
                           {members.map(({ img, name }, key) => (
                             <Tooltip key={name} content={name}>
