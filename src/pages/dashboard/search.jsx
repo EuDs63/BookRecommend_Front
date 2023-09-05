@@ -48,24 +48,42 @@ import {
     }
 
     return (
-      <div className="mt-12 mb-8 flex flex-col gap-12">
-        <Card>
-          <CardHeader variant="gradient" color="blue" className="mb-8 p-6">
-            <Typography variant="h6" color="white">
-              搜索结果
+      <div className="mt-0  mb-8 flex flex-col gap-2" style={{ marginLeft: "35px" }}>
+            <Typography variant="h6" color="black">
+               搜索结果
             </Typography>
-          </CardHeader>
-          <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
-            <div>
-              <img src={`https://images.weserv.nl/?url=${bookInfoData.bookimage}`} className="h-48 w-36 rounded-lg shadow-lg shadow-blue-gray-500/40"/>
-              <Typography>作者：{bookInfoData.bookauthor}</Typography>
+        <Card style={{ overflow: "hidden", marginRight: "35px"}}>
+
+          <CardBody className="overflow-x-scroll px-0 pt-0 pb-2 grid grid-cols-2 gap-4" style={{ overflow: "hidden", height: "210px", }}>
+            <div style={{ overflow: "hidden"}}>
+              <img src={`https://images.weserv.nl/?url=${bookInfoData.bookimage}`} className="h-48 w-36 rounded-lg shadow-lg shadow-blue-gray-500/40" style={{ marginLeft: "10px", marginTop: "8px" }}/>
+            </div>
+            <div style={{ marginTop: "10px"}}>
               <Typography>书名：{bookInfoData.bookname}</Typography>
+              <Typography>作者：{bookInfoData.bookauthor}</Typography>
               <Typography>评分：{bookInfoData.bookrate}</Typography>
-              <Typography>{bookInfoData.bookdes}</Typography>
+              <Typography>{bookInfoData.bookdes}{bookInfoData.bookdes}</Typography> 
             </div>
           </CardBody>
+
+          <hr style={{ borderTop: "1px solid #ccc" }} /> {/* 分割横线 */}
+
+<CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
+  <div className="flex items-center">
+    <div>
+      <img src={`https://images.weserv.nl/?url=${bookInfoData.bookimage}`} className="h-48 w-36 rounded-lg shadow-lg shadow-blue-gray-500/40" style={{ flexShrink: 0, width: 200, marginLeft: "10px", marginTop: "8px"}}/>
+    </div>
+    <div className="ml-4"> {/* 使用ml-4来添加左边距 */}
+      <Typography>书名：{bookInfoData.bookname}</Typography>
+      <Typography>作者：{bookInfoData.bookauthor}</Typography>
+      <Typography>评分：{bookInfoData.bookrate}</Typography>
+      <Typography>{bookInfoData.bookdes}</Typography>
+    </div>
+  </div>
+</CardBody>
+
+
         </Card>
-        
       </div>
     );
   }
