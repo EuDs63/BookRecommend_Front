@@ -77,7 +77,7 @@ import {
                     {bookInfoData.bookdes}
                     </Typography>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'flex-end' }}> 
+                <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: "0px"}}> 
                     <Typography>年:{bookInfoData.bookdate}&nbsp;&nbsp;&nbsp;&nbsp;评分:{bookInfoData.bookrate}/10.00</Typography>
                 </div>
             </div>
