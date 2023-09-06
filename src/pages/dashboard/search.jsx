@@ -24,52 +24,6 @@ import {
         getSearchBookInfo();
         setCurrentPage(1);
     }, [query]); 
-   
-    function getCategoryBookInfo()
-    {
-        getcategorybookInfo(1,currentPage,10).then((resp)=>
-            {
-                var code = resp.data['code'].toString();
-                if (code === '0') {
-                    console.log("success!");
-                    const books = resp.data['books'];
-                    const totalPages = resp.data['total_pages'];
-                    const totalRecords = resp.data['total_records']
-                    const bookData = [];
-                    books.forEach(book => {
-                        const author = book.author
-                        const book_id = book.book_id
-                        const image = book.cover_image_url
-                        const des = book.description
-                        const rate = book.rating_avg
-                        const name = book.title
-                        const publisher = book.publisher
-                        const date = book.publish_date
-                        const bookObj = {
-                            author,
-                            book_id,
-                            image,
-                            des,
-                            rate,
-                            name,
-                            publisher,
-                            date,
-                        }
-                        bookData.push(bookObj)
-                    });
-                    console.log(bookData)
-                    console.log(totalPages)
-                    console.log(totalRecords)
-                    setBookInfoData(bookData)
-                    setTotalPages(totalPages)
-                    setTotalRecords(totalRecords)
-                }
-                else{
-                    console.log("fail!");
-                }
-            }
-        )
-    }
     function getSearchBookInfo()
     {
         booksearch(query,currentPage,10,1).then((resp)=>
