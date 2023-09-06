@@ -8,22 +8,23 @@ import {
     Tabs,
     TabsHeader,
     Tab,
-    Switch,
-    Tooltip,
     Button,
     Input,
-    Checkbox,
+    avatar,
 } from "@material-tailwind/react";
 import {
     HomeIcon,
     ChatBubbleLeftEllipsisIcon,
     Cog6ToothIcon,
-    PencilIcon,
 } from "@heroicons/react/24/solid";
-import { Link } from "react-router-dom";
-import { ProfileInfoCard } from "@/widgets/cards";
+import { useUser } from "../../UserContext";
+import service from "@/utils/service";
 
 export function Setting() {
+    const { isLoggedIn, user, logout } = useUser(); // 使用useUser钩子来获取用户状态
+    const avatar_url = service.baseURL+'/'+user.avatar_path;
+
+
     return (
         <>
             <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url(https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80)] bg-cover	bg-center">
@@ -41,13 +42,13 @@ export function Setting() {
                             />
                             <div>
                                 <Typography variant="h5" color="blue-gray" className="mb-1">
-                                    Richard Davis
+                                    {user.username}
                                 </Typography>
                                 <Typography
                                     variant="small"
                                     className="font-normal text-blue-gray-600"
                                 >
-                                    CEO / Co-Founder
+                                    {avatar_url}
                                 </Typography>
                             </div>
                         </div>
