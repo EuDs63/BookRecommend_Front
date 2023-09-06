@@ -94,9 +94,9 @@ export function DashboardNavbar() {
             <Input label="Type here" onChange={handleInputChange}  value={searchText} />
         </div>
         <Button
-            variant="solid"
+            variant="filled"
             color="blue-gray"
-            className="hidden md:flex"
+            className="hidden md:flex ml-2"
             onClick={handleSearchClick}
         >
             搜索
