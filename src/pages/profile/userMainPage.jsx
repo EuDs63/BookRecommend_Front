@@ -1,14 +1,7 @@
 import React from "react";
 import { Typography } from "@material-tailwind/react";
-import { Carousel, IconButton } from "@material-tailwind/react";
-import { Button, IconButton } from "@material-tailwind/react";
+import { Carousel, IconButton,Button } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
-import {
-  HomeIcon,
-  ChatBubbleLeftEllipsisIcon,
-  Cog6ToothIcon,
-  PencilIcon,
-} from "@heroicons/react/24/solid";
 import {
   ClockIcon,
   CheckIcon,
