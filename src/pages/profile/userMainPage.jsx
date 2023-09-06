@@ -36,18 +36,28 @@ import {
   willReadBookData,
   readingBookData,
   haveReadBookData,
+  bookCommentsData,
   recommendedBooksData,
 } from "@/data";
+import { ProfileInfoCard, BookCommentsCard } from "@/widgets/cards";
 import { useState, useEffect } from "react";
 
-export function CarouselDefault() {
-  return (
-    <Carousel className="rounded-xl">
-        
-    </Carousel>
-  );
-}
 export function UserMainPage() {
+  function CarouselDefault() {
+    return <Carousel className="rounded-xl"></Carousel>;
+  }
+  const [newCultureData, setnewCultureData] = useState();
+  const [newLiteratureData, setnewLiteratureData] = useState();
+  const [newPopularScienceData, setnewPopularScienceData] = useState();
+  const [newPopularityData, setnewPopularityData] = useState();
+  const [newTechnologyData, setnewTechnologyData] = useState();
+  const [newManagementData, setnewManagementData] = useState();
+  const [concernCultureData, setConcernCultureData] = useState();
+  const [concernLiteratureData, setConcernLiteratureData] = useState();
+  const [concernPopularScienceData, setConcernPopularScienceData] = useState();
+  const [concernPopularityData, setConcernPopularityData] = useState();
+  const [concernTechnologyData, setConcernTechnologyData] = useState();
+  const [concernManagementData, setConcernManagementData] = useState();
   function BookList({ books }) {
     return (
       <div className="flex justify-between space-x-4">
@@ -109,9 +119,9 @@ export function UserMainPage() {
         <div className="mx-1"></div>
         <div
           className={`cursor-pointer ${
-            tab === "popular" ? "font-bold text-black" : "text-gray-500"
+            tab === "popularity" ? "font-bold text-black" : "text-gray-500"
           }`}
-          onClick={() => onTabClick("popular")}
+          onClick={() => onTabClick("popularity")}
         >
           流行
         </div>
@@ -167,7 +177,6 @@ export function UserMainPage() {
         )}
         {/* 添加其他标签对应的内容 */}
       </div>
-
       <div className="mb-4 border-b border-blue-gray-200 p-4 pb-4 shadow-md">
         <div className="flex items-center">
           <Typography
@@ -186,12 +195,30 @@ export function UserMainPage() {
         {/* 使用 my-12 类来添加垂直间距，也可以根据需要调整数字部分 */}
         <BookList books={recommendedBooksData.slice(0, 6)} />
       </div>
-
       <div className="p-4 shadow-md">
         <Typography variant="h4" className="mb-2 font-bold text-blue-gray-300">
           猜你想看
         </Typography>
         <BookList books={recommendedBooksData.slice(0, 6)} />
+      </div>
+      <div className="my-12"></div>{" "}
+      {/* 使用 my-12 类来添加垂直间距，也可以根据需要调整数字部分 */}
+      <div>
+        <Typography variant="h4" color="blue-gray" className="mb-3">
+          热门评论
+        </Typography>
+        <ul className="flex flex-col gap-10">
+          {bookCommentsData.map((props, index) => (
+            <div className="max-h-50 w-full overflow-y-auto">
+              <div key={props.comment_id} className="mb-4">
+                <BookCommentsCard {...props} />
+                {index < bookCommentsData.length - 1 && (
+                  <hr className="mt-4 border-t border-gray-300" />
+                )}
+              </div>
+            </div>
+          ))}
+        </ul>
       </div>
     </div>
   );
