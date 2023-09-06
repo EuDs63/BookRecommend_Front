@@ -1,4 +1,6 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState,useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import { updateUser,updateLoginStatus } from './userActions';
 
 // 创建一个Context对象
 const UserContext = createContext();
@@ -15,9 +17,24 @@ export function UserProvider({ children }) {
     username: ""
   });
 
+  // 从 Redux 中获取状态
+  const reduxUser = useSelector(state => state.user);
+  const dispatch = useDispatch();
+
+  // 同步 Redux 中的用户信息到本地状态
+  useEffect(() => {
+    setUser(reduxUser);
+    setIsLoggedIn(reduxUser.isLoggedIn);
+  }, [reduxUser]);
+
   const login = (userData) => {
     setUser({ ...userData });
     setIsLoggedIn(true);
+
+    // 更新 Redux 状态
+    dispatch(updateUser(userData));
+    dispatch(updateLoginStatus(true));
+    //dispatch(setIsLoggedIn(true));
   };
 
   const logout = () => {
@@ -29,10 +46,21 @@ export function UserProvider({ children }) {
       username: ""
     });
     setIsLoggedIn(false);
+
+    // 清除 Redux 状态
+    dispatch(updateUser({ // 清除用户信息
+      avatar_path: "static/avatar/default.png",
+      is_admin: false,
+      register_time: "",
+      user_id: null,
+      username: ""
+    }));
+    dispatch(updateLoginStatus(false)); // 更新登录状态
+    //dispatch(setIsLoggedIn(false));
   };
 
   return (
-    <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn,user,login,logout }}>
+    <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn, user, login, logout }}>
       {children}
     </UserContext.Provider>
   );

@@ -6,16 +6,25 @@ import { ThemeProvider } from "@material-tailwind/react";
 import { MaterialTailwindControllerProvider } from "@/context";
 import "../public/css/tailwind.css";
 import { UserProvider } from "./UserContext";
+import { Provider } from 'react-redux'; // 导入 Provider
+import { PersistGate } from 'redux-persist/integration/react'; // 导入 PersistGate
+import { store, persistor } from './store'; // 导入 Redux store 和 persistor
+
+
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <UserProvider>
-    <React.StrictMode>
-      <BrowserRouter>
-        <ThemeProvider>
-          <MaterialTailwindControllerProvider>
-            <App />
-          </MaterialTailwindControllerProvider>
-        </ThemeProvider>
-      </BrowserRouter>
-    </React.StrictMode>
-  </UserProvider>
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <UserProvider>
+        <React.StrictMode>
+          <BrowserRouter>
+            <ThemeProvider>
+              <MaterialTailwindControllerProvider>
+                <App />
+              </MaterialTailwindControllerProvider>
+            </ThemeProvider>
+          </BrowserRouter>
+        </React.StrictMode>
+      </UserProvider>
+    </PersistGate>
+  </Provider>
 );
