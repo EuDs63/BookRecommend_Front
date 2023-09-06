@@ -34,16 +34,15 @@ export function UserProvider({ children }) {
     // 更新 Redux 状态
     dispatch(updateUser(userData));
     dispatch(updateLoginStatus(true));
-    //dispatch(setIsLoggedIn(true));
   };
 
   const logout = () => {
     setUser({
-      avatar_path: "static/avatar/default.png",
-      is_admin: false,
-      register_time: "",
-      user_id: null,
-      username: ""
+      isLoggedIn: false, // 用户登录状态，默认为未登录
+      user_id: null,      // 用户ID
+      username: '',      // 用户名
+      avatar_path: '',    // 头像路径
+      register_time: "",  // 注册时间
     });
     setIsLoggedIn(false);
 
@@ -53,10 +52,9 @@ export function UserProvider({ children }) {
       is_admin: false,
       register_time: "",
       user_id: null,
-      username: ""
+      username: "",
     }));
     dispatch(updateLoginStatus(false)); // 更新登录状态
-    //dispatch(setIsLoggedIn(false));
   };
 
   return (

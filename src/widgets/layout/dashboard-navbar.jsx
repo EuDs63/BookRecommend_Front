@@ -30,6 +30,8 @@ export function DashboardNavbar() {
     // 在用户点击登出按钮时更新用户状态
     setIsLoggedIn(false);
     navigate(`/tourist/main`);
+
+    logout();
   };
 
   const navigate = useNavigate();
