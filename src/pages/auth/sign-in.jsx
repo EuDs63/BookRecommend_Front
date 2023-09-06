@@ -18,12 +18,9 @@ export function SignIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { isLoggedIn, setIsLoggedIn } = useUser(); // 使用useUser钩子来获取用户状态
-  const handleLogout = () => {
-    // 在用户点击登出按钮时更新用户状态
-    setIsLoggedIn(false);
-  };
+
   const handleSignInContext = () => {
-    // 在用户点击登出按钮时更新用户状态
+    // 更新用户状态
     setIsLoggedIn(true);
   };
   const navigateTo = useNavigate();
@@ -38,7 +35,6 @@ export function SignIn() {
       var message = resp.data["msg"];
       console.log(message);
       if (code === "0") {
-        //getUserInfo(form.email);
         alert(message);
         navigateTo("/home");
         handleSignInContext();
