@@ -1,22 +1,8 @@
 import React from "react";
-import {
-  Typography,
-  Tab,
-  Tabs,
-  TabsHeader,
-  Card,
-  CardHeader,
-  CardBody,
-  IconButton,
-  Menu,
-  MenuHandler,
-  MenuList,
-  MenuItem,
-  Avatar,
-  Tooltip,
-  Progress,
-  Carousel,
-} from "@material-tailwind/react";
+import { Typography } from "@material-tailwind/react";
+import { Carousel, IconButton } from "@material-tailwind/react";
+import { Button, IconButton } from "@material-tailwind/react";
+import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import {
   HomeIcon,
   ChatBubbleLeftEllipsisIcon,
@@ -36,41 +22,118 @@ import {
   willReadBookData,
   readingBookData,
   haveReadBookData,
+  bookCommentsData,
   recommendedBooksData,
 } from "@/data";
+import { ProfileInfoCard, BookCommentsCard } from "@/widgets/cards";
 import { useState, useEffect } from "react";
-
-export function CarouselDefault() {
-  return (
-    <Carousel className="rounded-xl">
-        
-    </Carousel>
-  );
-}
+import { getcategorybookInfo } from "@/utils/api";
 export function UserMainPage() {
+  useEffect(() => {
+    getCategoryBookInfo(1, setnewLiteratureData);
+    getCategoryBookInfo(2, setnewPopularityData);
+    getCategoryBookInfo(3, setnewCultureData);
+    getCategoryBookInfo(4, setnewLifeData);
+    getCategoryBookInfo(5, setnewManagementData);
+    getCategoryBookInfo(6, setnewTechnologyData);
+    // 继续添加其他范围和对应的数据更新函数
+  }, []);
+  function getCategoryBookInfo(range, setDataFunction) {
+    getcategorybookInfo(range, 5, 6, 1).then((resp) => {
+      var code = resp.data["code"].toString();
+      if (code === "0") {
+        console.log("success!");
+        setDataFunction(resp.data["books"]);
+        console.log(resp.data["books"]);
+      } else {
+        console.log("fail!");
+      }
+    });
+  }
+
+  function generateContent(selectedTab) {
+    const tabs = [
+      "culture",
+      "literature",
+      "life",
+      "popularity",
+      "technology",
+      "management",
+    ];
+    const dataSets = [
+      { data: newCultureData, setter: setnewCultureData },
+      { data: newLiteratureData, setter: setnewLiteratureData },
+      { data: newLifeData, setter: setnewLifeData },
+      { data: newPopularityData, setter: setnewPopularityData },
+      { data: newTechnologyData, setter: setnewTechnologyData },
+      { data: newManagementData, setter: setnewManagementData },
+    ];
+    const index = tabs.indexOf(selectedTab);
+    if (index !== -1) {
+      const { data, setter } = dataSets[index];
+      return (
+        <div>
+          {Array.from({ length: 5 }, (_, i) => (
+            <BookList key={i} books={data.slice(i * 6, (i + 1) * 6)} />
+          ))}
+        </div>
+      );
+    }
+    return null;
+  }
+
+  function CarouselDefault({ selectedTab }) {
+    const content = generateContent(selectedTab);
+    return <Carousel className="rounded-xl">{content}</Carousel>;
+  }
+
+  const [newCultureData, setnewCultureData] = useState([]);
+  const [newLiteratureData, setnewLiteratureData] = useState([]);
+  const [newLifeData, setnewLifeData] = useState([]);
+  const [newPopularityData, setnewPopularityData] = useState([]);
+  const [newTechnologyData, setnewTechnologyData] = useState([]);
+  const [newManagementData, setnewManagementData] = useState([]);
+  const [concernCultureData, setConcernCultureData] = useState([]);
+  const [concernLiteratureData, setConcernLiteratureData] = useState([]);
+  const [concernLifeData, setConcernLifeData] = useState([]);
+  const [concernPopularityData, setConcernPopularityData] = useState([]);
+  const [concernTechnologyData, setConcernTechnologyData] = useState([]);
+  const [concernManagementData, setConcernManagementData] = useState([]);
   function BookList({ books }) {
     return (
       <div className="flex justify-between space-x-4">
-        {" "}
-        {/* 添加 justify-between 类 */}
         {books.map((book, index) => (
           <div key={index} className="flex flex-col items-center">
-            <Link to={`/dashboard/home?query=${book.id}`}>
+            <Link to={`/dashboard/home?query=${book.book_id}`}>
               <img
-                src={`https://images.weserv.nl/?url=${book.cover_image}`}
+                src={`https://images.weserv.nl/?url=${book.cover_image_url}`}
                 alt={book.title}
                 className="h-40 w-32 rounded-md"
               />
             </Link>
             <Typography variant="h5" color="gray-500" className="mt-1 mb-2">
-              {book.title}
+              <span
+                className="max-w-xs overflow-hidden truncate whitespace-nowrap"
+                title={book.title} // 鼠标悬浮时显示完整文本
+              >
+                {book.title.length > 5
+                  ? book.title.substr(0, 5) + "..."
+                  : book.title}
+              </span>
             </Typography>
             <Typography
               variant="small"
               color="gray-500"
               className="mt-1 mb-2 font-[YourChosenFont]"
             >
-              {book.author}
+              <span
+                className="max-w-xs overflow-hidden truncate whitespace-nowrap"
+                title={book.author} // 鼠标悬浮时显示完整文本
+              >
+                {book.author.length > 10
+                  ? book.author.substr(0, 5) + "..."
+                  : book.author}
+              </span>
             </Typography>
           </div>
         ))}
@@ -100,18 +163,18 @@ export function UserMainPage() {
         <div className="mx-1"></div>
         <div
           className={`cursor-pointer ${
-            tab === "popular science" ? "font-bold text-black" : "text-gray-500"
+            tab === "life" ? "font-bold text-black" : "text-gray-500"
           }`}
-          onClick={() => onTabClick("popular science")}
+          onClick={() => onTabClick("life")}
         >
-          科普
+          生活
         </div>
         <div className="mx-1"></div>
         <div
           className={`cursor-pointer ${
-            tab === "popular" ? "font-bold text-black" : "text-gray-500"
+            tab === "popularity" ? "font-bold text-black" : "text-gray-500"
           }`}
-          onClick={() => onTabClick("popular")}
+          onClick={() => onTabClick("popularity")}
         >
           流行
         </div>
@@ -159,15 +222,9 @@ export function UserMainPage() {
         <div className="my-3"></div>{" "}
         {/* 使用 my-12 类来添加垂直间距，也可以根据需要调整数字部分 */}
         {/* 根据选中的标签显示不同的内容 */}
-        {selectedTab === "culture" && (
-          <BookList books={recommendedBooksData.slice(0, 6)} />
-        )}
-        {selectedTab === "literature" && (
-          <BookList books={willReadBookData.slice(0, 6)} />
-        )}
+        <CarouselDefault selectedTab={selectedTab} />
         {/* 添加其他标签对应的内容 */}
       </div>
-
       <div className="mb-4 border-b border-blue-gray-200 p-4 pb-4 shadow-md">
         <div className="flex items-center">
           <Typography
@@ -186,12 +243,30 @@ export function UserMainPage() {
         {/* 使用 my-12 类来添加垂直间距，也可以根据需要调整数字部分 */}
         <BookList books={recommendedBooksData.slice(0, 6)} />
       </div>
-
       <div className="p-4 shadow-md">
         <Typography variant="h4" className="mb-2 font-bold text-blue-gray-300">
           猜你想看
         </Typography>
         <BookList books={recommendedBooksData.slice(0, 6)} />
+      </div>
+      <div className="my-12"></div>{" "}
+      {/* 使用 my-12 类来添加垂直间距，也可以根据需要调整数字部分 */}
+      <div>
+        <Typography variant="h4" color="blue-gray" className="mb-3">
+          热门评论
+        </Typography>
+        <ul className="flex flex-col gap-1">
+          {bookCommentsData.map((props, index) => (
+            <div className="max-h-50 w-full overflow-y-auto">
+              <div key={props.comment_id} className="mb-4">
+                <BookCommentsCard {...props} />
+                {/* {index < bookCommentsData.length - 1 && (
+                  <hr className="mt-4 border-t border-gray-300" />
+                )} */}
+              </div>
+            </div>
+          ))}
+        </ul>
       </div>
     </div>
   );

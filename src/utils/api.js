@@ -61,14 +61,15 @@ export function bookInfo(book_id, info_type){
     })
 }
 
-export function getcategorybookInfo(category_id, page, per_page){
+export function getcategorybookInfo(category_id, page, per_page, order=0){
     return service({
         url:`/book/category`,
         method: 'get',
         params: {
             category_id: category_id,
             page: page,
-            per_page: per_page
+            per_page: per_page,
+            order: order,
         }
     })
 }
@@ -89,7 +90,7 @@ export function booksearch(keyword, page, per_page, method)
 
 export function commentInfo(){
     return service({
-        
+
     })
 }
 
