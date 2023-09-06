@@ -32,7 +32,7 @@ export function DashboardNavbar() {
   const { fixedNavbar, openSidenav } = controller;
   const { pathname } = useLocation();
   const [layout, page] = pathname.split("/").filter((el) => el !== "");
-  const { isLoggedIn, setIsLoggedIn } = useUser(); // 使用useUser钩子来获取用户状态
+  const { isLoggedIn, setIsLoggedIn,user } = useUser(); // 使用useUser钩子来获取用户状态
   
   const handleLogout = () => {
     // 在用户点击登出按钮时更新用户状态
@@ -118,7 +118,7 @@ export function DashboardNavbar() {
                 className="hidden items-center gap-1 px-4 xl:flex"
               >
                 <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
-                User Profile
+                {user.username}
               </Button>
               <IconButton
                 variant="text"

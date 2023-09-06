@@ -17,11 +17,12 @@ import { useUser } from "../../UserContext";
 export function SignIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { isLoggedIn, setIsLoggedIn } = useUser(); // 使用useUser钩子来获取用户状态
+  const { isLoggedIn, setIsLoggedIn,login } = useUser(); // 使用useUser钩子来获取用户状态
 
-  const handleSignInContext = () => {
+  const handleSignInContext = (data) => {
     // 更新用户状态
     setIsLoggedIn(true);
+    login(data)
   };
   const navigateTo = useNavigate();
 
@@ -37,7 +38,7 @@ export function SignIn() {
       if (code === "0") {
         alert(message);
         navigateTo("/home");
-        handleSignInContext();
+        handleSignInContext(resp.data["user"]);
       } else {
         console.log(username + " try to sign in, but fail");
         alert(message);
