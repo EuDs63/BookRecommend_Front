@@ -1,5 +1,6 @@
 import React from "react";
 import { Typography } from "@material-tailwind/react";
+import { Carousel, IconButton } from "@material-tailwind/react";
 import { Button, IconButton } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import {
@@ -29,16 +30,16 @@ import { useState, useEffect } from "react";
 import { getcategorybookInfo } from "@/utils/api";
 export function UserMainPage() {
   useEffect(() => {
-    getCategoryBookInfo(1, setnewCultureData);
-    getCategoryBookInfo(2, setnewLiteratureData);
-    getCategoryBookInfo(3, setnewPopularScienceData);
-    getCategoryBookInfo(4, setnewPopularityData);
-    getCategoryBookInfo(5, setnewTechnologyData);
-    getCategoryBookInfo(6, setnewManagementData);
+    getCategoryBookInfo(1, setnewLiteratureData);
+    getCategoryBookInfo(2, setnewPopularityData);
+    getCategoryBookInfo(3, setnewCultureData);
+    getCategoryBookInfo(4, setnewLifeData);
+    getCategoryBookInfo(5, setnewManagementData);
+    getCategoryBookInfo(6, setnewTechnologyData);
     // 继续添加其他范围和对应的数据更新函数
   }, []);
   function getCategoryBookInfo(range, setDataFunction) {
-    getcategorybookInfo(1, range, 30, 1).then((resp) => {
+    getcategorybookInfo(range, 5, 6, 1).then((resp) => {
       var code = resp.data["code"].toString();
       if (code === "0") {
         console.log("success!");
@@ -54,7 +55,7 @@ export function UserMainPage() {
     const tabs = [
       "culture",
       "literature",
-      "popular science",
+      "life",
       "popularity",
       "technology",
       "management",
@@ -62,7 +63,7 @@ export function UserMainPage() {
     const dataSets = [
       { data: newCultureData, setter: setnewCultureData },
       { data: newLiteratureData, setter: setnewLiteratureData },
-      { data: newPopularScienceData, setter: setnewPopularScienceData },
+      { data: newLifeData, setter: setnewLifeData },
       { data: newPopularityData, setter: setnewPopularityData },
       { data: newTechnologyData, setter: setnewTechnologyData },
       { data: newManagementData, setter: setnewManagementData },
@@ -81,48 +82,58 @@ export function UserMainPage() {
     return null;
   }
 
-    function CarouselDefault({ selectedTab }) {
+  function CarouselDefault({ selectedTab }) {
     const content = generateContent(selectedTab);
     return <Carousel className="rounded-xl">{content}</Carousel>;
   }
 
   const [newCultureData, setnewCultureData] = useState([]);
   const [newLiteratureData, setnewLiteratureData] = useState([]);
-  const [newPopularScienceData, setnewPopularScienceData] = useState([]);
+  const [newLifeData, setnewLifeData] = useState([]);
   const [newPopularityData, setnewPopularityData] = useState([]);
   const [newTechnologyData, setnewTechnologyData] = useState([]);
   const [newManagementData, setnewManagementData] = useState([]);
   const [concernCultureData, setConcernCultureData] = useState([]);
   const [concernLiteratureData, setConcernLiteratureData] = useState([]);
-  const [concernPopularScienceData, setConcernPopularScienceData] = useState(
-    []
-  );
+  const [concernLifeData, setConcernLifeData] = useState([]);
   const [concernPopularityData, setConcernPopularityData] = useState([]);
   const [concernTechnologyData, setConcernTechnologyData] = useState([]);
   const [concernManagementData, setConcernManagementData] = useState([]);
   function BookList({ books }) {
     return (
       <div className="flex justify-between space-x-4">
-        {" "}
-        {/* 添加 justify-between 类 */}
         {books.map((book, index) => (
           <div key={index} className="flex flex-col items-center">
-            <Link to={`/dashboard/home?query=${book.id}`}>
+            <Link to={`/dashboard/home?query=${book.book_id}`}>
               <img
-                src={`https://images.weserv.nl/?url=${book.cover_image}`}
+                src={`https://images.weserv.nl/?url=${book.cover_image_url}`}
                 alt={book.title}
                 className="h-40 w-32 rounded-md"
               />
             </Link>
             <Typography variant="h5" color="gray-500" className="mt-1 mb-2">
-              {book.title}
+              <span
+                className="max-w-xs overflow-hidden truncate whitespace-nowrap"
+                title={book.title} // 鼠标悬浮时显示完整文本
+              >
+                {book.title.length > 5
+                  ? book.title.substr(0, 5) + "..."
+                  : book.title}
+              </span>
             </Typography>
             <Typography
               variant="small"
               color="gray-500"
               className="mt-1 mb-2 font-[YourChosenFont]"
             >
-              {book.author}
+              <span
+                className="max-w-xs overflow-hidden truncate whitespace-nowrap"
+                title={book.author} // 鼠标悬浮时显示完整文本
+              >
+                {book.author.length > 10
+                  ? book.author.substr(0, 5) + "..."
+                  : book.author}
+              </span>
             </Typography>
           </div>
         ))}
@@ -152,11 +163,11 @@ export function UserMainPage() {
         <div className="mx-1"></div>
         <div
           className={`cursor-pointer ${
-            tab === "popular science" ? "font-bold text-black" : "text-gray-500"
+            tab === "life" ? "font-bold text-black" : "text-gray-500"
           }`}
-          onClick={() => onTabClick("popular science")}
+          onClick={() => onTabClick("life")}
         >
-          科普
+          生活
         </div>
         <div className="mx-1"></div>
         <div
