@@ -18,11 +18,10 @@ import {
     Cog6ToothIcon,
 } from "@heroicons/react/24/solid";
 import { useUser } from "../../UserContext";
-import service from "@/utils/service";
 
 export function Setting() {
     const { isLoggedIn, user, logout } = useUser(); // 使用useUser钩子来获取用户状态
-    const avatar_url = service.baseURL+'/'+user.avatar_path;
+    const avatar_url = import.meta.env.VITE_BASE_URL+'/'+user.avatar_path;
 
 
     return (
@@ -35,7 +34,7 @@ export function Setting() {
                     <div className="mb-10 flex items-center justify-between gap-6">
                         <div className="flex items-center gap-6">
                             <Avatar
-                                src="/img/bruce-mars.jpeg"
+                                src={avatar_url}
                                 alt="bruce-mars"
                                 size="xl"
                                 className="rounded-lg shadow-lg shadow-blue-gray-500/40"
@@ -48,7 +47,7 @@ export function Setting() {
                                     variant="small"
                                     className="font-normal text-blue-gray-600"
                                 >
-                                    {avatar_url}
+                                    {user.register_time} 加入
                                 </Typography>
                             </div>
                         </div>
@@ -103,7 +102,7 @@ export function Setting() {
 
                             <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96 flex items-center space-x-6 flex-col">
                                 <div className="flex items-center gap-4">
-                                    <Avatar src="/img/bruce-mars.jpeg" alt="avatar" />
+                                    <Avatar src={avatar_url} alt="avatar" />
                                     <div>
                                         <Typography variant="h6">原始头像</Typography>
                                     </div>
