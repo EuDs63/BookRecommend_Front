@@ -9,6 +9,7 @@ import {
 import { Profile, UserMainPage, UserProfile } from "@/pages/profile";
 import { DashBoard, Tables, Notifications, Search } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
+import { Setting } from "./pages/user";
 import WillReadPage from "./pages/profile/willReadPage";
 import ReadingPage from "./pages/profile/readingPage";
 import HaveReadPage from "./pages/profile/haveReadPage";
@@ -118,19 +119,25 @@ export const routes = [
         element: <UserMainPage />,
       },
     ],
-  }
-  //   {
-  //     title: "user pages",
-  //     layout: "user",
-  //     pages: [
-  //       {
-  //         icon: <UserPlusIcon {...icon} />,
-  //         name: "user profile",
-  //         path: "/user/:userid",
-  //         element: <userProfile />,
-  //       },
-  //     ],
-  //   },
+  },
+  {
+    title: "user pages",
+    layout: "user",
+    pages: [
+      {
+        icon: <BellIcon {...icon} />,
+        name: "用户首页",
+        path: "/main",
+        element: <UserMainPage />,
+      },
+      {
+        icon: <BellIcon {...icon} />,
+        name: "用户设置",
+        path: "/setting",
+        element: <Setting />,
+      }
+    ],
+  },
 ];
 
 export default routes;
