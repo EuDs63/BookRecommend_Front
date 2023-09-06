@@ -1,6 +1,6 @@
 // userReducer.js
 
-import { UPDATE_USER, UPDATE_LOGIN_STATUS } from '../actionTypes';
+import { UPDATE_USER, UPDATE_LOGIN_STATUS } from '../actions/actionTypes';
 
 const initialState = {
     isLoggedIn: false, // 用户登录状态，默认为未登录
