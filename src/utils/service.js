@@ -9,4 +9,22 @@ let service = axios.create({
   },
 });
 
+// 添加一个请求拦截器，用于在每个请求中添加 Authorization 头部
+service.interceptors.request.use(
+  (config) => {
+    // 从本地存储获取 token
+    const token = localStorage.getItem('token');
+    
+    // 如果 token 存在，则将其添加到请求头部
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 export default service;

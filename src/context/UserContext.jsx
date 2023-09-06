@@ -22,6 +22,7 @@ export function UserProvider({ children }) {
   const dispatch = useDispatch();
 
   // 同步 Redux 中的用户信息到本地状态
+  // 该 useEffect 仅在 reduxUser 发生变化时执行
   useEffect(() => {
     setUser(reduxUser);
     setIsLoggedIn(reduxUser.isLoggedIn);
