@@ -5,7 +5,7 @@ import {
     Typography,
   } from "@material-tailwind/react";
   import { useLocation } from "react-router-dom";
-  import { getcategorybookInfo } from "@/utils/api";
+  import { getcategorybookInfo, booksearch } from "@/utils/api";
   import { useEffect, useState } from "react";
 
   
@@ -21,7 +21,8 @@ import {
     const [totalRecords, setTotalRecords] = useState("");
     useEffect(() => {
         // 在组件加载后执行的代码
-        getCategoryBookInfo();
+        getSearchBookInfo();
+        setCurrentPage(1);
     }, [query]); 
    
     function getCategoryBookInfo()
@@ -69,6 +70,50 @@ import {
             }
         )
     }
+    function getSearchBookInfo()
+    {
+        booksearch(query,currentPage,10,1).then((resp)=>
+        {
+            var code = resp.data['code'].toString();
+            if (code === '0') {
+                console.log("success!");
+                const books = resp.data['books'];
+                const totalPages = resp.data['total_pages'];
+                const totalRecords = resp.data['total_records']
+                const bookData = [];
+                books.forEach(book => {
+                    const author = book.author
+                    const book_id = book.book_id
+                    const image = book.cover_image_url
+                    const des = book.description
+                    const rate = book.rating_avg
+                    const name = book.title
+                    const publisher = book.publisher
+                    const date = book.publish_date
+                    const bookObj = {
+                        author,
+                        book_id,
+                        image,
+                        des,
+                        rate,
+                        name,
+                        publisher,
+                        date,
+                    }
+                    bookData.push(bookObj)
+                });
+                console.log(bookData)
+                console.log(totalPages)
+                console.log(totalRecords)
+                setBookInfoData(bookData)
+                setTotalPages(totalPages)
+                setTotalRecords(totalRecords)
+            }
+            else{
+                console.log("fail!");
+            }
+        })
+    }
     return (
       <div>
         <Typography variant="h6" color="black"
@@ -102,7 +147,7 @@ import {
                     >
                         {book.name}
                     </Typography>
-                    <Typography>book.publisher</Typography>
+                    <Typography>{book.publisher}</Typography>
                 </div>
                 <div>
                     <Typography style={{ color: "blue" }}>{book.author}</Typography>
@@ -119,7 +164,7 @@ import {
                 </div>
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
                     <Typography>
-                        年:book.date&nbsp;&nbsp;&nbsp;&nbsp;评分:{book.rate}/10.00
+                        年:{book.date}&nbsp;&nbsp;&nbsp;&nbsp;评分:{book.rate}/10.00
                     </Typography>
                 </div>
             </div>
@@ -145,7 +190,7 @@ import {
                     </div>
                     <div>
                         <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
-                            <a href={`search?query=1&page=${currentPage-1}`} class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+                            <a href={`search?query=${query}&page=${currentPage-1}`} class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
                                 <span class="sr-only">Previous</span>
                                 <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                     <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
@@ -167,7 +212,7 @@ import {
                                     return (
                                         <a
                                         key={index}
-                                        href={`search?query=1&page=${index+1}`} // 这里需要根据实际情况生成正确的链接
+                                        href={`search?query=${query}&page=${index+1}`} // 这里需要根据实际情况生成正确的链接
                                         className={`relative inline-flex items-center ${
                                             currentPage === index + 1
                                             ? 'bg-indigo-600 text-white'
@@ -195,7 +240,7 @@ import {
                             })}
 
 
-                            <a href={`search?query=1&page=${currentPage+1}`} class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+                            <a href={`search?query=${query}&page=${currentPage+1}`} class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
                                 <span class="sr-only">Next</span>
                                 <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                     <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
