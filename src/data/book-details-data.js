@@ -1,0 +1,33 @@
+export const bookDetailsData =[
+  {
+    book_id: 1,
+    isbn: 9787020058358,
+    cover_image: "https://img1.doubanio.com/view/subject/l/public/s2128420.jpg",
+    title: "坟",
+    author: "鲁迅",
+    publisher: "人民文学出版社",
+    rating_avg: 9.6,
+    publish_date: "2006-12",
+    page_num: 302,
+    category: "杂文集",
+    description: "道德这事，必须普遍，人人应做，人人能行，又于自他两利，才有存在的价值",
+    rating_num: 11084,
+    comment_count: 1765,
+  },
+  {
+    book_id: 2,
+    isbn: 9787020152780,
+    cover_image: "/img/team-2.jpeg",
+    title: "朝花夕拾",
+    author: "鲁迅",
+    publisher: "人民文学出版社",
+    rating_avg: 9.5,
+    publish_date: "2022-1",
+    page_num: 116,
+    category: "杂文集",
+    description: "前几篇神话故事是中学时代魂牵梦萦的精神来源，都不记得是先生写的了。这种叙述语气也是精神上影响很多。",
+    rating_num: 461,
+    comment_count: 167,
+  },
+];
+export default bookDetailsData;

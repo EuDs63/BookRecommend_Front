@@ -21,7 +21,7 @@ import {
 import { Link } from "react-router-dom";
 import { ProfileInfoCard, MessageCard } from "@/widgets/cards";
 import { platformSettingsData, conversationsData, projectsData } from "@/data";
-
+//import { bookDetailsData } from "@/data"
 export function Profile() {
   return (
     <>
@@ -40,13 +40,13 @@ export function Profile() {
               />
               <div>
                 <Typography variant="h5" color="blue-gray" className="mb-1">
-                  Harry Potter
+                  Richard Davis
                 </Typography>
                 <Typography
                   variant="small"
                   className="font-normal text-blue-gray-600"
                 >
-                  CEO / Co-Founder000
+                  CEO / Co-Founder
                 </Typography>
               </div>
             </div>
@@ -70,7 +70,7 @@ export function Profile() {
             </div>
           </div>
           <div className="gird-cols-1 mb-12 grid gap-12 px-4 lg:grid-cols-2 xl:grid-cols-3">
-            {/* <div>
+            <div>
               <Typography variant="h6" color="blue-gray" className="mb-3">
                 Platform Settings
               </Typography>
@@ -96,10 +96,10 @@ export function Profile() {
                   </div>
                 ))}
               </div>
-            </div> */}
+            </div>
             <ProfileInfoCard
               title="Profile Information"
-              description="Hi, I'm Alon mask, Decisions: If you can't decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
+              description="Hi, I'm Alec Thompson, Decisions: If you can't decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
               details={{
                 "first name": "Alec M. Thompson",
                 mobile: "(44) 123 1234 123",
@@ -119,7 +119,7 @@ export function Profile() {
                 </Tooltip>
               }
             />
-            {/* <div>
+            <div>
               <Typography variant="h6" color="blue-gray" className="mb-3">
                 Platform Settings
               </Typography>
@@ -136,7 +136,7 @@ export function Profile() {
                   />
                 ))}
               </ul>
-            </div> */}
+            </div>
           </div>
           <div className="px-4 pb-4">
             <Typography variant="h6" color="blue-gray" className="mb-2">

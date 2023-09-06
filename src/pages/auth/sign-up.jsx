@@ -13,48 +13,62 @@ import {
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { userRegister, userInfo } from "@/utils/api"
+import { useUser } from "../../UserContext";
 export function SignUp() {
 
-  const [username, setUsername] = useState("");
+  const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
+  const [password_confirmation, setPassword_confirmation] = useState("");
+    const { isLoggedIn, setIsLoggedIn } = useUser(); // 使用useUser钩子来获取用户状态
+    const handleLogout = () => {
+      // 在用户点击登出按钮时更新用户状态
+      setIsLoggedIn(false);
+    };
+    const handleSignInContext = () => {
+      // 在用户点击登出按钮时更新用户状态
+      setIsLoggedIn(true);
+    };
   const navigateTo = useNavigate();
-
   //注册
   function handleSignUp(){
-    //const history = useHistory();
-    console.log(username + " try to sign up");
+    // 验证两次密码输入是否一致
+    if (password !== password_confirmation) {
+      alert("两次密码输入不一致");
+      return;
+    }
+    // 两次密码输入一致，准备发送注册请求
+    const now = new Date();
+    const formattedTime = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
     userRegister({
         username: username,
         password: password,
-        email: email,
+        register_time: formattedTime,
     }).then((resp)=>{
       var code = resp.data['code'].toString();
       var message = resp.data['msg'];
-      console.log(message);
       if (code === '0') {
         //getUserInfo(form.email);
-        //router.push("/profile");
         alert(message);
         navigateTo('/home');//这里应该打开一个标签推荐页面
+        handleSignInContext();
       } else {
-        console.log(email + " try to sign up, but fail");
+        console.log(username + " try to sign up, but fail");
         alert(message);
+        console.log(username)
       }
-      //console.log(resp);
     });
 }
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
+  const handleUserNameChange = (e) => {
+    setUserName(e.target.value);
   }
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   }
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+  const handlePassword_confirmationChange = (e) => {
+    setPassword_confirmation(e.target.value);
   }
 
   return (
@@ -76,15 +90,12 @@ export function SignUp() {
             </Typography>
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
-            <Input label="Name" size="lg" />
-            <Input type="email" label="Email" size="lg" />
-            <Input type="password" label="Password" size="lg" />
-            <div className="-ml-2.5">
-              <Checkbox label="I agree the Terms and Conditions" />
-            </div>
+            <Input label="Name" size="lg" onChange={handleUserNameChange}/>
+            <Input type="password" label="Password" size="lg" onChange={handlePasswordChange} />
+            <Input type="password" label="Confirm your password" size="lg" onChange={handlePassword_confirmationChange} />
           </CardBody>
           <CardFooter className="pt-0">
-            <Button variant="gradient" fullWidth>
+            <Button variant="gradient" fullWidth onClick={handleSignUp}>
               Sign Up
             </Button>
             <Typography variant="small" className="mt-6 flex justify-center">

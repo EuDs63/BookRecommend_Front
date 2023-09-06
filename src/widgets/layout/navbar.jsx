@@ -9,10 +9,8 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-
 export function Navbar({ brandName, routes, action }) {
   const [openNav, setOpenNav] = React.useState(false);
-
   React.useEffect(() => {
     window.addEventListener(
       "resize",
@@ -88,9 +86,7 @@ Navbar.defaultProps = {
     <a
       href="https://www.creative-tim.com/product/material-tailwind-dashboard-react"
       target="_blank"
-    >
-
-    </a>
+    ></a>
   ),
 };
 
