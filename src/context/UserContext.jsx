@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState,useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { updateUser,updateLoginStatus } from './Redux/actions/userActions';
+import { updateUser,updateLoginStatus } from '../Redux/actions/userActions';
 
 // 创建一个Context对象
 const UserContext = createContext();

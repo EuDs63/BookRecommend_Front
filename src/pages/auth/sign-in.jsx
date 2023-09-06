@@ -12,7 +12,7 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { userLogin, userInfo } from "@/utils/api";
-import { useUser } from "../../UserContext";
+import { useUser } from "../../context/UserContext";
 
 export function SignIn() {
   const [username, setUsername] = useState("");

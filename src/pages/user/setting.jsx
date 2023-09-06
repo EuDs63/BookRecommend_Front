@@ -17,7 +17,7 @@ import {
     ChatBubbleLeftEllipsisIcon,
     Cog6ToothIcon,
 } from "@heroicons/react/24/solid";
-import { useUser } from "../../UserContext";
+import { useUser } from "../../context/UserContext";
 
 export function Setting() {
     const { isLoggedIn, user, logout } = useUser(); // 使用useUser钩子来获取用户状态

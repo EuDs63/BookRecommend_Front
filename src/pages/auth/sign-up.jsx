@@ -13,7 +13,7 @@ import {
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { userRegister, userInfo } from "@/utils/api"
-import { useUser } from "../../UserContext";
+import { useUser } from "../../context/UserContext";
 export function SignUp() {
 
   const [username, setUserName] = useState("");
