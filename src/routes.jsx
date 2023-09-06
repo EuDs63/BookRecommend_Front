@@ -107,6 +107,18 @@ export const routes = [
       },
     ],
   },
+  {
+    title: "tourist pages",
+    layout: "tourist",
+    pages: [
+      {
+        icon: <BellIcon {...icon} />,
+        name: "游客首页",
+        path: "/main",
+        element: <UserMainPage />,
+      },
+    ],
+  }
   //   {
   //     title: "user pages",
   //     layout: "user",

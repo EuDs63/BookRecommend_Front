@@ -61,9 +61,21 @@ export function bookInfo(book_id, info_type){
     })
 }
 
+export function getcategorybookInfo(category_id, page, per_page){
+    return service({
+        url:`/book/category`,
+        method: 'get',
+        params: {
+            category_id: category_id,
+            page: page,
+            per_page: per_page
+        }
+    })
+}
+
 export function commentInfo(){
     return service({
-
+        
     })
 }
 

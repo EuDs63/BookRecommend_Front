@@ -8,7 +8,6 @@ import {
   ArrowRightOnRectangleIcon,
 } from "@heroicons/react/24/solid";
 import {
-  Sidenav,
   DashboardNavbar,
   Configurator,
   Footer,
@@ -17,14 +16,13 @@ import {
 import routes from "@/routes";
 import { useMaterialTailwindController, setOpenConfigurator } from "@/context";
 
-export function Dashboard() {
-  const [controller, dispatch] = useMaterialTailwindController();
-  const { sidenavType } = controller;
+export function Tourist() {
+  const [dispatch] = useMaterialTailwindController();
 
   const navbarRoutes = [
     {
       name: "首页",
-      path: "/dashboard/main",
+      path: "/tourist/main",
       icon: ChartPieIcon,
     },
     {
@@ -42,11 +40,6 @@ export function Dashboard() {
       path: "/dashboard/:userid/will-read",
       icon: UserPlusIcon,
     },
-    {
-      name: "游客首页",
-      path: "/tourist/main",
-      icon: UserPlusIcon,
-    }
   ];
 
 
@@ -70,7 +63,7 @@ export function Dashboard() {
         <Routes>
           {routes.map(
             ({ layout, pages }) =>
-              layout === "dashboard" &&
+              layout === "tourist" &&
               pages.map(({ path, element }) => (
                 <Route exact path={path} element={element} />
               ))
@@ -84,6 +77,6 @@ export function Dashboard() {
   );
 }
 
-Dashboard.displayName = "/src/layout/dashboard.jsx";
+Tourist.displayName = "/src/layout/tourist.jsx";
 
-export default Dashboard;
+export default Tourist;
