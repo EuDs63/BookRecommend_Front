@@ -88,21 +88,39 @@ export function Setting() {
                             </form>
 
                         </div>
-                        <ProfileInfoCard
-                            title="Profile Information"
-                            description="Hi, I'm Alec Thompson, Decisions: If you can't decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
-                            details={{
-                                "first name": "Alec M. Thompson",
-                                mobile: "(44) 123 1234 123",
-                                email: "alecthompson@mail.com",
-                                location: "USA",
-                            }}
-                            action={
-                                <Tooltip content="Edit Profile">
-                                    <PencilIcon className="h-4 w-4 cursor-pointer text-blue-gray-500" />
-                                </Tooltip>
-                            }
-                        />
+                        <div>
+                            <Typography variant="h4" color="blue-gray">
+                                更换头像
+                            </Typography>
+
+                            <Typography
+                                variant="small"
+                                className="font-normal text-blue-gray-600 mt-2"
+                            >
+                                请选择图片上传：大小400 * 400像素支持JPG、PNG等格式，图片需小于2M
+                            </Typography>
+
+                            <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96 flex items-center space-x-6 flex-col">
+                                <div className="flex items-center gap-4">
+                                    <Avatar src="/img/bruce-mars.jpeg" alt="avatar" />
+                                    <div>
+                                        <Typography variant="h6">原始头像</Typography>
+                                    </div>
+                                </div>
+
+                                <label className="block mt-4 items-center">
+
+                                    <input type="file" className="block w-full text-sm text-slate-500
+                                                                file:mr-4 file:py-2 file:px-4
+                                                                file:rounded-full file:border-0
+                                                                file:text-sm file:font-semibold
+                                                                file:bg-violet-50 file:text-violet-700
+                                                                hover:file:bg-violet-100
+                                                                "/>
+                                </label>
+                            </form>
+                        </div>
+
                     </div>
                 </CardBody>
             </Card>
