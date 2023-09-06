@@ -17,7 +17,7 @@ import { useUser } from "../../UserContext";
 export function SignIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { isLoggedIn, setIsLoggedIn,login } = useUser(); // 使用useUser钩子来获取用户状态
+  const { setIsLoggedIn,login } = useUser(); // 使用useUser钩子来获取用户状态
 
   const handleSignInContext = (data) => {
     // 更新用户状态

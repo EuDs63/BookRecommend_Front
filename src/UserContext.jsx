@@ -8,7 +8,6 @@ export function UserProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // 默认用户未登录
 
   const [user, setUser] = useState({
-    isLoggedIn: false,
     avatar_path: "static/avatar/default.png",
     is_admin: false,
     register_time: "",
@@ -17,18 +16,19 @@ export function UserProvider({ children }) {
   });
 
   const login = (userData) => {
-    setUser({ ...userData, isLoggedIn: true });
+    setUser({ ...userData });
+    setIsLoggedIn(true);
   };
 
   const logout = () => {
     setUser({
-      isLoggedIn: false,
       avatar_path: "static/avatar/default.png",
       is_admin: false,
       register_time: "",
       user_id: null,
       username: ""
     });
+    setIsLoggedIn(false);
   };
 
   return (
