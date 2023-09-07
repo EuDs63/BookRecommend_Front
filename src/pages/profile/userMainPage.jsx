@@ -18,7 +18,7 @@ import {
 } from "@/data";
 import { ProfileInfoCard, BookCommentsCard } from "@/widgets/cards";
 import { useState, useEffect } from "react";
-import { getcategorybookInfo } from "@/utils/api";
+import { getAction, getcategorybookInfo } from "@/utils/api";
 export function UserMainPage() {
   useEffect(() => {
     getCategoryBookInfo(1, setnewLiteratureData, 1);
@@ -33,15 +33,24 @@ export function UserMainPage() {
     getCategoryBookInfo(4, setConcernLifeData, 2);
     getCategoryBookInfo(5, setConcernManagementData, 2);
     getCategoryBookInfo(6, setConcernTechnologyData, 2);
+
     // 继续添加其他范围和对应的数据更新函数
   }, []);
   function getCategoryBookInfo(range, setDataFunction, type) {
     getcategorybookInfo(range, 1, 30, type).then((resp) => {
       var code = resp.data["code"].toString();
       if (code === "0") {
-        console.log("success!");
         setDataFunction(resp.data["books"]);
-        console.log(resp.data["books"]);
+      } else {
+        console.log("fail!");
+      }
+    });
+  }
+  function getCommentInfo(user_id) {
+    getAction(2, 2, 0, user_id).then((resp) => {
+      var code = resp.data["code"].toString();
+      if (code === "0") {
+        setDataFunction(resp.data["books"]);
       } else {
         console.log("fail!");
       }
@@ -337,7 +346,7 @@ export function UserMainPage() {
       {/* 使用 my-12 类来添加垂直间距，也可以根据需要调整数字部分 */}
       <div>
         <Typography variant="h4" color="blue-gray" className="mb-3">
-          热门评论
+          我的评论
         </Typography>
         <ul className="flex flex-col gap-1">
           {bookCommentsData.map((props, index) => (
