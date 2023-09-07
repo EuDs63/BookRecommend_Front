@@ -1,7 +1,13 @@
 import React from "react";
-import { Typography } from "@material-tailwind/react";
+import {
+  Typography,
+  Card,
+  CardHeader,
+  CardBody,
+} from "@material-tailwind/react";
 import { Carousel, IconButton, Button } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { useParams, useLocation } from "react-router-dom";
 import {
   ClockIcon,
   CheckIcon,
@@ -20,6 +26,7 @@ import { ProfileInfoCard, BookCommentsCard } from "@/widgets/cards";
 import { useState, useEffect } from "react";
 import { getAction, getcategorybookInfo } from "@/utils/api";
 export function UserMainPage() {
+  const { userid } = useParams(); // 获取路由参数
   useEffect(() => {
     getCategoryBookInfo(1, setnewLiteratureData, 1);
     getCategoryBookInfo(2, setnewPopularityData, 1);
@@ -33,10 +40,11 @@ export function UserMainPage() {
     getCategoryBookInfo(4, setConcernLifeData, 2);
     getCategoryBookInfo(5, setConcernManagementData, 2);
     getCategoryBookInfo(6, setConcernTechnologyData, 2);
-
+    getCommentInfo(userid);
     // 继续添加其他范围和对应的数据更新函数
   }, []);
   function getCategoryBookInfo(range, setDataFunction, type) {
+    //type=1:新书；type=2:最受关注图书
     getcategorybookInfo(range, 1, 30, type).then((resp) => {
       var code = resp.data["code"].toString();
       if (code === "0") {
@@ -50,13 +58,16 @@ export function UserMainPage() {
     getAction(2, 2, 0, user_id).then((resp) => {
       var code = resp.data["code"].toString();
       if (code === "0") {
-        setDataFunction(resp.data["books"]);
+        setUserComments(resp.data["content"]);
       } else {
         console.log("fail!");
       }
     });
   }
 
+  const [selectedTab, setSelectedTab] = useState("culture"); // 初始选中的标签为文化
+  const [recommendTab, setRecommendTab] = useState("culture"); // 初始选中的标签为文化
+  const [userComments, setUserComments] = useState([]);
   function generateContent(selectedTab, type) {
     const tabs = [
       "culture",
@@ -102,7 +113,6 @@ export function UserMainPage() {
 
     return null;
   }
-
 
   function CarouselDefault({ selectedTab, type }) {
     const content = generateContent(selectedTab, type);
@@ -291,9 +301,6 @@ export function UserMainPage() {
     );
   }
 
-  const [selectedTab, setSelectedTab] = useState("culture"); // 初始选中的标签为文化
-  const [recommendTab, setRecommendTab] = useState("culture"); // 初始选中的标签为文化
-
   return (
     <div>
       <div className="mb-4 border-b border-blue-gray-200 p-4 pb-4 shadow-md">
@@ -346,19 +353,79 @@ export function UserMainPage() {
       {/* 使用 my-12 类来添加垂直间距，也可以根据需要调整数字部分 */}
       <div>
         <Typography variant="h4" color="blue-gray" className="mb-3">
-          我的评论
+          我的书评
         </Typography>
         <ul className="flex flex-col gap-1">
-          {bookCommentsData.map((props, index) => (
-            <div className="max-h-50 w-full overflow-y-auto">
-              <div key={props.comment_id} className="mb-4">
-                <BookCommentsCard {...props} />
-                {/* {index < bookCommentsData.length - 1 && (
-                  <hr className="mt-4 border-t border-gray-300" />
-                )} */}
+          <Card>
+            {userComments.length > 0 ? (
+              userComments.map((comment, index) => (
+                <div className="max-h-50 w-full overflow-y-auto">
+                  <div key={index} className="mb-4">
+                    <CardBody
+                      key={index}
+                      style={{
+                        overflow: "hidden",
+                        height: "235px",
+                        display: "flex",
+                      }}
+                    >
+                      <div>
+                        <Link to={`/dashboard/home?query=${comment.book_id}`}>
+                          <img
+                            src={`https://images.weserv.nl/?url=${comment.cover_image_url}`}
+                            className="h-48 w-36 rounded-lg shadow-lg shadow-blue-gray-500/40"
+                          />
+                        </Link>
+                      </div>
+                      <div style={{ marginLeft: "20px", flex: 1 }}>
+                        <div>
+                          <Typography
+                            style={{
+                              color: "black",
+                              fontSize: "22px",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {comment.title}
+                          </Typography>
+                        </div>
+                        {/* <div>
+                          <Typography style={{ color: "blue" }}>
+                            {book.author}
+                          </Typography>
+                        </div> */}
+                        <div
+                          style={{
+                            display: "-webkit-box",
+                            WebkitBoxOrient: "vertical",
+                            WebkitLineClamp: 3,
+                            overflow: "hidden",
+                          }}
+                        >
+                          <Typography>{comment.content}</Typography>
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "flex-end",
+                          }}
+                        >
+                          <Typography>{comment.create_time} 评</Typography>
+                        </div>
+                      </div>
+                    </CardBody>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div>
+                {/* 当 userComments 为空时的内容 */}
+                <Typography className="font-mono text-2xl font-bold text-black">
+                  墨薮书评多逸事,何妨挥翰与题辞
+                </Typography>
               </div>
-            </div>
-          ))}
+            )}
+          </Card>
         </ul>
       </div>
     </div>

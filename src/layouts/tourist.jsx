@@ -26,11 +26,6 @@ export function Tourist() {
       icon: ChartPieIcon,
     },
     {
-      name: "图书详情页",
-      path: "/dashboard/home",
-      icon: UserIcon,
-    },
-    {
       name: "个人主页",
       path: "/dashboard/:userid",
       icon: UserPlusIcon,

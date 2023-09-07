@@ -24,13 +24,8 @@ export function Dashboard() {
   const navbarRoutes = [
     {
       name: "首页",
-      path: "/dashboard/main",
+      path: "/dashboard/main/:userid",
       icon: ChartPieIcon,
-    },
-    {
-      name: "图书详情页",
-      path: "/dashboard/home",
-      icon: UserIcon,
     },
     {
       name: "个人主页",
@@ -44,14 +39,14 @@ export function Dashboard() {
     },
     {
       name: "游客首页",
-      path: "/tourist/main",
+      path: "/tourist/main/:userid",
       icon: UserPlusIcon,
     },
     {
       name: "用户首页",
-      path: "/user/main",
+      path: "/user/main/:userid",
       icon: UserPlusIcon,
-    }
+    },
   ];
 
 
