@@ -1,23 +1,9 @@
 import React from "react";
 import { Typography } from "@material-tailwind/react";
 import { Carousel, IconButton } from "@material-tailwind/react";
-import { Button, IconButton } from "@material-tailwind/react";
+import { Button } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
-import {
-  HomeIcon,
-  ChatBubbleLeftEllipsisIcon,
-  Cog6ToothIcon,
-  PencilIcon,
-} from "@heroicons/react/24/solid";
-import {
-  ClockIcon,
-  CheckIcon,
-  EllipsisVerticalIcon,
-  ArrowUpIcon,
-} from "@heroicons/react/24/outline";
 import { Link, BrowserRouter, Route, Routes } from "react-router-dom";
-import { StatisticsCard } from "@/widgets/cards";
-import { StatisticsChart } from "@/widgets/charts";
 import {
   willReadBookData,
   readingBookData,
@@ -39,7 +25,7 @@ export function UserMainPage() {
     // 继续添加其他范围和对应的数据更新函数
   }, []);
   function getCategoryBookInfo(range, setDataFunction) {
-    getcategorybookInfo(range, 5, 6, 1).then((resp) => {
+    getcategorybookInfo(range, 1, 30, 1).then((resp) => {
       var code = resp.data["code"].toString();
       if (code === "0") {
         console.log("success!");
@@ -72,11 +58,11 @@ export function UserMainPage() {
     if (index !== -1) {
       const { data, setter } = dataSets[index];
       return (
-        <div>
-          {Array.from({ length: 5 }, (_, i) => (
-            <BookList key={i} books={data.slice(i * 6, (i + 1) * 6)} />
-          ))}
-        </div>
+          Array.from({ length: 5 }, (_, i) => (
+            <div key={i}>
+              <BookList books={data.slice(i * 6, (i + 1) * 6)} />
+            </div>
+          ))
       );
     }
     return null;
@@ -84,7 +70,62 @@ export function UserMainPage() {
 
   function CarouselDefault({ selectedTab }) {
     const content = generateContent(selectedTab);
-    return <Carousel className="rounded-xl">{content}</Carousel>;
+    return (
+      <Carousel
+        className="rounded-xl"
+    
+        prevArrow={({ handlePrev }) => (
+          <IconButton
+            variant="text"
+            color="gray"
+            size="lg"
+            onClick={handlePrev}
+            className="!absolute top-2/4 left-4 -translate-y-2/4"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="h-6 w-6 text-blue-500" // 按钮的颜色为深蓝色
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+              />
+            </svg>
+          </IconButton>
+        )}
+        nextArrow={({ handleNext }) => (
+          <IconButton
+            variant="text"
+            color="gray"
+            size="lg"
+            onClick={handleNext}
+            className="!absolute top-2/4 !right-4 -translate-y-2/4"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="h-6 w-6 text-blue-500" // 按钮的颜色为深蓝色
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+              />
+            </svg>
+          </IconButton>
+        )}
+      >
+        {content}
+      </Carousel>
+    );
   }
 
   const [newCultureData, setnewCultureData] = useState([]);
