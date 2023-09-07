@@ -1,5 +1,5 @@
 import service from "@/utils/service";
-import { func } from "prop-types";
+// import { func } from "prop-types";
 
 export function userLogin(data) {
   return service({
@@ -10,10 +10,10 @@ export function userLogin(data) {
 }
 
 export function userAutoLogin() {
-    return service({
-        url: '/user/auto_login',
-        method: 'get'
-    })
+  return service({
+    url: '/user/auto_login',
+    method: 'get'
+  })
 }
 
 export function userRegister(userData) {
@@ -93,44 +93,34 @@ export function booksearch(keyword, page, per_page, method) {
       method: method,
     },
   });
-export function gettagbookInfo(tag_id, page, per_page){
+}
+  export function gettagbookInfo(tag_id, page, per_page) {
     return service({
-        url:`/book/tag`,
-        method: 'get',
-        params: {
-            tag_id: tag_id,
-            page: page,
-            per_page: per_page,
-        }
+      url: `/book/tag`,
+      method: 'get',
+      params: {
+        tag_id: tag_id,
+        page: page,
+        per_page: per_page,
+      }
     })
-}
+  }
 
-export function booksearch(keyword, page, per_page, method)
-{
+  export function getAction(type, method, book_id, user_id) {
     return service({
-        url:`/book/search`,
-        method: 'get',
-        params: {
-            keyword: keyword,
-            page: page,
-            per_page: per_page,
-            method: method
-        }
-    })
-}
+      url: `/action/get`,
+      method: "post",
+      data: {
+        type: type,
+        method: method,
+        book_id: book_id,
+        user_id: user_id,
+      },
+    });
+  }
 
-export function getAction(type, method, book_id, user_id) {
-  return service({
-    url: `/action/get`,
-    method: "post",
-    data: {
-      type: type,
-      method: method,
-      book_id: book_id,
-      user_id: user_id,
-    },
-  });
-}
-export function commentInfo() {
-  return service({});
-}
+  export function commentInfo() {
+    return service(
+      {}
+    );
+  }
