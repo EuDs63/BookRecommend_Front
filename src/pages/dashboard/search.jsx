@@ -3,9 +3,10 @@ import {
     CardHeader,
     CardBody,
     Typography,
+    alert,
   } from "@material-tailwind/react";
   import { useLocation } from "react-router-dom";
-  import { getcategorybookInfo, booksearch } from "@/utils/api";
+  import { booksearch } from "@/utils/api";
   import { useEffect, useState } from "react";
 
 
@@ -16,18 +17,18 @@ import {
     const query = queryParams.get("query");
     const [bookInfoData, setBookInfoData] = useState([]);
     const currentPageParam = queryParams.get("page");
-    const [currentPage, setCurrentPage] = useState(currentPageParam ? parseInt(currentPageParam) : 1);
+    const [currentPage, setCurrentPage] = useState(currentPageParam !== null ? parseInt(currentPageParam) : 1);
     const [totalPages, setTotalPages] = useState("");
     const [totalRecords, setTotalRecords] = useState("");
     useEffect(() => {
-        // 在组件加载后执行的代码
-        getSearchBookInfo();
-        setCurrentPage(1);
-    }, [query]);
+        // 在组件加载后执行的代码        
+        getSearchBookInfo(); 
+    }, [query,currentPage]); 
     function getSearchBookInfo()
     {
         booksearch(query,currentPage,10,1).then((resp)=>
         {
+            setCurrentPage(currentPageParam !== null ? parseInt(currentPageParam) : 1)
             var code = resp.data['code'].toString();
             if (code === '0') {
                 console.log("success!");
