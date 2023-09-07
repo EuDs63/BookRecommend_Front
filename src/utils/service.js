@@ -17,7 +17,7 @@ service.interceptors.request.use(
     
     // 如果 token 存在，则将其添加到请求头部
     if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
+      config.headers['Authorization'] = `${token}`;
     }
     
     return config;

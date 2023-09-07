@@ -8,6 +8,13 @@ export function userLogin(data) {
     })
 }
 
+export function userAutoLogin() {
+    return service({
+        url: '/user/auto_login',
+        method: 'get'
+    })
+}
+
 export function userRegister(userData) {
     return service({
         url: '/user/register',
