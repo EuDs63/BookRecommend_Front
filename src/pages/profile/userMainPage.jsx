@@ -1,6 +1,6 @@
 import React from "react";
 import { Typography } from "@material-tailwind/react";
-import { Carousel, IconButton,Button } from "@material-tailwind/react";
+import { Carousel, IconButton, Button } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import {
   ClockIcon,
@@ -21,16 +21,22 @@ import { useState, useEffect } from "react";
 import { getcategorybookInfo } from "@/utils/api";
 export function UserMainPage() {
   useEffect(() => {
-    getCategoryBookInfo(1, setnewLiteratureData);
-    getCategoryBookInfo(2, setnewPopularityData);
-    getCategoryBookInfo(3, setnewCultureData);
-    getCategoryBookInfo(4, setnewLifeData);
-    getCategoryBookInfo(5, setnewManagementData);
-    getCategoryBookInfo(6, setnewTechnologyData);
+    getCategoryBookInfo(1, setnewLiteratureData, 1);
+    getCategoryBookInfo(2, setnewPopularityData, 1);
+    getCategoryBookInfo(3, setnewCultureData, 1);
+    getCategoryBookInfo(4, setnewLifeData, 1);
+    getCategoryBookInfo(5, setnewManagementData, 1);
+    getCategoryBookInfo(6, setnewTechnologyData, 1);
+    getCategoryBookInfo(1, setConcernLiteratureData, 2);
+    getCategoryBookInfo(2, setConcernPopularityData, 2);
+    getCategoryBookInfo(3, setConcernCultureData, 2);
+    getCategoryBookInfo(4, setConcernLifeData, 2);
+    getCategoryBookInfo(5, setConcernManagementData, 2);
+    getCategoryBookInfo(6, setConcernTechnologyData, 2);
     // 继续添加其他范围和对应的数据更新函数
   }, []);
-  function getCategoryBookInfo(range, setDataFunction) {
-    getcategorybookInfo(range, 1, 30, 1).then((resp) => {
+  function getCategoryBookInfo(range, setDataFunction, type) {
+    getcategorybookInfo(range, 1, 30, type).then((resp) => {
       var code = resp.data["code"].toString();
       if (code === "0") {
         console.log("success!");
@@ -42,7 +48,7 @@ export function UserMainPage() {
     });
   }
 
-  function generateContent(selectedTab) {
+  function generateContent(selectedTab, type) {
     const tabs = [
       "culture",
       "literature",
@@ -51,30 +57,46 @@ export function UserMainPage() {
       "technology",
       "management",
     ];
-    const dataSets = [
-      { data: newCultureData, setter: setnewCultureData },
-      { data: newLiteratureData, setter: setnewLiteratureData },
-      { data: newLifeData, setter: setnewLifeData },
-      { data: newPopularityData, setter: setnewPopularityData },
-      { data: newTechnologyData, setter: setnewTechnologyData },
-      { data: newManagementData, setter: setnewManagementData },
-    ];
+
+    let dataSets = [];
+
+    if (type === 1) {
+      dataSets = [
+        { data: newCultureData, setter: setnewCultureData },
+        { data: newLiteratureData, setter: setnewLiteratureData },
+        { data: newLifeData, setter: setnewLifeData },
+        { data: newPopularityData, setter: setnewPopularityData },
+        { data: newTechnologyData, setter: setnewTechnologyData },
+        { data: newManagementData, setter: setnewManagementData },
+      ];
+    } else {
+      dataSets = [
+        { data: concernCultureData, setter: setConcernCultureData },
+        { data: concernLiteratureData, setter: setConcernLiteratureData },
+        { data: concernLifeData, setter: setConcernLifeData },
+        { data: concernPopularityData, setter: setConcernPopularityData },
+        { data: concernTechnologyData, setter: setConcernTechnologyData },
+        { data: concernManagementData, setter: setConcernManagementData },
+      ];
+    }
+
     const index = tabs.indexOf(selectedTab);
+
     if (index !== -1) {
       const { data, setter } = dataSets[index];
-      return (
-          Array.from({ length: 5 }, (_, i) => (
-            <div key={i}>
-              <BookList books={data.slice(i * 6, (i + 1) * 6)} />
-            </div>
-          ))
-      );
+      return Array.from({ length: 5 }, (_, i) => (
+        <div key={i}>
+          <BookList books={data.slice(i * 6, (i + 1) * 6)} />
+        </div>
+      ));
     }
+
     return null;
   }
 
-  function CarouselDefault({ selectedTab }) {
-    const content = generateContent(selectedTab);
+
+  function CarouselDefault({ selectedTab, type }) {
+    const content = generateContent(selectedTab, type);
     return (
       <Carousel
         className="rounded-xl"
@@ -282,7 +304,7 @@ export function UserMainPage() {
         <div className="my-3"></div>{" "}
         {/* 使用 my-12 类来添加垂直间距，也可以根据需要调整数字部分 */}
         {/* 根据选中的标签显示不同的内容 */}
-        <CarouselDefault selectedTab={selectedTab} />
+        <CarouselDefault selectedTab={selectedTab} type={1} />
         {/* 添加其他标签对应的内容 */}
       </div>
       <div className="mb-4 border-b border-blue-gray-200 p-4 pb-4 shadow-md">
@@ -291,7 +313,7 @@ export function UserMainPage() {
             variant="h4"
             className="mb-2 font-bold text-blue-gray-300"
           >
-            最受关注的图书榜
+            最受关注图书榜
           </Typography>
           <div className="mx-1">
             {/* 中间的空格 */}
@@ -301,7 +323,9 @@ export function UserMainPage() {
         </div>
         <div className="my-3"></div>{" "}
         {/* 使用 my-12 类来添加垂直间距，也可以根据需要调整数字部分 */}
-        <BookList books={recommendedBooksData.slice(0, 6)} />
+        {/* 根据选中的标签显示不同的内容 */}
+        <CarouselDefault selectedTab={recommendTab} type={2} />
+        {/* 添加其他标签对应的内容 */}
       </div>
       <div className="p-4 shadow-md">
         <Typography variant="h4" className="mb-2 font-bold text-blue-gray-300">

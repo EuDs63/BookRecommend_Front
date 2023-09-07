@@ -32,20 +32,10 @@ export function WillReadPage({ willReadBookData }) {
         console.log("success!");
         console.log(resp.data);
         const contents = resp.data["content"];
-        console.log(contents)
         const books = contents.map((content) => content["book"]);
-        const collect_time = contents.map(
-          (content) => content.collect_time
-        );
-        const collect_type = contents.map(
-          (content) => content.collect_type
-        );
+        const collect_time = contents.map((content) => content.collect_time);
+        const collect_type = contents.map((content) => content.collect_type);
         const bookData = [];
-        if (Array.isArray(books)) {
-          console.log("books 是一个数组");
-        } else {
-          console.log("books 不是一个数组");
-        }
         books.forEach((book) => {
           const author = book.author;
           const book_id = book.book_id;
@@ -67,7 +57,6 @@ export function WillReadPage({ willReadBookData }) {
           };
           bookData.push(bookObj);
         });
-        console.log(bookData);
         console.log(collect_time);
         const collectText =
           collect_type === 1
