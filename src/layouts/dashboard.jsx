@@ -49,7 +49,6 @@ export function Dashboard() {
     },
   ];
 
-
   return (
     <div className="min-h-screen bg-blue-gray-50/50">
       <div className="p-4 xl:mr-80">

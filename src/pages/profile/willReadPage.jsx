@@ -7,12 +7,13 @@ import {
   CardBody,
   Typography,
 } from "@material-tailwind/react";
-export function WillReadPage({ willReadBookData }) {
+export function WillReadPage() {
   const { userid } = useParams(); // 获取路由参数
-  const { willRead } = useLocation();
-  const queryParams = new URLSearchParams(willRead);
+  const { search } = useLocation();
+  const queryParams = new URLSearchParams(search);
   //   const query = queryParams.get("query");
   const [bookInfoData, setBookInfoData] = useState([]);
+  const [bookCollectedTimeData, setBookCollectedTimeData] = useState([]);
   const currentPageParam = queryParams.get("page");
   const [currentPage, setCurrentPage] = useState(
     currentPageParam ? parseInt(currentPageParam) : 1
@@ -30,11 +31,18 @@ export function WillReadPage({ willReadBookData }) {
       var code = resp.data["code"].toString();
       if (code === "0") {
         console.log("success!");
-        console.log(resp.data);
         const contents = resp.data["content"];
-        const books = contents.map((content) => content["book"]);
-        const collect_time = contents.map((content) => content.collect_time);
         const collect_type = contents.map((content) => content.collect_type);
+        const indices = [];
+        collect_type.forEach((value, index) => {
+          if (value === 1) {
+            indices.push(index);
+          }
+        });
+        const books = indices.map((index) => contents[index].book);
+        const collect_time = indices.map(
+          (index) => contents[index].collect_time
+        );
         const bookData = [];
         books.forEach((book) => {
           const author = book.author;
@@ -57,17 +65,8 @@ export function WillReadPage({ willReadBookData }) {
           };
           bookData.push(bookObj);
         });
-        console.log(collect_time);
-        const collectText =
-          collect_type === 1
-            ? "想读"
-            : collect_type === 2
-            ? "在读"
-            : collect_type === 3
-            ? "读过"
-            : "其他情况";
-        console.log(collectText);
         setBookInfoData(bookData);
+        setBookCollectedTimeData(collect_time)
         // setTotalPages(totalPages);
         // setTotalRecords(totalRecords);
       } else {
@@ -127,9 +126,7 @@ export function WillReadPage({ willReadBookData }) {
                 <Typography>{book.des}</Typography>
               </div>
               <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                <Typography>
-                  年:{book.date}&nbsp;&nbsp;&nbsp;&nbsp;评分:{book.rate}/10.00
-                </Typography>
+                <Typography>收藏于 {bookCollectedTimeData[index]}</Typography>
               </div>
             </div>
           </CardBody>

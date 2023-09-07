@@ -18,17 +18,11 @@ import {
   Cog6ToothIcon,
   PencilIcon,
 } from "@heroicons/react/24/solid";
-import { Link, useParams, useLocation  } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import { ProfileInfoCard, BookCommentsCard } from "@/widgets/cards";
-import {
-  bookDetailsData,
-  recommendedBooksData,
-  bookCommentsData,
-} from "@/data";
+import { recommendedBooksData, bookCommentsData } from "@/data";
 import { bookInfo, commentInfo } from "@/utils/api";
 import React, { useState, useEffect } from "react";
-// const [bookDetailsData, setBookDetailsData] = useState(null);
-// const [recommendedBooksData, setRecommendedBooksData] = useState([]);
 
 //点击一个“详情”页面将给出Info_type=1,bookId=X;
 //经过推荐系统将返回四个bookId,Info_type=0;
@@ -36,26 +30,31 @@ import React, { useState, useEffect } from "react";
 //useEffect函数需要四个操作:1. fetch一个详细信息 2. 推荐算法 3. fetch四个推荐信息 4. fectch评论
 
 export function Profile() {
-  const { query } = useParams(); // 获取路由参m 数
-  // useEffect(() => {
-  //   // 使用 fetch 执行相同的请求
-  //   fetch(`/book/${book_id}/${info_type}`, {
-  //     method: "GET",
-  //   })
-  //     .then((response) => {
-  //       if (!response.ok) {
-  //         throw new Error("Network response was not ok");
-  //       }
-  //       return response.json(); // 解析 JSON 响应
-  //     })
-  //     .then((data) => {
-  //       // 处理获取的数据
-  //       console.log(data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("There was a problem with the fetch operation:", error);
-  //     });
-  // }, []); // 仅在组件挂载时加载数据
+  const { search } = useLocation();
+  const [bookDetailsData, setBookDetailsData] = useState();
+  // const [recommendedBooksData, setRecommendedBooksData] = useState([]);
+  const queryParams = new URLSearchParams(search);
+  const query = queryParams.get("query");
+  console.log(query);
+  useEffect(() => {
+    console.log('11111'+ query);
+    console.log("haahah");
+    // 在组件加载后执行的代码
+    getDetailBookInfo();
+  }, [query]);
+
+  function getDetailBookInfo() {
+    bookInfo(query, 1).then((resp) => {
+      var code = resp.data["code"].toString();
+      if (code === "0") {
+        console.log("success!");
+        const book = resp.data["book"];
+        setBookDetailsData(book);
+      } else {
+        console.log("fail!");
+      }
+    });
+  }
   return (
     <>
       <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url(https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80)] bg-cover	bg-center">
@@ -65,66 +64,41 @@ export function Profile() {
         <CardBody className="p-4">
           <div className="mb-10 flex items-center justify-between gap-6">
             <div className="flex items-center gap-6">
-              {bookDetailsData.map(
-                (
-                  {
-                    book_id,
-                    isbn,
-                    cover_image,
-                    title,
-                    author,
-                    publisher,
-                    rating_avg,
-                    publish_date,
-                    page_num,
-                    category,
-                    description,
-                    rating_num,
-                    comment_count,
-                  },
-                  index // 添加索引参数
-                ) => (
-                  <div key={book_id} className="flex items-center">
-                    {index === 0 && ( // 仅在索引为0（即第一个对象）时渲染
-                      <>
-                        <img
-                          src={`https://images.weserv.nl/?url=${cover_image}`}
-                          alt={title}
-                          className="h-48 w-36 rounded-lg shadow-lg shadow-blue-gray-500/40"
-                        />
-                        <div className="ml-10">
-                          <Typography
-                            variant="h3"
-                            color="blue-gray"
-                            className="mb-1"
-                          >
-                            {title}
-                          </Typography>
-                          <Typography
-                            variant="lead"
-                            className="font-normal text-blue-gray-600"
-                          >
-                            {author}
-                          </Typography>
-                          <Typography
-                            variant="lead"
-                            className="font-normal text-blue-gray-600"
-                          >
-                            {rating_avg} / 10.0分 {rating_num}人评分{" "}
-                            {comment_count}个评论
-                          </Typography>
-                          <Typography
-                            variant="paragraph"
-                            className="font-normal text-blue-gray-600"
-                          >
-                            "{description}"
-                          </Typography>
-                        </div>
-                      </>
-                    )}
+              <div key={book_id} className="flex items-center">
+                <>
+                  <img
+                    src={`https://images.weserv.nl/?url=${bookDetailsData.cover_image_url}`}
+                    alt={title}
+                    className="h-48 w-36 rounded-lg shadow-lg shadow-blue-gray-500/40"
+                  />
+                  <div className="ml-10">
+                    <Typography variant="h3" color="blue-gray" className="mb-1">
+                      {bookDetailsData.title}
+                    </Typography>
+                    <Typography
+                      variant="lead"
+                      className="font-normal text-blue-gray-600"
+                    >
+                      {bookDetailsData.author}
+                    </Typography>
+                    <Typography
+                      variant="lead"
+                      className="font-normal text-blue-gray-600"
+                    >
+                      {bookDetailsData.rating_avg} / 10.0分{" "}
+                      {bookDetailsData.rating_num}人评分{" "}
+                      {bookDetailsData.comment_count}
+                      个评论
+                    </Typography>
+                    <Typography
+                      variant="paragraph"
+                      className="font-normal text-blue-gray-600"
+                    >
+                      "{bookDetailsData.description}"
+                    </Typography>
                   </div>
-                )
-              )}
+                </>
+              </div>
             </div>
           </div>
           {/*
@@ -152,11 +126,12 @@ export function Profile() {
               {bookDetailsData.length > 0 && (
                 <ProfileInfoCard
                   details={{
-                    出版社: bookDetailsData[0].publisher,
-                    ISBN: bookDetailsData[0].isbn,
-                    出版日期: bookDetailsData[0].publish_date,
-                    类别: bookDetailsData[0].category,
-                    页数: bookDetailsData[0].page_num,
+                    出版社: bookDetailsData.publisher,
+                    ISBN: bookDetailsData.isbn,
+                    出版日期: bookDetailsData.publish_date,
+                    类别: bookDetailsData.category,
+                    页数: bookDetailsData.page_num,
+                    标签: bookDetailsData.tag,
                   }}
                   action={
                     <Tooltip content="Edit Profile">
