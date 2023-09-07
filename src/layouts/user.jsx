@@ -8,7 +8,6 @@ import {
   ArrowRightOnRectangleIcon,
 } from "@heroicons/react/24/solid";
 import {
-  Sidenav,
   DashboardNavbar,
   Configurator,
   Footer,
@@ -17,14 +16,13 @@ import {
 import routes from "@/routes";
 import { useMaterialTailwindController, setOpenConfigurator } from "@/context";
 
-export function Dashboard() {
-  const [controller, dispatch] = useMaterialTailwindController();
-  const { sidenavType } = controller;
+export function User() {
+  const [dispatch] = useMaterialTailwindController();
 
   const navbarRoutes = [
     {
       name: "首页",
-      path: "/dashboard/main/:userid",
+      path: "/user/main/:userid",
       icon: ChartPieIcon,
     },
     {
@@ -33,26 +31,12 @@ export function Dashboard() {
       icon: UserPlusIcon,
     },
     {
-      name: "想读",
-      path: "/dashboard/:userid/will-read",
+      name: "设置",
+      path: "/user/setting",
       icon: UserPlusIcon,
     },
-    {
-      name: "游客首页",
-      path: "/tourist/main/:userid",
-      icon: UserPlusIcon,
-    },
-    {
-      name: "用户首页",
-      path: "/user/main/:userid",
-      icon: UserPlusIcon,
-    },
-    {
-        name: "分类浏览",
-        path: "/dashboard/category",
-        icon: UserPlusIcon,
-    }
   ];
+
 
   return (
     <div className="min-h-screen bg-blue-gray-50/50">
@@ -74,7 +58,7 @@ export function Dashboard() {
         <Routes>
           {routes.map(
             ({ layout, pages }) =>
-              layout === "dashboard" &&
+              layout === "user" &&
               pages.map(({ path, element }) => (
                 <Route exact path={path} element={element} />
               ))
@@ -88,6 +72,6 @@ export function Dashboard() {
   );
 }
 
-Dashboard.displayName = "/src/layout/dashboard.jsx";
+User.displayName = "/src/layout/user.jsx";
 
-export default Dashboard;
+export default User;

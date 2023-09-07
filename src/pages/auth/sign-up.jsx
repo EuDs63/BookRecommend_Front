@@ -5,15 +5,14 @@ import {
   CardBody,
   CardFooter,
   Input,
-  Checkbox,
   Button,
   Typography,
 } from "@material-tailwind/react";
 
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import { userRegister, userInfo } from "@/utils/api"
-import { useUser } from "../../UserContext";
+import { userRegister } from "@/utils/api"
+import { useUser } from "@/context/UserContext";
 export function SignUp() {
 
   const [username, setUserName] = useState("");
@@ -47,9 +46,8 @@ export function SignUp() {
       var code = resp.data['code'].toString();
       var message = resp.data['msg'];
       if (code === '0') {
-        //getUserInfo(form.email);
         alert(message);
-        navigateTo('/home');//这里应该打开一个标签推荐页面
+        navigateTo('/auth/sign-in');//这里应该打开一个标签推荐页面
         handleSignInContext();
       } else {
         console.log(username + " try to sign up, but fail");

@@ -7,8 +7,9 @@ import {
   UserPlusIcon,
 } from "@heroicons/react/24/solid";
 import { Profile, UserMainPage, UserProfile } from "@/pages/profile";
-import { DashBoard, Tables, Notifications, Search } from "@/pages/dashboard";
+import { DashBoard, Tables, Notifications, Search, Category, TagSearch} from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
+import { Setting } from "./pages/user";
 import WillReadPage from "./pages/profile/willReadPage";
 import ReadingPage from "./pages/profile/readingPage";
 import HaveReadPage from "./pages/profile/haveReadPage";
@@ -77,15 +78,21 @@ export const routes = [
       },
       {
         icon: <BellIcon {...icon} />,
-        name: "search",
-        path: "/search",
-        element: <Search />,
+        name: "userMainPage",
+        path: "/main/:userid",
+        element: <UserMainPage />,
       },
       {
         icon: <BellIcon {...icon} />,
-        name: "userMainPage",
-        path: "/main",
-        element: <UserMainPage />,
+        name: "category",
+        path: "/category",
+        element: <Category />,
+      },
+      {
+        icon: <BellIcon {...icon} />,
+        name: "tagsearch",
+        path: "/tagsearch",
+        element: <TagSearch />,
       },
     ],
   },
@@ -107,18 +114,36 @@ export const routes = [
       },
     ],
   },
-  //   {
-  //     title: "user pages",
-  //     layout: "user",
-  //     pages: [
-  //       {
-  //         icon: <UserPlusIcon {...icon} />,
-  //         name: "user profile",
-  //         path: "/user/:userid",
-  //         element: <userProfile />,
-  //       },
-  //     ],
-  //   },
+  {
+    title: "tourist pages",
+    layout: "tourist",
+    pages: [
+      {
+        icon: <BellIcon {...icon} />,
+        name: "游客首页",
+        path: "/main/:userid",
+        element: <UserMainPage />,
+      },
+    ],
+  },
+  {
+    title: "user pages",
+    layout: "user",
+    pages: [
+      {
+        icon: <BellIcon {...icon} />,
+        name: "用户首页",
+        path: "/main/:userid",
+        element: <UserMainPage />,
+      },
+      {
+        icon: <BellIcon {...icon} />,
+        name: "用户设置",
+        path: "/setting",
+        element: <Setting />,
+      },
+    ],
+  },
 ];
 
 export default routes;

@@ -9,24 +9,47 @@ import {
   Button,
   Typography,
 } from "@material-tailwind/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { userLogin, userInfo } from "@/utils/api";
-import { useUser } from "../../UserContext";
+import { userLogin, userInfo, userAutoLogin } from "@/utils/api";
+import { useUser } from "../../context/UserContext";
 
 export function SignIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { isLoggedIn, setIsLoggedIn } = useUser(); // 使用useUser钩子来获取用户状态
-  const handleLogout = () => {
-    // 在用户点击登出按钮时更新用户状态
-    setIsLoggedIn(false);
-  };
-  const handleSignInContext = () => {
-    // 在用户点击登出按钮时更新用户状态
-    setIsLoggedIn(true);
-  };
+  const [rememberMe, setRememberMe] = useState(false);
+  const { setIsLoggedIn, login } = useUser(); // 使用useUser钩子来获取用户状态
   const navigateTo = useNavigate();
+
+  useEffect(() => {
+    // 检查用户是否已经登录，如果已经登录则不执行自动登录逻辑
+      userAutoLogin().then((resp) => {
+        var code = resp.data["code"].toString();
+        var message = resp.data["msg"];
+        var token = resp.data["token"];
+        if (code === "0") {
+          handleSignInContext(resp.data["user"], token);
+          alert('自动登录成功');
+          navigateTo("/user/main");
+        } 
+      });
+
+  }, []);
+
+  // 验证成功
+  const handleSignInContext = (data, token) => {
+    // 更新用户状态
+    setIsLoggedIn(true);
+    login(data)
+    // 根据用户选择，将 token 存储在 localStorage 或 sessionStorage 中
+    if (rememberMe) {
+      localStorage.setItem('token', token);
+    } else {
+      sessionStorage.setItem('token', token);
+    }
+
+  };
+
 
   // 登录
   function handleSignIn() {
@@ -36,14 +59,12 @@ export function SignIn() {
     }).then((resp) => {
       var code = resp.data["code"].toString();
       var message = resp.data["msg"];
-      console.log(message);
+      var token = resp.data["token"];
       if (code === "0") {
-        //getUserInfo(form.email);
         alert(message);
-        navigateTo("/home");
-        handleSignInContext();
+        navigateTo("/user/main");
+        handleSignInContext(resp.data["user"], token);
       } else {
-        console.log(username + " try to sign in, but fail");
         alert(message);
       }
     });
@@ -84,7 +105,8 @@ export function SignIn() {
               onChange={handlePasswordChange}
             />
             <div className="-ml-2.5">
-              <Checkbox label="Remember Me" />
+              <Checkbox label="Remember Me" checked={rememberMe}
+                onChange={() => setRememberMe(!rememberMe)} />
             </div>
           </CardBody>
           <CardFooter className="pt-0">
