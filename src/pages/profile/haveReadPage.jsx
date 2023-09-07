@@ -1,22 +1,146 @@
+import { getAction } from "@/utils/api";
 import React, { useState, useEffect } from "react";
-
-function HaveReadPage({ haveReadBookData }) {
+import { useParams, useLocation } from "react-router-dom";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  Typography,
+} from "@material-tailwind/react";
+export function HaveReadPage() {
+  const { userid } = useParams(); // 获取路由参数
+  const { search } = useLocation();
+  const queryParams = new URLSearchParams(search);
+  //   const query = queryParams.get("query");
+  const [bookInfoData, setBookInfoData] = useState([]);
+  const [bookCollectedTimeData, setBookCollectedTimeData] = useState([]);
+  const currentPageParam = queryParams.get("page");
+  const [currentPage, setCurrentPage] = useState(
+    currentPageParam ? parseInt(currentPageParam) : 1
+  );
+  //   const [totalPages, setTotalPages] = useState("");
+  //   const [totalRecords, setTotalRecords] = useState("");
+  useEffect(() => {
+    // 在组件加载后执行的代码
+    console.log(userid);
+    getReadingPageInfo();
+    setCurrentPage(1);
+  }, [userid]);
+  function getReadingPageInfo() {
+    getAction(1, 2, 0, userid).then((resp) => {
+      var code = resp.data["code"].toString();
+      if (code === "0") {
+        console.log("success!");
+        const contents = resp.data["content"];
+        const collect_type = contents.map((content) => content.collect_type);
+        const indices = [];
+        collect_type.forEach((value, index) => {
+          if (value === 3) {
+            indices.push(index);
+          }
+        });
+        const books = indices.map((index) => contents[index].book);
+        const collect_time = indices.map(
+          (index) => contents[index].collect_time
+        );
+        const bookData = [];
+        books.forEach((book) => {
+          const author = book.author;
+          const book_id = book.book_id;
+          const image = book.cover_image_url;
+          const des = book.description;
+          const rate = book.rating_avg;
+          const name = book.title;
+          const publisher = book.publisher;
+          const date = book.publish_date;
+          const bookObj = {
+            author,
+            book_id,
+            image,
+            des,
+            rate,
+            name,
+            publisher,
+            date,
+          };
+          bookData.push(bookObj);
+        });
+        setBookInfoData(bookData);
+        setBookCollectedTimeData(collect_time);
+        // setTotalPages(totalPages);
+        // setTotalRecords(totalRecords);
+      } else {
+        console.log("fail!");
+      }
+    });
+  }
   return (
     <div>
-      <h2>读过书籍</h2>
-      <ul>
-        {haveReadBookData ? (
-          haveReadBookData.map((book) => (
-            <li key={book.book_id}>
-              <div>书名: {book.title}</div>
-              <div>作者: {book.author}</div>
-              {/* 其他书籍信息 */}
-            </li>
-          ))
+      <Typography
+        variant="h6"
+        color="black"
+        style={{
+          color: "black",
+          fontSize: "22px",
+          fontWeight: "bold",
+        }}
+      >
+        我曾读过
+      </Typography>
+      <Card>
+        {bookInfoData.map((book, index) => (
+          <CardBody
+            key={index}
+            style={{ overflow: "hidden", height: "235px", display: "flex" }}
+          >
+            <div>
+              <img
+                src={`https://images.weserv.nl/?url=${book.image}`}
+                className="h-48 w-36 rounded-lg shadow-lg shadow-blue-gray-500/40"
+              />
+            </div>
+            <div style={{ marginLeft: "20px", flex: 1 }}>
+              <div>
+                <Typography
+                  style={{
+                    color: "black",
+                    fontSize: "22px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {book.name}
+                </Typography>
+                <Typography>{book.publisher}</Typography>
+              </div>
+              <div>
+                <Typography style={{ color: "blue" }}>{book.author}</Typography>
+              </div>
+              <div
+                style={{
+                  display: "-webkit-box",
+                  WebkitBoxOrient: "vertical",
+                  WebkitLineClamp: 3,
+                  overflow: "hidden",
+                }}
+              >
+                <Typography>{book.des}</Typography>
+              </div>
+              <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                <Typography>收藏于 {bookCollectedTimeData[index]}</Typography>
+              </div>
+            </div>
+          </CardBody>
+        ))}
+      </Card>
+      <div>
+        {bookInfoData.length > 30 ? (
+          <span>读书谓已多，抚事知不足</span>
+        ) : bookInfoData.length >= 10 && bookInfoData.length <= 30 ? (
+          <span>欲穷千里目，更上一层楼</span>
         ) : (
-          <p>加载中...</p>
+          <span>玉不琢不成器，人不学不知理</span>
         )}
-      </ul>
+      </div>
     </div>
   );
 }
