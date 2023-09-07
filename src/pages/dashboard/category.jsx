@@ -45,131 +45,55 @@ export function Category() {
           return null;
         }
       }
-
-      const linkStyle = {
-        textDecoration: 'none',
-        color: '#0074e4',
-        marginRight: '10px', // 控制链接之间的间距
-      };
     
-      const containerStyle = {
-        display: 'flex',
-        flexWrap: 'wrap',
-      };
-    
-      const columnStyle = {
-        flex: '1', // 平均分配宽度
-      };
+      function LinkContainer({ tagId, label }) {
+        return (
+          <div style={{ width: '20%', padding: '8px' }}>
+            <Link to={`/dashboard/tagsearch?tag_id=${tagId}&page=1`} style={{ textDecoration: 'none' }}>
+                <span style={{ color: '#0074e4' }}>{label}</span>
+                ({recordsArray[tagId - 1]})
+            </Link>
+          </div>
+        );
+      }      
 
     return(
         <div>
             <Card>
-                
+
             <Typography variant="h6" color="black"
             style={{
                 color: "black",
                 fontSize: "24px",
                 fontWeight: "bold",
+                marginLeft: "10px",
             }}>
                 文学
             </Typography>
-            <Typography>
-                <Link to="/dashboard/tagsearch?tag_id=21&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>小说({recordsArray[21-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=14&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>中国文学({recordsArray[14-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=15&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>余华({recordsArray[15-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=16&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>儿童文学({recordsArray[16-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=17&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>古典文学({recordsArray[17-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=18&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>名著({recordsArray[18-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=19&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>外国名著({recordsArray[19-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=20&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>外国文学({recordsArray[20-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=21&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>张爱玲({recordsArray[21-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=22&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>当代文学({recordsArray[22-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=23&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>散文({recordsArray[23-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=24&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>杂文({recordsArray[24-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=25&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>村上春树({recordsArray[25-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=26&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>杜拉斯({recordsArray[26-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=27&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>港台({recordsArray[27-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=28&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>童话({recordsArray[28-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=29&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>外国名著({recordsArray[29-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=30&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>米兰·昆德拉({recordsArray[30-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=31&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>茨威格({recordsArray[31-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=32&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>诗歌({recordsArray[32-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=33&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>诗词({recordsArray[33-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=34&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>钱钟书({recordsArray[34-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=35&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>随笔({recordsArray[35-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=36&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>鲁迅({recordsArray[36-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
+            <Typography style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-start' }}>
+                <LinkContainer tagId={14} label="中国文学" />
+                <LinkContainer tagId={15} label="余华" />
+                <LinkContainer tagId={16} label="儿童文学" />
+                <LinkContainer tagId={17} label="古典文学" />
+                <LinkContainer tagId={18} label="名著" />
+                <LinkContainer tagId={19} label="外国名著" />
+                <LinkContainer tagId={20} label="外国文学" />
+                <LinkContainer tagId={21} label="小说" />
+                <LinkContainer tagId={22} label="张爱玲" />
+                <LinkContainer tagId={23} label="当代文学" />
+                <LinkContainer tagId={24} label="散文" />
+                <LinkContainer tagId={25} label="杂文" />
+                <LinkContainer tagId={26} label="村上春树" />
+                <LinkContainer tagId={27} label="杜拉斯" />
+                <LinkContainer tagId={28} label="港台" />
+                <LinkContainer tagId={29} label="童话" />
+                <LinkContainer tagId={30} label="米兰·昆德拉" />
+                <LinkContainer tagId={31} label="茨威格" />
+                <LinkContainer tagId={32} label="诗歌" />
+                <LinkContainer tagId={33} label="诗词" />
+                <LinkContainer tagId={34} label="钱钟书" />
+                <LinkContainer tagId={35} label="随笔" />
+                <LinkContainer tagId={36} label="鲁迅" />
             </Typography>
 
             <Typography variant="h6" color="black"
@@ -177,42 +101,19 @@ export function Category() {
                 color: "black",
                 fontSize: "24px",
                 fontWeight: "bold",
+                marginLeft: "10px",
             }}>
                 流行
             </Typography>
-            <Typography>
-                <Link to="/dashboard/tagsearch?tag_id=39&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>推理({recordsArray[39-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=37&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>奇幻({recordsArray[37-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=38&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>悬疑{recordsArray[38-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=40&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>武侠({recordsArray[40-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=41&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>科幻({recordsArray[41-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=42&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>绘本({recordsArray[42-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=43&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>青春({recordsArray[43-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=44&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>魔幻({recordsArray[44-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
+            <Typography style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-start' }}>
+                <LinkContainer tagId={37} label="奇幻" />
+                <LinkContainer tagId={38} label="悬疑" />
+                <LinkContainer tagId={39} label="推理" />
+                <LinkContainer tagId={40} label="武侠" />
+                <LinkContainer tagId={41} label="科幻" />
+                <LinkContainer tagId={42} label="绘本" />
+                <LinkContainer tagId={43} label="青春" />
+                <LinkContainer tagId={44} label="魔幻" />
             </Typography>
 
             <Typography variant="h6" color="black"
@@ -220,62 +121,24 @@ export function Category() {
                 color: "black",
                 fontSize: "24px",
                 fontWeight: "bold",
+                marginLeft: "10px",
             }}>
                 文化
             </Typography>
-            <Typography>
-                <Link to="/dashboard/tagsearch?tag_id=1&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>人物传记({recordsArray[1-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=2&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>传记({recordsArray[2-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=3&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>军事({recordsArray[3-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=4&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>历史({recordsArray[4-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=5&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>哲学({recordsArray[5-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=6&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>建筑({recordsArray[6-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=7&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>心理学({recordsArray[7-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=8&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>戏剧({recordsArray[8-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=9&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>政治学({recordsArray[9-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=10&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>社会({recordsArray[10-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=11&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>绘画({recordsArray[11-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=12&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>艺术({recordsArray[12-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=13&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>设计({recordsArray[13-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
+            <Typography style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-start' }}>
+                <LinkContainer tagId={1} label="人物传记" />
+                <LinkContainer tagId={2} label="传记" />
+                <LinkContainer tagId={3} label="军事" />
+                <LinkContainer tagId={4} label="历史" />
+                <LinkContainer tagId={5} label="哲学" />
+                <LinkContainer tagId={6} label="建筑" />
+                <LinkContainer tagId={7} label="心理学" />
+                <LinkContainer tagId={8} label="戏剧" />
+                <LinkContainer tagId={9} label="政治学" />
+                <LinkContainer tagId={10} label="社会" />
+                <LinkContainer tagId={11} label="绘画" />
+                <LinkContainer tagId={12} label="艺术" />
+                <LinkContainer tagId={13} label="设计" />
             </Typography>
 
             <Typography variant="h6" color="black"
@@ -283,38 +146,18 @@ export function Category() {
                 color: "black",
                 fontSize: "24px",
                 fontWeight: "bold",
+                marginLeft: "10px",
             }}>
                 生活
             </Typography>
-            <Typography>
-                <Link to="/dashboard/tagsearch?tag_id=45&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>健康({recordsArray[45-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=46&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>励志({recordsArray[46-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=47&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>心理({recordsArray[47-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=48&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>成长({recordsArray[48-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=49&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>教育({recordsArray[49-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=50&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>游记({recordsArray[50-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=51&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>爱情({recordsArray[51-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
+            <Typography style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-start' }}>
+                <LinkContainer tagId={45} label="健康" />
+                <LinkContainer tagId={46} label="励志" />
+                <LinkContainer tagId={47} label="心理" />
+                <LinkContainer tagId={48} label="成长" />
+                <LinkContainer tagId={49} label="教育" />
+                <LinkContainer tagId={50} label="游记" />
+                <LinkContainer tagId={51} label="爱情" />
             </Typography>
 
             <Typography variant="h6" color="black"
@@ -322,53 +165,31 @@ export function Category() {
                 color: "black",
                 fontSize: "24px",
                 fontWeight: "bold",
+                marginLeft: "10px",
             }}>
                 经管
             </Typography>
-            <Typography>
-                <Link to="/dashboard/tagsearch?tag_id=56&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>商业({recordsArray[56-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=57&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>管理({recordsArray[57-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=58&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>经济学({recordsArray[58-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=59&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>金融({recordsArray[59-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            </Typography>   
+            <Typography style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-start' }}>
+                <LinkContainer tagId={56} label="商业" />
+                <LinkContainer tagId={57} label="管理" />
+                <LinkContainer tagId={58} label="经济学" />
+                <LinkContainer tagId={59} label="金融" />
+            </Typography>
 
             <Typography variant="h6" color="black"
             style={{
                 color: "black",
                 fontSize: "24px",
                 fontWeight: "bold",
+                marginLeft: "10px",
             }}>
                 科技
             </Typography>
-            <Typography>
-                <Link to="/dashboard/tagsearch?tag_id=52&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>科普({recordsArray[52-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=53&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>程序({recordsArray[53-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=54&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>编程({recordsArray[54-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Link to="/dashboard/tagsearch?tag_id=55&page=1" style={{ textDecoration: 'none' }}>
-                    <span style={{ color: '#0074e4' }}>通信({recordsArray[55-1]})</span>
-                </Link>
-                &nbsp;&nbsp;&nbsp;&nbsp;
+            <Typography style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-start' }}>
+                <LinkContainer tagId={52} label="科普" />
+                <LinkContainer tagId={53} label="程序" />
+                <LinkContainer tagId={54} label="编程" />
+                <LinkContainer tagId={55} label="通信" />
             </Typography>
 
             </Card>
