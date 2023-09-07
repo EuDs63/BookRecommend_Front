@@ -93,6 +93,30 @@ export function booksearch(keyword, page, per_page, method) {
       method: method,
     },
   });
+export function gettagbookInfo(tag_id, page, per_page){
+    return service({
+        url:`/book/tag`,
+        method: 'get',
+        params: {
+            tag_id: tag_id,
+            page: page,
+            per_page: per_page,
+        }
+    })
+}
+
+export function booksearch(keyword, page, per_page, method)
+{
+    return service({
+        url:`/book/search`,
+        method: 'get',
+        params: {
+            keyword: keyword,
+            page: page,
+            per_page: per_page,
+            method: method
+        }
+    })
 }
 
 export function getAction(type, method, book_id, user_id) {

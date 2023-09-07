@@ -7,7 +7,7 @@ import {
   UserPlusIcon,
 } from "@heroicons/react/24/solid";
 import { Profile, UserMainPage, UserProfile } from "@/pages/profile";
-import { DashBoard, Tables, Notifications, Search } from "@/pages/dashboard";
+import { DashBoard, Tables, Notifications, Search, Category, TagSearch} from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
 import { Setting } from "./pages/user";
 import WillReadPage from "./pages/profile/willReadPage";
@@ -81,6 +81,18 @@ export const routes = [
         name: "userMainPage",
         path: "/main",
         element: <UserMainPage />,
+      },
+      {
+        icon: <BellIcon {...icon} />,
+        name: "category",
+        path: "/category",
+        element: <Category />,
+      },
+      {
+        icon: <BellIcon {...icon} />,
+        name: "tagsearch",
+        path: "/tagsearch",
+        element: <TagSearch />,
       },
     ],
   },
