@@ -21,8 +21,39 @@ import { useUser } from "../../context/UserContext";
 
 export function Setting() {
     const { isLoggedIn, user, logout } = useUser(); // 使用useUser钩子来获取用户状态
-    const avatar_url = import.meta.env.VITE_BASE_URL+'/'+user.avatar_path;
+    const avatar_url = import.meta.env.VITE_BASE_URL + '/' + user.avatar_path;
+    const [password, setPassword] = useState("");
+    const [password_confirmation, setPassword_confirmation] = useState("");
 
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value);
+    }
+
+    const handlePassword_confirmationChange = (e) => {
+        setPassword_confirmation(e.target.value);
+    }
+
+    function handleChangePassword(){
+        // 验证两次密码输入是否一致
+        if (password !== password_confirmation) {
+          alert("两次密码输入不一致");
+          return;
+        }
+        // 两次密码输入一致，准备发送更改密码请求
+        userRegister({
+            user_id: username,
+            password: password,
+        }).then((resp)=>{
+          var code = resp.data['code'].toString();
+          var message = resp.data['msg'];
+          if (code === '0') {
+            alert(message);
+            navigateTo('/auth/sign-in');//这里应该打开一个标签推荐页面
+          } else {
+            alert(message);
+          }
+        });
+    }
 
     return (
         <>
@@ -79,10 +110,11 @@ export function Setting() {
                             <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
                                 <div className="mb-4 flex flex-col gap-6">
                                     <Input type="password" size="lg" label="旧密码" />
-                                    <Input type="password" size="lg" label="新密码" />
-                                    <Input type="password" size="lg" label="再次确认" />
+                                    <Input type="password" label="新密码" size="lg" onChange={handlePasswordChange} />
+                                    <Input type="password" label="再次确认" size="lg" onChange={handlePassword_confirmationChange} />
+
                                 </div>
-                                <Button className="mt-6" fullWidth>
+                                <Button className="mt-6" fullWidth onClick={handleChangePassword}>
                                     保存并重新登录
                                 </Button>
                             </form>

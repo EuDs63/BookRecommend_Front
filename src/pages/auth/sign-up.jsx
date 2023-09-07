@@ -5,15 +5,14 @@ import {
   CardBody,
   CardFooter,
   Input,
-  Checkbox,
   Button,
   Typography,
 } from "@material-tailwind/react";
 
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import { userRegister, userInfo } from "@/utils/api"
-import { useUser } from "../../context/UserContext";
+import { userRegister } from "@/utils/api"
+import { useUser } from "@/context/UserContext";
 export function SignUp() {
 
   const [username, setUserName] = useState("");
