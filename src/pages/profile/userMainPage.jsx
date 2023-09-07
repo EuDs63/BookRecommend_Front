@@ -1,8 +1,13 @@
 import React from "react";
 import { Typography } from "@material-tailwind/react";
-import { Carousel, IconButton } from "@material-tailwind/react";
-import { Button } from "@material-tailwind/react";
+import { Carousel, IconButton,Button } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+import {
+  ClockIcon,
+  CheckIcon,
+  EllipsisVerticalIcon,
+  ArrowUpIcon,
+} from "@heroicons/react/24/outline";
 import { Link, BrowserRouter, Route, Routes } from "react-router-dom";
 import {
   willReadBookData,
@@ -73,7 +78,7 @@ export function UserMainPage() {
     return (
       <Carousel
         className="rounded-xl"
-    
+
         prevArrow={({ handlePrev }) => (
           <IconButton
             variant="text"

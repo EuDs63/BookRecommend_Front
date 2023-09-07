@@ -12,19 +12,17 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { userLogin, userInfo } from "@/utils/api";
-import { useUser } from "../../UserContext";
+import { useUser } from "../../context/UserContext";
 
 export function SignIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { isLoggedIn, setIsLoggedIn } = useUser(); // 使用useUser钩子来获取用户状态
-  const handleLogout = () => {
-    // 在用户点击登出按钮时更新用户状态
-    setIsLoggedIn(false);
-  };
-  const handleSignInContext = () => {
-    // 在用户点击登出按钮时更新用户状态
+  const { setIsLoggedIn,login } = useUser(); // 使用useUser钩子来获取用户状态
+
+  const handleSignInContext = (data) => {
+    // 更新用户状态
     setIsLoggedIn(true);
+    login(data)
   };
   const navigateTo = useNavigate();
 
@@ -38,10 +36,9 @@ export function SignIn() {
       var message = resp.data["msg"];
       console.log(message);
       if (code === "0") {
-        //getUserInfo(form.email);
         alert(message);
         navigateTo("/home");
-        handleSignInContext();
+        handleSignInContext(resp.data["user"]);
       } else {
         console.log(username + " try to sign in, but fail");
         alert(message);
