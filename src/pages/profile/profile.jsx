@@ -18,7 +18,7 @@ import {
   Cog6ToothIcon,
   PencilIcon,
 } from "@heroicons/react/24/solid";
-import { Link } from "react-router-dom";
+import { Link, useParams, useLocation  } from "react-router-dom";
 import { ProfileInfoCard, BookCommentsCard } from "@/widgets/cards";
 import {
   bookDetailsData,
@@ -36,25 +36,26 @@ import React, { useState, useEffect } from "react";
 //useEffect函数需要四个操作:1. fetch一个详细信息 2. 推荐算法 3. fetch四个推荐信息 4. fectch评论
 
 export function Profile() {
-    // useEffect(() => {
-    //   // 使用 fetch 执行相同的请求
-    //   fetch(`/book/${book_id}/${info_type}`, {
-    //     method: "GET",
-    //   })
-    //     .then((response) => {
-    //       if (!response.ok) {
-    //         throw new Error("Network response was not ok");
-    //       }
-    //       return response.json(); // 解析 JSON 响应
-    //     })
-    //     .then((data) => {
-    //       // 处理获取的数据
-    //       console.log(data);
-    //     })
-    //     .catch((error) => {
-    //       console.error("There was a problem with the fetch operation:", error);
-    //     });
-    // }, []); // 仅在组件挂载时加载数据
+  const { query } = useParams(); // 获取路由参m 数
+  // useEffect(() => {
+  //   // 使用 fetch 执行相同的请求
+  //   fetch(`/book/${book_id}/${info_type}`, {
+  //     method: "GET",
+  //   })
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error("Network response was not ok");
+  //       }
+  //       return response.json(); // 解析 JSON 响应
+  //     })
+  //     .then((data) => {
+  //       // 处理获取的数据
+  //       console.log(data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("There was a problem with the fetch operation:", error);
+  //     });
+  // }, []); // 仅在组件挂载时加载数据
   return (
     <>
       <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url(https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80)] bg-cover	bg-center">

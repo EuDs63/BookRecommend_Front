@@ -8,7 +8,7 @@ function App() {
       <Route path="/auth/*" element={<Auth />} />
       <Route path="/tourist/*" element={<Tourist />} />
       <Route path="/user/*" element={<User />} />
-      <Route path="*" element={<Navigate to="/dashboard/main" replace />} />
+      <Route path="*" element={<Navigate to="/dashboard/main/:userid" replace />} />
     </Routes>
   );
 }

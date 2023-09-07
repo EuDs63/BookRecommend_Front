@@ -29,7 +29,7 @@ export function DashboardNavbar() {
   const handleLogout = () => {
     // 在用户点击登出按钮时更新用户状态
     setIsLoggedIn(false);
-    navigate(`/tourist/main`);
+    navigate(`/tourist/main/:userid`);
 
     logout();
   };

@@ -79,7 +79,7 @@ export const routes = [
       {
         icon: <BellIcon {...icon} />,
         name: "userMainPage",
-        path: "/main",
+        path: "/main/:userid",
         element: <UserMainPage />,
       },
       {
@@ -121,7 +121,7 @@ export const routes = [
       {
         icon: <BellIcon {...icon} />,
         name: "游客首页",
-        path: "/main",
+        path: "/main/:userid",
         element: <UserMainPage />,
       },
     ],
@@ -133,7 +133,7 @@ export const routes = [
       {
         icon: <BellIcon {...icon} />,
         name: "用户首页",
-        path: "/main",
+        path: "/main/:userid",
         element: <UserMainPage />,
       },
       {
@@ -141,7 +141,7 @@ export const routes = [
         name: "用户设置",
         path: "/setting",
         element: <Setting />,
-      }
+      },
     ],
   },
 ];

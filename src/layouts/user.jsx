@@ -22,7 +22,7 @@ export function User() {
   const navbarRoutes = [
     {
       name: "首页",
-      path: "/user/main",
+      path: "/user/main/:userid",
       icon: ChartPieIcon,
     },
     {
