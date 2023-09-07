@@ -14,12 +14,12 @@ service.interceptors.request.use(
   (config) => {
     // 从本地存储获取 token
     const token = localStorage.getItem('token');
-    
+
     // 如果 token 存在，则将其添加到请求头部
     if (token) {
       config.headers['Authorization'] = `${token}`;
     }
-    
+
     return config;
   },
   (error) => {

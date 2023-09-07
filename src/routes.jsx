@@ -78,12 +78,6 @@ export const routes = [
       },
       {
         icon: <BellIcon {...icon} />,
-        name: "search",
-        path: "/search",
-        element: <Search />,
-      },
-      {
-        icon: <BellIcon {...icon} />,
         name: "userMainPage",
         path: "/main",
         element: <UserMainPage />,

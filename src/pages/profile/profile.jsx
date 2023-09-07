@@ -207,7 +207,7 @@ export function Profile() {
                     <CardHeader
                       floated={false}
                       color="gray"
-                      className="aspect-w-4 aspect-h-3 relative mx-0 mt-0 mb-4 overflow-hidden"
+                      className="relative mx-0 mt-0 mb-4 h-48 w-36 overflow-hidden"
                     >
                       <img
                         src={`https://images.weserv.nl/?url=${cover_image}`}
@@ -231,9 +231,12 @@ export function Profile() {
                       </Typography>
                       <Typography
                         variant="small"
-                        className="font-normal text-blue-gray-500"
+                        className="text-blue-gray-500overflow-hidden font-normal "
+                        style={{ textOverflow: "ellipsis" }}
                       >
-                        {description}
+                        {description.length > 50
+                          ? description.substring(0, 50) + "..."
+                          : description}
                       </Typography>
                     </CardBody>
                     <CardFooter className="mt-6 flex items-center justify-between py-0 px-1">

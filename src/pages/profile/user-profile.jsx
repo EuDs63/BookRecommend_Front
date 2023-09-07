@@ -35,19 +35,19 @@ import {
 function BookFilter({ willReadBookNum, readingBookNum, haveReadBookNum }) {
   return (
     <div className="space-x-4">
-      <Link to="/will-read">
+      <Link to="/dashboard/:userid/will-read">
         <button className="rounded-md bg-blue-500 py-2 px-4 text-white">
           <HomeIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
           想读 ({willReadBookNum} 本)
         </button>
       </Link>
-      <Link to="/currently-reading">
+      <Link to="/dashboard/:userid/currently-reading">
         <button className="rounded-md bg-green-500 py-2 px-4 text-white">
           <ChatBubbleLeftEllipsisIcon className="-mt-0.5 mr-2 inline-block h-5 w-5" />
           在读 ({readingBookNum} 本)
         </button>
       </Link>
-      <Link to="/have-read">
+      <Link to="/dashboard/:userid/have-read">
         <button className="rounded-md bg-yellow-500 py-2 px-4 text-white">
           <Cog6ToothIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
           读过 ({haveReadBookNum} 本)
@@ -64,9 +64,9 @@ function BookList({ books }) {
       {/* 添加 justify-between 类 */}
       {books.map((book, index) => (
         <div key={index} className="flex flex-col items-center">
-          <Link to={`/dashboard/home?query=${book.id}`}>
+          <Link to={`/dashboard/home?query=${book.book_id}`}>
             <img
-              src={`https://images.weserv.nl/?url=${book.cover_image}`}
+              src={`https://images.weserv.nl/?url=${book.cover_image_url}`}
               alt={book.title}
               className="h-40 w-32 rounded-md"
             />

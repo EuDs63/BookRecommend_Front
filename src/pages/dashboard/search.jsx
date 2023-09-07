@@ -8,12 +8,12 @@ import {
   import { getcategorybookInfo, booksearch } from "@/utils/api";
   import { useEffect, useState } from "react";
 
-  
-  
+
+
   export function Search() {
     const { search } = useLocation();
     const queryParams = new URLSearchParams(search);
-    const query = queryParams.get("query");  
+    const query = queryParams.get("query");
     const [bookInfoData, setBookInfoData] = useState([]);
     const currentPageParam = queryParams.get("page");
     const [currentPage, setCurrentPage] = useState(currentPageParam ? parseInt(currentPageParam) : 1);
@@ -23,7 +23,7 @@ import {
         // 在组件加载后执行的代码
         getSearchBookInfo();
         setCurrentPage(1);
-    }, [query]); 
+    }, [query]);
     function getSearchBookInfo()
     {
         booksearch(query,currentPage,10,1).then((resp)=>
@@ -122,7 +122,7 @@ import {
                     </Typography>
                 </div>
             </div>
-            </CardBody> 
+            </CardBody>
             ))}
 
             <div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
@@ -192,8 +192,6 @@ import {
                                 // 隐藏其他页码
                                 return null;
                             })}
-
-
                             <a href={`search?query=${query}&page=${currentPage+1}`} class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
                                 <span class="sr-only">Next</span>
                                 <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -209,6 +207,5 @@ import {
       </div>
     );
   }
-  
+
   export default Search;
-  
