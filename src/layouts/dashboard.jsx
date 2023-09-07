@@ -51,6 +51,11 @@ export function Dashboard() {
       name: "用户首页",
       path: "/user/main",
       icon: UserPlusIcon,
+    },
+    {
+        name: "分类浏览",
+        path: "/dashboard/category",
+        icon: UserPlusIcon,
     }
   ];
 

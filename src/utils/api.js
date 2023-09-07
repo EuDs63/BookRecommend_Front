@@ -74,6 +74,18 @@ export function getcategorybookInfo(category_id, page, per_page, order=0){
     })
 }
 
+export function gettagbookInfo(tag_id, page, per_page){
+    return service({
+        url:`/book/tag`,
+        method: 'get',
+        params: {
+            tag_id: tag_id,
+            page: page,
+            per_page: per_page,
+        }
+    })
+}
+
 export function booksearch(keyword, page, per_page, method)
 {
     return service({
