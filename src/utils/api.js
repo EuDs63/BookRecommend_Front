@@ -92,7 +92,7 @@ export function getAction(type, method, book_id, user_id) {
   return service({
     url: `/action/get`,
     method: "post",
-    json: {
+    data: {
       type: type,
       method: method,
       book_id: book_id,
