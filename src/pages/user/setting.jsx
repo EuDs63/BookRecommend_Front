@@ -19,12 +19,20 @@ import {
 } from "@heroicons/react/24/solid";
 import { useUser } from "@/context/UserContext";
 import { useState } from "react";
+import { changePassword } from "@/utils/api";
+import { useNavigate } from 'react-router-dom';
 
 export function Setting() {
     const { isLoggedIn, user, logout } = useUser(); // 使用useUser钩子来获取用户状态
     const avatar_url = import.meta.env.VITE_BASE_URL + '/' + user.avatar_path;
+    const [origin_password, setOrigin_password] = useState(""); // 用于保存用户输入的原始密码
     const [password, setPassword] = useState("");
     const [password_confirmation, setPassword_confirmation] = useState("");
+    const navigateTo = useNavigate();
+
+    const handleOrigin_passwordChange = (e) => {
+        setOrigin_password(e.target.value);
+    }
 
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
@@ -41,15 +49,12 @@ export function Setting() {
           return;
         }
         // 两次密码输入一致，准备发送更改密码请求
-        userRegister({
-            user_id: username,
-            password: password,
-        }).then((resp)=>{
+        changePassword(origin_password,password).then((resp)=>{
           var code = resp.data['code'].toString();
           var message = resp.data['msg'];
           if (code === '0') {
             alert(message);
-            navigateTo('/auth/sign-in');//这里应该打开一个标签推荐页面
+            navigateTo('/auth/sign-in');
           } else {
             alert(message);
           }
@@ -110,7 +115,7 @@ export function Setting() {
 
                             <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
                                 <div className="mb-4 flex flex-col gap-6">
-                                    <Input type="password" size="lg" label="旧密码" />
+                                    <Input type="password" size="lg" label="旧密码" onChange={handleOrigin_passwordChange}/>
                                     <Input type="password" label="新密码" size="lg" onChange={handlePasswordChange} />
                                     <Input type="password" label="再次确认" size="lg" onChange={handlePassword_confirmationChange} />
 

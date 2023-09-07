@@ -94,33 +94,46 @@ export function booksearch(keyword, page, per_page, method) {
     },
   });
 }
-  export function gettagbookInfo(tag_id, page, per_page) {
-    return service({
-      url: `/book/tag`,
-      method: 'get',
-      params: {
-        tag_id: tag_id,
-        page: page,
-        per_page: per_page,
-      }
-    })
-  }
+export function gettagbookInfo(tag_id, page, per_page) {
+  return service({
+    url: `/book/tag`,
+    method: 'get',
+    params: {
+      tag_id: tag_id,
+      page: page,
+      per_page: per_page,
+    }
+  })
+}
 
-  export function getAction(type, method, book_id, user_id) {
-    return service({
-      url: `/action/get`,
+export function getAction(type, method, book_id, user_id) {
+  return service({
+    url: `/action/get`,
+    method: "post",
+    data: {
+      type: type,
+      method: method,
+      book_id: book_id,
+      user_id: user_id,
+    },
+  });
+}
+
+export function commentInfo() {
+  return service(
+    {}
+  );
+}
+
+export function changePassword(origin_password,new_password) {
+  return service(
+    {
+      url: "/user/update_password",
       method: "post",
       data: {
-        type: type,
-        method: method,
-        book_id: book_id,
-        user_id: user_id,
+        "origin_password" : origin_password,
+        "new_password" : new_password
       },
-    });
-  }
-
-  export function commentInfo() {
-    return service(
-      {}
-    );
-  }
+    }
+  );
+}
