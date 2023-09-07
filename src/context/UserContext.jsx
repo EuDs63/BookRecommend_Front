@@ -47,6 +47,9 @@ export function UserProvider({ children }) {
     });
     setIsLoggedIn(false);
 
+    // 清除本地存储中的 token
+    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
     // 清除 Redux 状态
     dispatch(updateUser({ // 清除用户信息
       avatar_path: "static/avatar/default.png",

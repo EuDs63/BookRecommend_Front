@@ -9,43 +9,35 @@ import {
   Button,
   Typography,
 } from "@material-tailwind/react";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { userLogin, userInfo,userAutoLogin } from "@/utils/api";
+import { userLogin, userInfo, userAutoLogin } from "@/utils/api";
 import { useUser } from "../../context/UserContext";
 
 export function SignIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-  const { isLoggedIn,setIsLoggedIn, login } = useUser(); // 使用useUser钩子来获取用户状态
+  const { setIsLoggedIn, login } = useUser(); // 使用useUser钩子来获取用户状态
   const navigateTo = useNavigate();
 
   useEffect(() => {
     // 检查用户是否已经登录，如果已经登录则不执行自动登录逻辑
-    if (!isLoggedIn) {
       userAutoLogin().then((resp) => {
         var code = resp.data["code"].toString();
         var message = resp.data["msg"];
         var token = resp.data["token"];
-        var user = resp.data["user"];
         if (code === "0") {
-          setUsername(user["username"]);
-          console.log(user["username"] + '自动登录成功');
+          handleSignInContext(resp.data["user"], token);
           alert('自动登录成功');
           navigateTo("/user/main");
-          handleSignInContext(resp.data["user"], token);
-        } else {
-          alert(message);
-        }
+        } 
       });
-    }
+
   }, []);
-  
-  
 
   // 验证成功
-  const handleSignInContext = (data,token) => {
+  const handleSignInContext = (data, token) => {
     // 更新用户状态
     setIsLoggedIn(true);
     login(data)
@@ -71,7 +63,7 @@ export function SignIn() {
       if (code === "0") {
         alert(message);
         navigateTo("/user/main");
-        handleSignInContext(resp.data["user"],token);
+        handleSignInContext(resp.data["user"], token);
       } else {
         alert(message);
       }
