@@ -32,28 +32,37 @@ export function Setting() {
 
     const [selectedFile, setSelectedFile] = useState(null);
     const [uploadStatus, setUploadStatus] = useState(null);
+    const [avatarPreview, setAvatarPreview] = useState(null);
 
     const handleFileChange = (e) => {
-        setSelectedFile(e.target.files[0]);
-    };
+        const file = e.target.files[0];
+        setSelectedFile(file);
+      
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            setAvatarPreview(event.target.result);
+          };
+          reader.readAsDataURL(file);
+        }
+      };
+      
 
     const handleUpload = () => {
         if (selectedFile) {
             console.log(selectedFile);
 
-            changeAvatar(selectedFile,user).then((resp) => {
+            changeAvatar(selectedFile, user).then((resp) => {
                 var code = resp.data['code'].toString();
                 var avatar_path = resp.data['avatar_path'];
                 if (code === '0') {
-                    console.log('上传成功');
-                    setUploadStatus('上传成功');
+                    setUploadStatus('修改成功');
                     change_avatar(avatar_path);
                 }
             }).catch((error) => {
-                setUploadStatus('上传失败');
-                // 可以在这里处理上传失败后的逻辑
+                setUploadStatus('修改失败，请重试');
             });
-        }else{
+        } else {
             console.log('请选择图片');
             setUploadStatus('请选择图片');
         }
@@ -169,24 +178,38 @@ export function Setting() {
 
                             <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96 flex items-center space-x-6 flex-col">
                                 <div className="flex items-center gap-4">
-                                    <Avatar src={avatar_url} alt="avatar" />
-                                    <div>
-                                        <Typography variant="h6">原始头像</Typography>
-                                    </div>
+                                    {avatarPreview ? (
+                                        <>
+                                            <Avatar src={avatarPreview} alt="avatar" />
+                                            <div>
+                                                <Typography variant="h6">预览头像</Typography>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Avatar src={avatar_url} alt="avatar" />
+                                            <div>
+                                                <Typography variant="h6">原始头像</Typography>
+                                            </div>
+                                        </>
+
+                                    )
+                                    }
+
                                 </div>
 
                                 <label className="block mt-4 items-center">
 
-                                    <input type="file" name="avatar" 
+                                    <input type="file" name="avatar"
                                         className="block w-full text-sm text-slate-500
                                                    file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0
                                                    file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700
                                                    hover:file:bg-violet-100"
                                         onChange={handleFileChange}
                                     />
-                                    <Button onClick={handleUpload}>上传头像</Button>
-                                    {uploadStatus && <div>{uploadStatus}</div>}
+                                    
                                 </label>
+                                <Button onClick={handleUpload} className="m-auto my-5">上传头像</Button>
                                 {uploadStatus && <div>{uploadStatus}</div>}
                             </form>
                         </div>
