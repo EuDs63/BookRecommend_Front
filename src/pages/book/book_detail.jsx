@@ -18,10 +18,10 @@ import {
   Cog6ToothIcon,
   PencilIcon,
 } from "@heroicons/react/24/solid";
-import { Link, useParams, useLocation } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ProfileInfoCard, BookCommentsCard } from "@/widgets/cards";
 import { recommendedBooksData, bookCommentsData } from "@/data";
-import { commentInfo, getBookInfomation } from "@/utils/api";
+import { getBookInfomation } from "@/utils/api";
 
 
 
@@ -92,7 +92,7 @@ export function BookDetail() {
           </div>
           <div className="flex">
             <div className="flex-1">
-              {book.length > 0 && (
+              {book && (
                 <ProfileInfoCard
                   details={{
                     出版社: book.publisher,
@@ -102,11 +102,6 @@ export function BookDetail() {
                     页数: book.page_num,
                     标签: book.tag,
                   }}
-                  action={
-                    <Tooltip content="Edit Profile">
-                      <PencilIcon className="h-4 w-4 cursor-pointer text-blue-gray-500" />
-                    </Tooltip>
-                  }
                 />
               )}
             </div>
@@ -129,13 +124,12 @@ export function BookDetail() {
               </Tabs>
             </div>
           </div>
-          <div className="my-12"></div>{" "}
-          {/* 使用 my-12 类来添加垂直间距，也可以根据需要调整数字部分 */}
-          <div className="px-4 pb-4 ">
+
+          <div className="px-4 pb-4 mt-12">
             <Typography variant="h4" color="blue-gray" className="mb-2">
-              您可能会感兴趣
+              同类别推荐
             </Typography>
-            <hr className="border-t border-gray-300" /> {/* 分隔线 */}
+            <hr className="border-t border-gray-300" /> 
             <div className="mt-6 grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-4">
               {recommendedBooksData.map(
                 ({
@@ -186,7 +180,7 @@ export function BookDetail() {
                     </CardBody>
                     <CardFooter className="mt-6 flex items-center justify-between py-0 px-1">
                       <div className="flex items-center justify-between">
-                        <Link to={route}>
+                        <Link to={`/book/${book_id}`}>
                           <Button variant="outlined" size="sm">
                             查看详情
                           </Button>
@@ -212,11 +206,10 @@ export function BookDetail() {
               )}
             </div>
           </div>
-          <div className="my-12"></div>{" "}
-          {/* 使用 my-12 类来添加垂直间距，也可以根据需要调整数字部分 */}
+          <div className="my-12"></div>
           <div>
             <Typography variant="h4" color="blue-gray" className="mb-3">
-              热门评论
+              短评
             </Typography>
             <ul className="flex flex-col gap-10">
               {bookCommentsData.map((props, index) => (
