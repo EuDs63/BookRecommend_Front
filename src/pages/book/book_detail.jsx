@@ -22,7 +22,7 @@ import { Link, useParams, useLocation } from "react-router-dom";
 import { ProfileInfoCard, BookCommentsCard } from "@/widgets/cards";
 import { recommendedBooksData, bookCommentsData } from "@/data";
 import { commentInfo, getBookInfomation } from "@/utils/api";
-import React, { useState, useEffect } from "react";
+
 
 
 //点击一个“详情”页面将给出Info_type=1,bookId=X;

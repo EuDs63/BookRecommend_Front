@@ -52,7 +52,7 @@ function BookList({ books }) {
 
   const bookElements = books.map((book, index) => (
     <div key={index} className="flex flex-col items-center">
-      <Link to={`/dashboard/home?query=${book.book_id}`}>
+      <Link to={`/book/${book.book_id}`}>
         <img
           src={`https://images.weserv.nl/?url=${book.image}`}
           alt={book.title}

@@ -10,7 +10,7 @@ import {
 import { DashBoard, Tables, Notifications } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
 import { Setting,UserProfile,WillRead,Reading,HaveRead,UserMainPage } from "@/pages/user";
-import { Category, Search, TagSearch,BookDetail, BookTest } from "@/pages/book";
+import { Category, Search, TagSearch,BookDetail } from "@/pages/book";
 import { TouristMainPage } from "@/pages/tourist";
 
 const icon = {
@@ -141,12 +141,6 @@ export const routes = [
         path: ":book_id",
         element: <BookDetail />,
       },
-      {
-        icon: <BellIcon {...icon} />,
-        name: "测试",
-        path: "/test/:book_id",
-        element: <BookTest />,
-      }
     ],
   },
 ];
