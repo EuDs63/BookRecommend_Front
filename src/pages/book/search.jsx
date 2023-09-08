@@ -6,7 +6,7 @@ import {
   import { useLocation } from "react-router-dom";
   import { booksearch } from "@/utils/api";
   import { useEffect, useState } from "react";
-
+  import {Link } from "react-router-dom";
 
 
   export function Search() {
@@ -83,13 +83,14 @@ import {
                 key={index}
                 style={{ overflow: "hidden", height: "235px", display: "flex" }}
             >
-            <div>
+            <Link to={`/book/${book.book_id}`}>
                 <img
                     src={`https://images.weserv.nl/?url=${book.image}`}
                     className="h-48 w-36 rounded-lg shadow-lg shadow-blue-gray-500/40"
                 />
-            </div>
+            </Link>
             <div style={{ marginLeft: "20px", flex: 1 }}>
+                <Link to={`/book/${book.book_id}`}>
                 <div>
                     <Typography
                         style={{
@@ -102,6 +103,8 @@ import {
                     </Typography>
                     <Typography>{book.publisher}</Typography>
                 </div>
+                </Link>
+
                 <div>
                     <Typography style={{ color: "blue" }}>{book.author}</Typography>
                 </div>
