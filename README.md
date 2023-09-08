@@ -140,3 +140,6 @@ git branch -d 本地分支名 #删除本次任务所用的本地分支（也可�
    2. 根据 "记住密码" 选项存储 token：如果用户选择了 "记住密码"，则将 token 存储在 localStorage 中；否则，将 token 存储在 sessionStorage 中。
    3. 在应用程序启动时检查存储中是否存在有效的 token：在你的应用程序启动时（例如，在 App.js 或主页加载时），检查 localStorage 和 sessionStorage 中是否存在有效的 token。
    4. 如果存在有效的 token，自动登录用户
+
+### 2023年9月9日
+这两天看了[https://blog.skk.moe/post/why-you-should-not-fetch-data-directly-in-use-effect/](为什么你不应该在 React 中直接使用 useEffect 从 API 获取数据),再加上这段时间来自己的体验，以及晚上的时候使用useSWR的畅快感，真后悔没早用。

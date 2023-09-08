@@ -31,7 +31,7 @@ export function BookCommentsCard({
             </span>
           </Typography>
           <div className="overflow-hidden">
-            <Typography className="text-sm font-normal text-black">
+            <Typography className="text-base font-normal text-black ">
               {content}
             </Typography>
           </div>
