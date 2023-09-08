@@ -7,9 +7,11 @@ import {
   CardBody,
   Typography,
 } from "@material-tailwind/react";
+import { useUser } from "@/context/UserContext";
 
 export function Reading() {
-  const { userid } = useParams(); // 获取路由参数
+  const { isLoggedIn, user, logout, change_avatar } = useUser(); // 使用useUser钩子来获取用户状态
+  const userid = user.user_id;
   const { search } = useLocation();
   const queryParams = new URLSearchParams(search);
   //   const query = queryParams.get("query");

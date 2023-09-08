@@ -1,16 +1,8 @@
 import {
   Card,
   CardBody,
-  CardHeader,
-  CardFooter,
   Avatar,
   Typography,
-  Tabs,
-  TabsHeader,
-  Tab,
-  Switch,
-  Tooltip,
-  Button,
 } from "@material-tailwind/react";
 
 import {
@@ -19,42 +11,30 @@ import {
   Cog6ToothIcon,
 } from "@heroicons/react/24/solid";
 import React, { useState, useEffect } from "react";
-import {
-  Link,
-  BrowserRouter,
-  Route,
-  Routes,
-  useParams,
-  useLocation,
-} from "react-router-dom";
-import { ProfileInfoCard, MessageCard } from "@/widgets/cards";
-import WillRead from "./will_read.jsx";
-import Reading from "./reading.jsx";
-import HaveRead from "@/pages/user/have_read.jsx";
-import { userProfileData } from "@/data";
+import {Link,useLocation} from "react-router-dom";
 import { getAction } from "@/utils/api";
+import { useUser } from "@/context/UserContext";
 
 function BookFilter({
-  userid,
   willReadBookNum,
   readingBookNum,
-  haveReadBookNum,
-}) {
+  haveReadBookNum,}) 
+{
   return (
     <div className="space-x-4">
-      <Link to={`/dashboard/${userid}/will-read`}>
+      <Link to={`/user/wish`}>
         <button className="rounded-md bg-blue-500 py-2 px-4 text-white">
           <HomeIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
           想读 ({willReadBookNum} 本)
         </button>
       </Link>
-      <Link to={`/dashboard/${userid}/currently-reading`}>
+      <Link to={`/user/do`}>
         <button className="rounded-md bg-green-500 py-2 px-4 text-white">
           <ChatBubbleLeftEllipsisIcon className="-mt-0.5 mr-2 inline-block h-5 w-5" />
           在读 ({readingBookNum} 本)
         </button>
       </Link>
-      <Link to={`/dashboard/${userid}/have-read`}>
+      <Link to={`/user/collect`}>
         <button className="rounded-md bg-yellow-500 py-2 px-4 text-white">
           <Cog6ToothIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
           读过 ({haveReadBookNum} 本)
@@ -102,7 +82,9 @@ function BookList({ books }) {
 }
 
 export function UserProfile() {
-  const { userid } = useParams(); // 获取路由参数
+  const { user } = useUser(); // 使用useUser钩子来获取用户状态
+  const avatar_url = import.meta.env.VITE_BASE_URL + '/' + user.avatar_path;
+
   const { search } = useLocation();
   const queryParams = new URLSearchParams(search);
   //   const query = queryParams.get("query");
@@ -113,23 +95,19 @@ export function UserProfile() {
   const [currentPage, setCurrentPage] = useState(
     currentPageParam ? parseInt(currentPageParam) : 1
   );
-  //   const [totalPages, setTotalPages] = useState("");
-  //   const [totalRecords, setTotalRecords] = useState("");
   useEffect(() => {
     // 在组件加载后执行的代码
-    console.log(userid);
     getPageInfo(1, setWillReadBookData);
     getPageInfo(2, setReadingBookData);
     getPageInfo(3, setHaveReadBookData);
     setCurrentPage(1);
-  }, [userid]);
+  }, []);
 
   function getPageInfo(type, setFuction) {
     //type=1:想读，type=2：在读,type=3:读过
-    getAction(1, 2, 0, userid).then((resp) => {
+    getAction(1, 2, 0, user.user_id).then((resp) => {
       var code = resp.data["code"].toString();
       if (code === "0") {
-        console.log("success!");
         const contents = resp.data["content"];
         const collect_type = contents.map((content) => content.collect_type);
         const indices = [];
@@ -165,13 +143,12 @@ export function UserProfile() {
           bookData.push(bookObj);
         });
         setFuction(bookData);
-        // setTotalPages(totalPages);
-        // setTotalRecords(totalRecords);
       } else {
         console.log("fail!");
       }
     });
   }
+
   return (
     <>
       <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url(https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80)] bg-cover	bg-center">
@@ -181,64 +158,27 @@ export function UserProfile() {
         <CardBody className="p-4">
           <div className="mb-10 flex items-center justify-between gap-6">
             <div className="flex items-center gap-6">
-              {userProfileData.map(
-                (
-                  {
-                    user_img,
-                    user_id,
-                    username,
-                    password,
-                    register_time,
-                    is_admin,
-                  },
-                  index // 添加索引参数
-                ) => (
-                  <div key={user_id} className="flex items-center">
-                    {index === 0 && ( // 仅在索引为0（即第一个对象）时渲染
-                      <>
-                        <img
-                          src={user_img}
-                          alt={username}
-                          className="h-20 w-20 rounded-lg shadow-lg shadow-blue-gray-500/40"
-                        />
-                        <div className="ml-10">
-                          <Typography
-                            variant="h3"
-                            color="blue-gray"
-                            className="mb-1"
-                          >
-                            {username}
-                          </Typography>
-                          {/* <Typography
-                            variant="lead"
-                            className="font-normal text-blue-gray-600"
-                          >
-                            {author}
-                          </Typography> */}
-                          {/* <Typography
-                            variant="lead"
-                            className="font-normal text-blue-gray-600"
-                          >
-                            {rating_avg} / 10.0分 {rating_num}人评分{" "}
-                            {comment_count}个评论
-                          </Typography> */}
-                          <Typography
-                            variant="paragraph"
-                            className="font-normal text-blue-gray-600"
-                          >
-                            "{register_time}加入"
-                          </Typography>
-                        </div>
-                      </>
-                    )}
-                  </div>
-                )
-              )}
+              <Avatar src={avatar_url} alt="user.username" variant="square" className="h-20 w-20 rounded-lg shadow-lg shadow-blue-gray-500/40" />
+              <div className="ml-10">
+                <Typography
+                  variant="h3"
+                  color="blue-gray"
+                  className="mb-1"
+                >
+                  {user.username}
+                </Typography>
+                <Typography
+                  variant="paragraph"
+                  className="font-normal text-blue-gray-600"
+                >
+                  "{user.register_time}加入"
+                </Typography>
+              </div>
             </div>
           </div>
           <div>
             <BookFilter
-              userid={userid}
+              userid={user.user_id}
               willReadBookNum={willReadBookData.length}
               readingBookNum={readingBookData.length}
               haveReadBookNum={haveReadBookData.length}
