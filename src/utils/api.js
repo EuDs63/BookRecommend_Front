@@ -1,6 +1,7 @@
 import service from "@/utils/service";
 import fileService from "@/utils/fileService";
-// import { func } from "prop-types";
+//import fetcher from "@/utils/fetcherService";
+import useSWR from "swr";
 
 export function userLogin(data) {
   return service({
@@ -52,22 +53,28 @@ export function userResetName(email, name) {
   });
 }
 
-export function userInfo(email) {
-  return service({
-    url: "/userinfo",
-    method: "get",
-    params: {
-      email,
-    },
-  });
-}
 //info_type 为1 ：对应bookDetailsData
 //info_type 为0 ,对应recommendedBooksData
-export function bookInfo(book_id, info_type) {
-  return service({
-    url: `/book/${book_id}/${info_type}`,
-    method: "get",
-  });
+export function getBookInfomation(book_id, info_type) {
+  const requestUrl = `/book/${book_id}/${info_type}`
+
+  async function fetchBookInfo() {
+    try {
+      const response = await service.get(requestUrl); // 发出 Axios 请求
+      return response.data; // 返回从后端获取的数据
+    } catch (error) {
+      throw error; // 抛出错误以供 SWR 处理
+    }
+  }
+
+  // 使用 SWR 钩子来获取数据
+  const { data, error, isLoading } = useSWR(requestUrl, fetchBookInfo);
+
+  return {
+    data: data,
+    isLoading,
+    isError: error,
+  }
 }
 
 export function getcategorybookInfo(category_id, page, per_page, order = 0) {
@@ -126,14 +133,14 @@ export function commentInfo() {
   );
 }
 
-export function changePassword(origin_password,new_password) {
+export function changePassword(origin_password, new_password) {
   return service(
     {
       url: "/user/update_password",
       method: "post",
       data: {
-        "origin_password" : origin_password,
-        "new_password" : new_password
+        "origin_password": origin_password,
+        "new_password": new_password
       },
     }
   );
@@ -150,7 +157,7 @@ export function changePassword(origin_password,new_password) {
 // }
 
 // 封装文件上传 API
-export function changeAvatar(file,info) {
+export function changeAvatar(file, info) {
   const formData = new FormData();
   formData.append("avatar", file); // 'avatar' 是后端接受文件的字段名
   formData.append("user_id", info.user_id);

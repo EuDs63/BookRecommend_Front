@@ -12,7 +12,7 @@ import {
 } from "@material-tailwind/react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { userLogin, userInfo, userAutoLogin } from "@/utils/api";
+import { userLogin, userAutoLogin } from "@/utils/api";
 import { useUser } from "../../context/UserContext";
 
 export function SignIn() {
