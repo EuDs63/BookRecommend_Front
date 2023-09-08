@@ -12,6 +12,7 @@ import { DashBoard, Tables, Notifications } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
 import { Setting } from "@/pages/user";
 import { Category, Search, TagSearch } from "@/pages/book";
+import { TouristMainPage } from "@/pages/tourist";
 import WillReadPage from "./pages/profile/willReadPage";
 import ReadingPage from "./pages/profile/readingPage";
 import HaveReadPage from "./pages/profile/haveReadPage";
@@ -105,8 +106,8 @@ export const routes = [
       {
         icon: <BellIcon {...icon} />,
         name: "游客首页",
-        path: "/main/:userid",
-        element: <UserMainPage />,
+        path: "/main",
+        element: <TouristMainPage />,
       },
     ],
   },
