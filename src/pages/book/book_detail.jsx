@@ -44,6 +44,10 @@ export function BookDetail() {
     });
   }
 
+  useEffect(() => {
+    getCommentInfo(book_id);
+  }, []);
+
   const { book_id } = useParams();
   const { data, isLoading, isError } = getBookInfomation(book_id, 1);
   if (isLoading) {
@@ -228,11 +232,11 @@ export function BookDetail() {
               {userComments.length > 0 ?
                 (
                   <ul className="flex flex-col gap-10">
-                    {bookCommentsData.map((props, index) => (
+                    {userComments.map((props, index) => (
                       <div className="max-h-50 w-full overflow-y-auto">
                         <div key={props.comment_id} className="mb-4">
                           <BookCommentsCard {...props} />
-                          {index < bookCommentsData.length - 1 && (
+                          {index < userComments.length - 1 && (
                             <hr className="mt-4 border-t border-gray-300" />
                           )}
                         </div>
