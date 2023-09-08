@@ -25,6 +25,7 @@ export function SignIn() {
   const navigateTo = useNavigate();
 
   useEffect(() => {
+    // 自动登录
     userAutoLogin().then((resp) => {
       var code = resp.data["code"].toString();
       var token = resp.data["token"];
@@ -86,8 +87,7 @@ export function SignIn() {
       var message = resp.data["msg"];
       var token = resp.data["token"];
       if (code === "0") {
-        //alert(message);
-        setOpen(true);
+        alert(message);
         navigateTo("/user/main");
         handleSignInContext(resp.data["user"], token);
       } else {

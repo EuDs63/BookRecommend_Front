@@ -1,4 +1,5 @@
 import service from "@/utils/service";
+import fileService from "@/utils/fileService";
 // import { func } from "prop-types";
 
 export function userLogin(data) {
@@ -136,4 +137,32 @@ export function changePassword(origin_password,new_password) {
       },
     }
   );
+}
+
+// export function changeAvatar(formData) {
+//   return fileService(
+//     {
+//       url: "/user/upload-avatar",
+//       method: "post",
+//       formData,
+//     }
+//   );
+// }
+
+// 封装文件上传 API
+export function changeAvatar(file,info) {
+  const formData = new FormData();
+  formData.append("avatar", file); // 'avatar' 是后端接受文件的字段名
+  formData.append("user_id", info.user_id);
+  return fileService.post("/user/upload_avatar", formData)
+    .then((response) => {
+      // 处理上传成功后的响应
+      console.log("上传成功", response.data);
+      return response; // 可以返回响应数据供上层调用使用
+    })
+    .catch((error) => {
+      // 处理上传失败时的错误
+      console.error("上传失败", error);
+      throw error; // 可以抛出错误供上层调用处理
+    });
 }

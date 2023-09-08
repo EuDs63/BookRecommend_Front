@@ -19,16 +19,45 @@ import {
 } from "@heroicons/react/24/solid";
 import { useUser } from "@/context/UserContext";
 import { useState } from "react";
-import { changePassword } from "@/utils/api";
+import { changePassword, changeAvatar } from "@/utils/api";
 import { useNavigate } from 'react-router-dom';
 
 export function Setting() {
-    const { isLoggedIn, user, logout } = useUser(); // 使用useUser钩子来获取用户状态
+    const { isLoggedIn, user, logout, change_avatar } = useUser(); // 使用useUser钩子来获取用户状态
     const avatar_url = import.meta.env.VITE_BASE_URL + '/' + user.avatar_path;
     const [origin_password, setOrigin_password] = useState(""); // 用于保存用户输入的原始密码
     const [password, setPassword] = useState("");
     const [password_confirmation, setPassword_confirmation] = useState("");
     const navigateTo = useNavigate();
+
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [uploadStatus, setUploadStatus] = useState(null);
+
+    const handleFileChange = (e) => {
+        setSelectedFile(e.target.files[0]);
+    };
+
+    const handleUpload = () => {
+        if (selectedFile) {
+            console.log(selectedFile);
+
+            changeAvatar(selectedFile,user).then((resp) => {
+                var code = resp.data['code'].toString();
+                var avatar_path = resp.data['avatar_path'];
+                if (code === '0') {
+                    console.log('上传成功');
+                    setUploadStatus('上传成功');
+                    change_avatar(avatar_path);
+                }
+            }).catch((error) => {
+                setUploadStatus('上传失败');
+                // 可以在这里处理上传失败后的逻辑
+            });
+        }else{
+            console.log('请选择图片');
+            setUploadStatus('请选择图片');
+        }
+    };
 
     const handleOrigin_passwordChange = (e) => {
         setOrigin_password(e.target.value);
@@ -42,22 +71,22 @@ export function Setting() {
         setPassword_confirmation(e.target.value);
     }
 
-    function handleChangePassword(){
+    function handleChangePassword() {
         // 验证两次密码输入是否一致
         if (password !== password_confirmation) {
-          alert("两次密码输入不一致");
-          return;
+            alert("两次密码输入不一致");
+            return;
         }
         // 两次密码输入一致，准备发送更改密码请求
-        changePassword(origin_password,password).then((resp)=>{
-          var code = resp.data['code'].toString();
-          var message = resp.data['msg'];
-          if (code === '0') {
-            alert(message);
-            navigateTo('/auth/sign-in');
-          } else {
-            alert(message);
-          }
+        changePassword(origin_password, password).then((resp) => {
+            var code = resp.data['code'].toString();
+            var message = resp.data['msg'];
+            if (code === '0') {
+                alert(message);
+                navigateTo('/auth/sign-in');
+            } else {
+                alert(message);
+            }
         });
     }
 
@@ -115,7 +144,7 @@ export function Setting() {
 
                             <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
                                 <div className="mb-4 flex flex-col gap-6">
-                                    <Input type="password" size="lg" label="旧密码" onChange={handleOrigin_passwordChange}/>
+                                    <Input type="password" size="lg" label="旧密码" onChange={handleOrigin_passwordChange} />
                                     <Input type="password" label="新密码" size="lg" onChange={handlePasswordChange} />
                                     <Input type="password" label="再次确认" size="lg" onChange={handlePassword_confirmationChange} />
 
@@ -148,14 +177,17 @@ export function Setting() {
 
                                 <label className="block mt-4 items-center">
 
-                                    <input type="file" className="block w-full text-sm text-slate-500
-                                                                file:mr-4 file:py-2 file:px-4
-                                                                file:rounded-full file:border-0
-                                                                file:text-sm file:font-semibold
-                                                                file:bg-violet-50 file:text-violet-700
-                                                                hover:file:bg-violet-100
-                                                                "/>
+                                    <input type="file" name="avatar" 
+                                        className="block w-full text-sm text-slate-500
+                                                   file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0
+                                                   file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700
+                                                   hover:file:bg-violet-100"
+                                        onChange={handleFileChange}
+                                    />
+                                    <Button onClick={handleUpload}>上传头像</Button>
+                                    {uploadStatus && <div>{uploadStatus}</div>}
                                 </label>
+                                {uploadStatus && <div>{uploadStatus}</div>}
                             </form>
                         </div>
 
