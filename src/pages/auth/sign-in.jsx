@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import {
+  Alert,
   Card,
   CardHeader,
   CardBody,
@@ -19,20 +20,44 @@ export function SignIn() {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const { setIsLoggedIn, login } = useUser(); // 使用useUser钩子来获取用户状态
+  const [secondsToShowAlert, setSecondsToShowAlert] = useState(3);
+  const [open, setOpen] = useState(false);
   const navigateTo = useNavigate();
 
   useEffect(() => {
-    // 检查用户是否已经登录，如果已经登录则不执行自动登录逻辑
-      userAutoLogin().then((resp) => {
-        var code = resp.data["code"].toString();
-        var message = resp.data["msg"];
-        var token = resp.data["token"];
-        if (code === "0") {
-          handleSignInContext(resp.data["user"], token);
-          alert('自动登录成功');
-          navigateTo("/user/main");
-        } 
-      });
+    userAutoLogin().then((resp) => {
+      var code = resp.data["code"].toString();
+      var token = resp.data["token"];
+      if (code === "0") {
+        setUsername(resp.data["user"]["username"]);
+        setPassword("password");
+        handleSignInContext(resp.data["user"], token);
+        
+        setOpen(true);
+
+        const timer = setInterval(() => {
+          setSecondsToShowAlert((prevSeconds) => {
+            if (prevSeconds > 0 ) {
+              return prevSeconds - 1;
+            } else {
+              return 0
+            }
+          });
+        }, 1000); // 每秒减少一次
+    
+        // 在计时结束时进行页面跳转
+        setTimeout(() => {
+          window.location.href = '/user/main'; // 将网址替换为您希望跳转的网址
+          clearInterval(timer); // 清除定时器
+        }, secondsToShowAlert * 1000);
+    
+        // 在组件卸载时清除计时器，以防止内存泄漏
+        return () => {
+          clearInterval(timer);
+        };
+
+      }
+    });
 
   }, []);
 
@@ -61,7 +86,8 @@ export function SignIn() {
       var message = resp.data["msg"];
       var token = resp.data["token"];
       if (code === "0") {
-        alert(message);
+        //alert(message);
+        setOpen(true);
         navigateTo("/user/main");
         handleSignInContext(resp.data["user"], token);
       } else {
@@ -97,12 +123,12 @@ export function SignIn() {
             </Typography>
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
-            <Input label="Name" size="lg" onChange={handleUsernameChange} />
+            <Input label="Name" size="lg" onChange={handleUsernameChange} value={username} />
             <Input
               type="password"
               label="Password"
               size="lg"
-              onChange={handlePasswordChange}
+              onChange={handlePasswordChange} value={password}
             />
             <div className="-ml-2.5">
               <Checkbox label="Remember Me" checked={rememberMe}
@@ -128,6 +154,18 @@ export function SignIn() {
             </Typography>
           </CardFooter>
         </Card>
+      </div>
+      <div className="">
+        {/* <Alert
+              className="rounded-none border-l-4 border-[#2ec946] bg-[#2ec946]/10 font-medium text-[#2ec946]"
+            >
+              自动登录成功
+            </Alert> */}
+
+        <Alert
+          open={open} onClose={() => setOpen(false)} className="w-1/2 m-auto justify-center" color="green">
+          自动登录验证成功,{secondsToShowAlert}秒后跳转到主页，或者点击<a href="/user/main">这里</a>跳转
+        </Alert>
       </div>
     </>
   );
