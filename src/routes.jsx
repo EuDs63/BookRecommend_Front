@@ -5,11 +5,13 @@ import {
   BellIcon,
   ArrowRightOnRectangleIcon,
   UserPlusIcon,
+  TagIcon,
 } from "@heroicons/react/24/solid";
 import { Profile, UserMainPage, UserProfile } from "@/pages/profile";
-import { DashBoard, Tables, Notifications, Search, Category, TagSearch} from "@/pages/dashboard";
+import { DashBoard, Tables, Notifications } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
-import { Setting } from "./pages/user";
+import { Setting } from "@/pages/user";
+import { Category, Search, TagSearch } from "@/pages/book";
 import WillReadPage from "./pages/profile/willReadPage";
 import ReadingPage from "./pages/profile/readingPage";
 import HaveReadPage from "./pages/profile/haveReadPage";
@@ -72,27 +74,9 @@ export const routes = [
       },
       {
         icon: <BellIcon {...icon} />,
-        name: "search",
-        path: "/search",
-        element: <Search />,
-      },
-      {
-        icon: <BellIcon {...icon} />,
         name: "userMainPage",
         path: "/main/:userid",
         element: <UserMainPage />,
-      },
-      {
-        icon: <BellIcon {...icon} />,
-        name: "category",
-        path: "/category",
-        element: <Category />,
-      },
-      {
-        icon: <BellIcon {...icon} />,
-        name: "tagsearch",
-        path: "/tagsearch",
-        element: <TagSearch />,
       },
     ],
   },
@@ -141,6 +125,30 @@ export const routes = [
         name: "用户设置",
         path: "/setting",
         element: <Setting />,
+      },
+    ],
+  },
+  {
+    title: "book pages",
+    layout: "book",
+    pages: [
+      {
+        icon: <TagIcon {...icon} />,
+        name: "分类浏览",
+        path: "/category",
+        element: <Category />,
+      },
+      {
+        icon: <BellIcon {...icon} />,
+        name: "搜索",
+        path: "/search",
+        element: <Search />,
+      },
+      {
+        icon: <BellIcon {...icon} />,
+        name: "tagsearch",
+        path: "/tagsearch",
+        element: <TagSearch />,
       },
     ],
   },

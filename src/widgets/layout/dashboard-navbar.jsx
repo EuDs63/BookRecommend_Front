@@ -41,7 +41,7 @@ export function DashboardNavbar() {
     setSearchText(e.target.value);
   };
   const handleSearchClick = () => {
-    navigate(`/dashboard/search?query=${searchText}`);
+    navigate(`/book/search?query=${searchText}`);
   };
 
 
