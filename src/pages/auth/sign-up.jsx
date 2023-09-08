@@ -88,7 +88,7 @@ export function SignUp() {
             </Typography>
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
-            <Input label="Name" size="lg" onChange={handleUserNameChange}/>
+            <Input label="Name" size="lg" onChange={handleUserNameChange} className="required"/>
             <Input type="password" label="Password" size="lg" onChange={handlePasswordChange} />
             <Input type="password" label="Confirm your password" size="lg" onChange={handlePassword_confirmationChange} />
           </CardBody>

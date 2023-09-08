@@ -10,7 +10,7 @@ import {
     Tab,
     Button,
     Input,
-    avatar,
+    Tooltip,
 } from "@material-tailwind/react";
 import {
     HomeIcon,
@@ -37,16 +37,16 @@ export function Setting() {
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         setSelectedFile(file);
-      
+
         if (file) {
-          const reader = new FileReader();
-          reader.onload = (event) => {
-            setAvatarPreview(event.target.result);
-          };
-          reader.readAsDataURL(file);
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                setAvatarPreview(event.target.result);
+            };
+            reader.readAsDataURL(file);
         }
-      };
-      
+    };
+
 
     const handleUpload = () => {
         if (selectedFile) {
@@ -165,16 +165,43 @@ export function Setting() {
 
                         </div>
                         <div>
-                            <Typography variant="h4" color="blue-gray">
-                                更换头像
-                            </Typography>
+                            <div className="flex gap-3">
+                                <Typography variant="h4" color="blue-gray">
+                                    更换头像
+                                </Typography>
+                                <Tooltip
+                                    placement="right-end"
+                                    className="border border-blue-gray-50 bg-white px-4 py-3 shadow-xl shadow-black/10"
+                                    content={
+                                        <div className="w-auto">
+                                            <Typography
+                                                variant="small"
+                                                color="blue-gray"
+                                                className="font-normal opacity-80"
+                                            >
+                                                <p>建议大小400 * 400像素</p>
+                                                <p>支持JPG、PNG等格式</p>
+                                            </Typography>
+                                        </div>
+                                    }
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        strokeWidth={2}
+                                        className="h-5 w-5 cursor-pointer text-blue-gray-500"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                                        />
+                                    </svg>
+                                </Tooltip>
 
-                            <Typography
-                                variant="small"
-                                className="font-normal text-blue-gray-600 mt-2"
-                            >
-                                请选择图片上传：大小400 * 400像素支持JPG、PNG等格式，图片需小于2M
-                            </Typography>
+                            </div>
 
                             <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96 flex items-center space-x-6 flex-col">
                                 <div className="flex items-center gap-4">
@@ -207,7 +234,7 @@ export function Setting() {
                                                    hover:file:bg-violet-100"
                                         onChange={handleFileChange}
                                     />
-                                    
+
                                 </label>
                                 <Button onClick={handleUpload} className="m-auto my-5">上传头像</Button>
                                 {uploadStatus && <div>{uploadStatus}</div>}
