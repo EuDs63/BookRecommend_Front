@@ -21,7 +21,7 @@ import {
 import { Link, useParams } from "react-router-dom";
 import { ProfileInfoCard, BookCommentsCard } from "@/widgets/cards";
 import { recommendedBooksData, bookCommentsData } from "@/data";
-import { getBookInfomation } from "@/utils/api";
+import { getBookInfomation,getAction } from "@/utils/api";
 
 
 
@@ -38,6 +38,7 @@ export function BookDetail() {
     return <div>loading...</div>;
   }
   if (isError) {
+    console.log(isError);
     return <div>error</div>;
   }
   if (data) {

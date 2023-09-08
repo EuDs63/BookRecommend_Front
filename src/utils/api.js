@@ -53,20 +53,19 @@ export function userResetName(email, name) {
   });
 }
 
+async function fetchBookInfo(requestUrl) {
+  try {
+    const response = await service.get(requestUrl); // 发出 Axios 请求
+    return response.data; // 返回从后端获取的数据
+  } catch (error) {
+    throw error; // 抛出错误以供 SWR 处理
+  }
+}
+
 //info_type 为1 ：对应bookDetailsData
 //info_type 为0 ,对应recommendedBooksData
 export function getBookInfomation(book_id, info_type) {
   const requestUrl = `/book/${book_id}/${info_type}`
-
-  async function fetchBookInfo() {
-    try {
-      const response = await service.get(requestUrl); // 发出 Axios 请求
-      return response.data; // 返回从后端获取的数据
-    } catch (error) {
-      throw error; // 抛出错误以供 SWR 处理
-    }
-  }
-
   // 使用 SWR 钩子来获取数据
   const { data, error, isLoading } = useSWR(requestUrl, fetchBookInfo);
 
