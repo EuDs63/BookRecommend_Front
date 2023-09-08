@@ -4,6 +4,7 @@ import {
   CardHeader,
   CardFooter,
   Avatar,
+  Textarea,
   Typography,
   Tabs,
   TabsHeader,
@@ -11,6 +12,7 @@ import {
   Switch,
   Tooltip,
   Button,
+  IconButton,
 } from "@material-tailwind/react";
 import {
   HomeIcon,
@@ -23,7 +25,7 @@ import { ProfileInfoCard, BookCommentsCard } from "@/widgets/cards";
 import { recommendedBooksData, bookCommentsData } from "@/data";
 import { getBookInfomation, getAction } from "@/utils/api";
 import { useState, useEffect } from "react";
-
+import { useUser } from "@/context/UserContext";
 
 //点击一个“详情”页面将给出Info_type=1,bookId=X;
 //经过推荐系统将返回四个bookId,Info_type=0;
@@ -47,7 +49,8 @@ export function BookDetail() {
   useEffect(() => {
     getCommentInfo(book_id);
   }, []);
-
+  const { isLoggedIn, user, logout, change_avatar } = useUser(); // 使用useUser钩子来获取用户状态
+  const avatar_url = import.meta.env.VITE_BASE_URL + '/' + user.avatar_path;
   const { book_id } = useParams();
   const { data, isLoading, isError } = getBookInfomation(book_id, 1);
   if (isLoading) {
@@ -254,6 +257,22 @@ export function BookDetail() {
 
             </div>
           </CardBody>
+          <CardFooter>
+            <div className="relative w-full">
+              <Textarea variant="static" placeholder="墨薮书评多逸事,何妨挥翰与题辞" rows={8} />
+              <div className="flex w-full justify-between py-1.5">
+                <Avatar src={avatar_url} size="sm"></Avatar>
+                <div className="flex gap-2">
+                  <Button size="md" color="red" className="rounded-md ">
+                    算了
+                  </Button>
+                  <Button size="md" color="green" className="rounded-md   ">
+                    写好了
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </CardFooter>
         </Card>
       </div>
     );
