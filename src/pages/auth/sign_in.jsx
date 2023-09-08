@@ -33,25 +33,25 @@ export function SignIn() {
         setUsername(resp.data["user"]["username"]);
         setPassword("password");
         handleSignInContext(resp.data["user"], token);
-        
+
         setOpen(true);
 
         const timer = setInterval(() => {
           setSecondsToShowAlert((prevSeconds) => {
-            if (prevSeconds > 0 ) {
+            if (prevSeconds > 0) {
               return prevSeconds - 1;
             } else {
               return 0
             }
           });
         }, 1000); // 每秒减少一次
-    
+
         // 在计时结束时进行页面跳转
         setTimeout(() => {
           window.location.href = '/user/main'; // 将网址替换为您希望跳转的网址
           clearInterval(timer); // 清除定时器
         }, secondsToShowAlert * 1000);
-    
+
         // 在组件卸载时清除计时器，以防止内存泄漏
         return () => {
           clearInterval(timer);
@@ -119,28 +119,28 @@ export function SignIn() {
             className="mb-4 grid h-28 place-items-center"
           >
             <Typography variant="h3" color="white">
-              Sign In
+              登录
             </Typography>
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
-            <Input label="Name" size="lg" onChange={handleUsernameChange} value={username} />
+            <Input label="用户名" size="lg" onChange={handleUsernameChange} value={username} />
             <Input
               type="password"
-              label="Password"
+              label="密码"
               size="lg"
               onChange={handlePasswordChange} value={password}
             />
             <div className="-ml-2.5">
-              <Checkbox label="Remember Me" checked={rememberMe}
+              <Checkbox label="下次自动登录" checked={rememberMe}
                 onChange={() => setRememberMe(!rememberMe)} />
             </div>
           </CardBody>
           <CardFooter className="pt-0">
             <Button variant="gradient" fullWidth onClick={handleSignIn}>
-              Sign In
+              登录
             </Button>
-            <Typography variant="small" className="mt-6 flex justify-center">
-              Don't have an account?
+            <Typography variant="small" className="mt-6 flex justify-center mb-2">
+              没有账号?
               <Link to="/auth/sign-up">
                 <Typography
                   as="span"
@@ -148,7 +148,21 @@ export function SignIn() {
                   color="blue"
                   className="ml-1 font-bold"
                 >
-                  Sign up
+                  注册
+                </Typography>
+              </Link>
+            </Typography>
+            <hr className="w-full border-blue-gray-200 border-1 " />
+            <Typography variant="small" className="mt-2 flex justify-center">
+              看看再说
+              <Link to="/tourist/main">
+                <Typography
+                  as="span"
+                  variant="small"
+                  color="blue"
+                  className="ml-1 font-bold"
+                >
+                  游客首页
                 </Typography>
               </Link>
             </Typography>
