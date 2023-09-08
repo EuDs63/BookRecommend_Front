@@ -9,7 +9,7 @@ function App() {
       <Route path="/tourist/*" element={<Tourist />} />
       <Route path="/user/*" element={<User />} />
       <Route path="/book/*" element={<Book />} />
-      <Route path="*" element={<Navigate to="/dashboard/main/:userid" replace />} />
+      <Route path="*" element={<Navigate to="/auth/sign-in" replace />} />
     </Routes>
   );
 }

@@ -7,10 +7,10 @@ import {
   UserPlusIcon,
   TagIcon,
 } from "@heroicons/react/24/solid";
-import { Profile, UserMainPage, UserProfile } from "@/pages/profile";
+// import { Profile, UserMainPage, UserProfile } from "@/pages/profile";
 import { DashBoard, Tables, Notifications } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
-import { Setting } from "@/pages/user";
+import { Setting,UserProfile,WillRead,Reading,HaveRead,UserMainPage } from "@/pages/user";
 import { Category, Search, TagSearch } from "@/pages/book";
 import { TouristMainPage } from "@/pages/tourist";
 import WillReadPage from "./pages/profile/willReadPage";
@@ -25,12 +25,12 @@ export const routes = [
   {
     layout: "dashboard",
     pages: [
-      {
-        icon: <UserCircleIcon {...icon} />,
-        name: "homepage",
-        path: "/home",
-        element: <Profile />,
-      },
+      // {
+      //   icon: <UserCircleIcon {...icon} />,
+      //   name: "homepage",
+      //   path: "/home",
+      //   element: <Profile />,
+      // },
       {
         icon: <HomeIcon {...icon} />,
         name: "dashboard",
@@ -118,8 +118,32 @@ export const routes = [
       {
         icon: <BellIcon {...icon} />,
         name: "用户首页",
-        path: "/main/:userid",
+        path: "/main",
         element: <UserMainPage />,
+      },
+      {
+        icon: <BellIcon {...icon} />,
+        name: "个人主页",
+        path: "/profile",
+        element: <UserProfile />,
+      },
+      {
+        icon: <BellIcon {...icon} />,
+        name: "想读",
+        path: "/wish",
+        element: <WillRead />,
+      },
+      {
+        icon: <BellIcon {...icon} />,
+        name: "在读",
+        path: "/do",
+        element: <Reading />,
+      },
+      {
+        icon: <BellIcon {...icon} />,
+        name: "读过",
+        path: "/collect",
+        element: <HaveRead />,
       },
       {
         icon: <BellIcon {...icon} />,

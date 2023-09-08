@@ -28,18 +28,18 @@ export function Book() {
         },
         {
             name: "个人主页",
-            path: "/dashboard/:userid",
-            icon: UserPlusIcon,
-        },
-        {
-            name: "设置",
-            path: "/user/setting",
+            path: "/user/profile",
             icon: UserPlusIcon,
         },
         {
             name: "分类浏览",
             path: "/book/category",
             icon: TagIcon,
+        },
+        {
+            name: "设置",
+            path: "/user/setting",
+            icon: UserPlusIcon,
         },
     ];
 

@@ -21,12 +21,12 @@ export function User() {
   const navbarRoutes = [
     {
       name: "首页",
-      path: "/user/main/:userid",
+      path: "/user/main",
       icon: ChartPieIcon,
     },
     {
       name: "个人主页",
-      path: "/dashboard/:userid",
+      path: "/user/profile",
       icon: UserPlusIcon,
     },
     {
