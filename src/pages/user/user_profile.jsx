@@ -53,7 +53,7 @@ function BookList({ books }) {
     <div key={index} className="flex flex-col items-center">
       <Link to={`/dashboard/home?query=${book.book_id}`}>
         <img
-          src={`https://images.weserv.nl/?url=${book.cover_image_url}`}
+          src={`https://images.weserv.nl/?url=${book.image}`}
           alt={book.title}
           className="h-40 w-32 rounded-md"
         />
@@ -87,7 +87,6 @@ export function UserProfile() {
 
   const { search } = useLocation();
   const queryParams = new URLSearchParams(search);
-  //   const query = queryParams.get("query");
   const [willReadBookData, setWillReadBookData] = useState([]);
   const [readingBookData, setReadingBookData] = useState([]);
   const [haveReadBookData, setHaveReadBookData] = useState([]);
@@ -95,6 +94,7 @@ export function UserProfile() {
   const [currentPage, setCurrentPage] = useState(
     currentPageParam ? parseInt(currentPageParam) : 1
   );
+
   useEffect(() => {
     // 在组件加载后执行的代码
     getPageInfo(1, setWillReadBookData);
