@@ -12,7 +12,7 @@ import {
   Switch,
   Tooltip,
   Button,
-  IconButton,
+  Rating,
   Spinner,
 } from "@material-tailwind/react";
 import {
@@ -20,6 +20,7 @@ import {
   ChatBubbleLeftEllipsisIcon,
   Cog6ToothIcon,
   PencilIcon,
+  HeartIcon,
 } from "@heroicons/react/24/solid";
 import { Link, useParams } from "react-router-dom";
 import { ProfileInfoCard, BookCommentsCard } from "@/widgets/cards";
@@ -38,6 +39,25 @@ export function BookDetail() {
   const avatar_url = import.meta.env.VITE_BASE_URL + '/' + user.avatar_path;
   const { book_id } = useParams();
   const { data, isLoading, isError } = getBookInfomation(book_id, 1);
+  const [rated, setRated] = useState(4);
+
+  // 将 rated 的值映射到相应的评级文本
+  const getRatingText = () => {
+    switch (rated) {
+      case 1:
+        return "很差";
+      case 2:
+        return "较差";
+      case 3:
+        return "还行";
+      case 4:
+        return "推荐";
+      case 5:
+        return "力荐";
+      default:
+        return "";
+    }
+  };
 
   let savedCommentName = `${book_id}_${user.user_id}_draftData`;
   // 获取该书籍下的已有评论
@@ -77,7 +97,7 @@ export function BookDetail() {
     if (value.length <= 500) {
       // 只有当输入长度不超过 500 时才更新状态
       setComment(value);
-    }else{
+    } else {
       setStatusMessage("要不再精简一下?");
     }
   }
@@ -183,20 +203,35 @@ export function BookDetail() {
                 )}
               </div>
               <div className="">
-                <Tabs value="app">
-                  <TabsHeader>
-                    <Tab value="app">
-                      想看
-                    </Tab>
-                    <Tab value="message">
-                      在看
-                    </Tab>
-                    <Tab value="settings">
-                      看过
-                    </Tab>
-                  </TabsHeader>
-                </Tabs>
+
               </div>
+              <Card>
+                <CardBody className="p-4 text-right">
+                  <Typography variant="h5" className="font-normal blue-gray mb-2">
+                    收藏盒
+                  </Typography>
+                  <Tabs value="app" className="mt-5">
+                    <TabsHeader>
+                      <Tab value="app">
+                        想看
+                      </Tab>
+                      <Tab value="message">
+                        在看
+                      </Tab>
+                      <Tab value="settings">
+                        看过
+                      </Tab>
+                    </TabsHeader>
+                  </Tabs>
+                  <div className="flex items-center gap-2 mt-5">
+                    <Rating value={4} onChange={(value) => setRated(value)} />
+                    <Typography color="blue-gray" className="font-medium">
+                      {getRatingText()}
+                    </Typography>
+                  </div>
+                </CardBody>
+
+              </Card>
             </div>
 
             <div className="px-4 pb-4 mt-12">
