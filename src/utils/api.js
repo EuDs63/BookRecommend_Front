@@ -2,6 +2,7 @@ import service from "@/utils/service";
 import fileService from "@/utils/fileService";
 //import fetcher from "@/utils/fetcherService";
 import useSWR from "swr";
+import { func } from "prop-types";
 
 export function userLogin(data) {
   return service({
@@ -42,18 +43,7 @@ export function userResetPassword(oldPassword, newPassword, email) {
   });
 }
 
-export function userResetName(email, name) {
-  return service({
-    url: "/resetname",
-    method: "post",
-    params: {
-      email,
-      name,
-    },
-  });
-}
-
-async function fetchBookInfo(requestUrl) {
+async function fetchInfo(requestUrl) {
   try {
     const response = await service.get(requestUrl); // 发出 Axios 请求
     return response.data; // 返回从后端获取的数据
@@ -67,10 +57,32 @@ async function fetchBookInfo(requestUrl) {
 export function getBookInfomation(book_id, info_type) {
   const requestUrl = `/book/${book_id}/${info_type}`
   // 使用 SWR 钩子来获取数据
-  const { data, error, isLoading } = useSWR(requestUrl, fetchBookInfo);
+  const { data, error, isLoading } = useSWR(requestUrl, fetchInfo);
 
   return {
     data: data,
+    isLoading,
+    isError: error,
+  }
+}
+
+export function getCollect(method,book_id,user_id){
+  const requestUrl = `/action/collect/${method}/${book_id}/${user_id}`
+  // 使用 SWR 钩子来获取数据
+  const { data, error, isLoading } = useSWR(requestUrl, fetchInfo);
+  return {
+    collect : data,
+    isLoading,
+    isError: error,
+  }
+}
+
+export function getRating(method,book_id,user_id){
+  const requestUrl = `/action/rating/${method}/${book_id}/${user_id}`
+  // 使用 SWR 钩子来获取数据
+  const { data, error, isLoading } = useSWR(requestUrl, fetchInfo);
+  return {
+    rating : data,
     isLoading,
     isError: error,
   }
@@ -125,6 +137,33 @@ export function getAction(type, method, book_id, user_id) {
     },
   });
 }
+
+// async function fetchUserAction(requestUrl, postData) {
+//   try {
+//     const response = await service.post(requestUrl, postData); // 发出 Axios 请求
+//     return response.data; // 返回从后端获取的数据
+//   } catch (error) {
+//     throw error; // 抛出错误以供 SWR 处理
+//   }
+// }
+
+// export function getUserAction(type, method, book_id, user_id) {
+//   const requestUrl = `/action/get`
+//   const postData = {
+//     type: type,
+//     method: method,
+//     book_id: book_id,
+//     user_id: user_id,
+//   }
+//   // 使用 SWR 钩子来获取数据
+//   const { data, error, isLoading } = useSWR(['/action/get', postData], fetchUserAction);
+
+//   return {
+//     data: data,
+//     isLoading,
+//     isError: error,
+//   }
+// }
 
 export function addComment(book_id, user_id, content) {
   return service({

@@ -66,8 +66,6 @@ export function BookDetail() {
   // 当用户登录状态发生变化时，重新获取评论
   useEffect(() => {
     const savedData = localStorage.getItem(savedCommentName);
-    console.log(savedCommentName);
-    console.log(savedData);
     if (savedData) {
       setComment(savedData)
     }
@@ -119,8 +117,6 @@ export function BookDetail() {
   }
   if (data) {
     const book = data.book;
-    console.log(book);
-
 
     return (
       <div>

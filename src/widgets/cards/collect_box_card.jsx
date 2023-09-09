@@ -10,7 +10,8 @@ import {
     Rating,
 } from "@material-tailwind/react";
 import PropTypes from "prop-types";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { getCollect,getRating } from "@/utils/api";
 
 export function CollectBoxCard({
     user_id,
@@ -35,7 +36,18 @@ export function CollectBoxCard({
                 return "";
         }
     };
-
+    // 获取收藏数据
+    const {collect,isLoading,isError} = getCollect(3, book_id, user_id);
+    const {rating,isLoading1,isError1} = getRating(3, book_id, user_id);
+    if (isError){
+        console.log(isError)
+    }
+    if (collect){
+        console.log(collect)
+    }
+    if (rating){
+        console.log(rating)
+    }
     return (
         <Card>
             <CardBody className="p-4 text-right">
