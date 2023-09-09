@@ -23,7 +23,7 @@ import {
 import { Link, useParams } from "react-router-dom";
 import { ProfileInfoCard, BookCommentsCard } from "@/widgets/cards";
 import { recommendedBooksData } from "@/data";
-import { getBookInfomation, getAction,addComment } from "@/utils/api";
+import { getBookInfomation, getAction, addComment } from "@/utils/api";
 import { useState, useEffect } from "react";
 import { useUser } from "@/context/UserContext";
 
@@ -33,8 +33,15 @@ import { useUser } from "@/context/UserContext";
 //useEffect函数需要四个操作:1. fetch一个详细信息 2. 推荐算法 3. fetch四个推荐信息 4. fectch评论
 
 export function BookDetail() {
-  // 评论
+  const { isLoggedIn, user } = useUser(); // 使用useUser钩子来获取用户状态
+  const avatar_url = import.meta.env.VITE_BASE_URL + '/' + user.avatar_path;
+  const { book_id } = useParams();
+  const { data, isLoading, isError } = getBookInfomation(book_id, 1);
+
+  let savedCommentName = `${book_id}_${user.user_id}_draftData`;
+  // 获取该书籍下的已有评论
   const [userComments, setUserComments] = useState([]);
+
   function getCommentInfo(book_id) {
     getAction(2, 1, book_id, 0).then((resp) => {
       var code = resp.data["code"].toString();
@@ -48,13 +55,16 @@ export function BookDetail() {
 
   useEffect(() => {
     getCommentInfo(book_id);
-  }, []);
-  const { isLoggedIn, user, logout, change_avatar } = useUser(); // 使用useUser钩子来获取用户状态
-  const avatar_url = import.meta.env.VITE_BASE_URL + '/' + user.avatar_path;
-  const { book_id } = useParams();
-  const { data, isLoading, isError } = getBookInfomation(book_id, 1);
+    // 在组件挂载时，从 localStorage 加载数据
+    const savedData = localStorage.getItem(savedCommentName);
+    console.log(savedCommentName);
+    console.log(savedData);
+    if (savedData) {
+      setComment(savedData)
+    }
+  }, [user]);
 
-  // 评论
+  // 用户添加评论
   const [comment, setComment] = useState("");
 
   const handleCommentChange = (e) => {
@@ -63,7 +73,13 @@ export function BookDetail() {
 
   const handleCommentCancel = () => {
     setComment("");
+    localStorage.removeItem(savedCommentName);
   }
+
+  const handleCommentSave = () => {
+    // 将当前表单数据保存到 localStorage
+    localStorage.setItem(savedCommentName, comment);
+  };
 
   const handleCommentSubmit = () => {
     console.log(comment);
@@ -71,6 +87,7 @@ export function BookDetail() {
       var code = resp.data["code"].toString();
       if (code === "0") {
         setComment("");
+        localStorage.removeItem(savedCommentName);
       } else {
         console.log("fail!");
       }
@@ -290,7 +307,7 @@ export function BookDetail() {
                   <Button size="md" color="red" className="rounded-md" onClick={handleCommentCancel}>
                     算了
                   </Button>
-                  <Button size="md" color="blue" className="rounded-md ">
+                  <Button size="md" color="blue" className="rounded-md" onClick={handleCommentSave}>
                     暂存
                   </Button>
                   <Button size="md" color="green" className="rounded-md" onClick={handleCommentSubmit}>
