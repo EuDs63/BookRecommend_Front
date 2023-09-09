@@ -82,7 +82,9 @@ export function CollectBoxCard({
     if (isError) {
         console.log(isError)
     }
-
+    if(isError1){
+        console.log(isError1)
+    }
     useEffect(() => {
         if (collectRecord) {
             const length = collectRecord.content.length
@@ -104,8 +106,6 @@ export function CollectBoxCard({
                 setRating_time(rating.rating_time)
             }
         }
-        console.log(ratingRecord)
-        console.log(book_id)
     }, [ratingRecord]);
 
 
