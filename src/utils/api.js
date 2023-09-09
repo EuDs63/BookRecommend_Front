@@ -178,6 +178,32 @@ export function addComment(book_id, user_id, content) {
   });
 }
 
+export function addCollect(book_id, user_id, collect_type) {
+  return service({
+    url: `/action/add`,
+    method: "post",
+    data: {
+      type: 1,
+      book_id: book_id,
+      user_id: user_id,
+      content: collect_type,
+    },
+  });
+}
+
+export function addRating(book_id,user_id,rating){
+  return service({
+    url: `/action/add`,
+    method: "post",
+    data: {
+      type: 3,
+      book_id: book_id,
+      user_id: user_id,
+      content: rating,
+    },
+  });
+}
+
 
 export function changePassword(origin_password, new_password) {
   return service(

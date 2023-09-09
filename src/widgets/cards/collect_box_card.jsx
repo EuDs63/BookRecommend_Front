@@ -11,7 +11,7 @@ import {
 } from "@material-tailwind/react";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import { getCollect, getRating } from "@/utils/api";
+import { getCollect, getRating,addRating } from "@/utils/api";
 import { CollectStatus } from "@/widgets/stuff";
 
 function mapRatingToInteger(rating) {
@@ -57,6 +57,18 @@ export function CollectBoxCard({
                 return "";
         }
     };
+
+    const handleRateChange = (value) => {
+        console.log(value)
+        setRated(value)
+        let add_rating = value * 2;
+        if (value === 5) {
+            add_rating = 9.9;
+        }
+        addRating(book_id,user_id,add_rating).then((response) => {
+            console.log(response.data);
+        });
+    }
 
     // 获取收藏数据
     const { collectRecord, isLoading, isError } = getCollect(3, book_id, user_id);
@@ -119,13 +131,11 @@ export function CollectBoxCard({
                 {
                     collect_type > 0 ? (
                         <>
-                            < CollectStatus collect_type={collect_type} collect_time={collect_time}/>
+                            < CollectStatus collect_type={collect_type} collect_time={collect_time} user_id={user_id} book_id={book_id}/>
                             {/* <Typography variant="h6" className="font-normal blue-gray mb-2">
                                 {getCollectText()}
                             </Typography> */}
                         </>
-
-
                     ) : (
                         <Tabs value="app" className="mt-5">
                             <TabsHeader>
@@ -149,7 +159,7 @@ export function CollectBoxCard({
                                 我的评分
                             </Typography>
                             <div className="flex items-center gap-2 mt-5">
-                                <Rating value={rated} onChange={(value) => setRated(value)} />
+                                <Rating value={rated} onChange={handleRateChange} />
                                 <Typography color="blue-gray" className="font-medium">
                                     {getRatingText()}
                                 </Typography>
