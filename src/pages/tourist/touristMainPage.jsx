@@ -177,7 +177,7 @@ export function TouristMainPage() {
       <div className="flex justify-between space-x-4">
         {books.map((book, index) => (
           <div key={index} className="flex flex-col items-center">
-            <Link to={`/dashboard/home?query=${book.book_id}`}>
+            <Link to={`/book/${book.book_id}`}>
               <img
                 src={`https://images.weserv.nl/?url=${book.cover_image_url}`}
                 alt={book.title}
