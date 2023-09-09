@@ -71,7 +71,7 @@ export function getCollect(method,book_id,user_id){
   // 使用 SWR 钩子来获取数据
   const { data, error, isLoading } = useSWR(requestUrl, fetchInfo);
   return {
-    collect : data,
+    collectRecord : data,
     isLoading,
     isError: error,
   }
@@ -82,7 +82,7 @@ export function getRating(method,book_id,user_id){
   // 使用 SWR 钩子来获取数据
   const { data, error, isLoading } = useSWR(requestUrl, fetchInfo);
   return {
-    rating : data,
+    ratingRecord : data,
     isLoading,
     isError: error,
   }
