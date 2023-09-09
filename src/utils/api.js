@@ -126,11 +126,19 @@ export function getAction(type, method, book_id, user_id) {
   });
 }
 
-export function commentInfo() {
-  return service(
-    {}
-  );
+export function addComment(book_id, user_id, content) {
+  return service({
+    url: `/action/add`,
+    method: "post",
+    data: {
+      type: 2,
+      book_id: book_id,
+      user_id: user_id,
+      content: content,
+    },
+  });
 }
+
 
 export function changePassword(origin_password, new_password) {
   return service(
@@ -144,16 +152,6 @@ export function changePassword(origin_password, new_password) {
     }
   );
 }
-
-// export function changeAvatar(formData) {
-//   return fileService(
-//     {
-//       url: "/user/upload-avatar",
-//       method: "post",
-//       formData,
-//     }
-//   );
-// }
 
 // 封装文件上传 API
 export function changeAvatar(file, info) {

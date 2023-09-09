@@ -22,8 +22,8 @@ import {
 } from "@heroicons/react/24/solid";
 import { Link, useParams } from "react-router-dom";
 import { ProfileInfoCard, BookCommentsCard } from "@/widgets/cards";
-import { recommendedBooksData, bookCommentsData } from "@/data";
-import { getBookInfomation, getAction } from "@/utils/api";
+import { recommendedBooksData } from "@/data";
+import { getBookInfomation, getAction,addComment } from "@/utils/api";
 import { useState, useEffect } from "react";
 import { useUser } from "@/context/UserContext";
 
@@ -53,6 +53,30 @@ export function BookDetail() {
   const avatar_url = import.meta.env.VITE_BASE_URL + '/' + user.avatar_path;
   const { book_id } = useParams();
   const { data, isLoading, isError } = getBookInfomation(book_id, 1);
+
+  // 评论
+  const [comment, setComment] = useState("");
+
+  const handleCommentChange = (e) => {
+    setComment(e.target.value);
+  }
+
+  const handleCommentCancel = () => {
+    setComment("");
+  }
+
+  const handleCommentSubmit = () => {
+    console.log(comment);
+    addComment(book_id, user.user_id, comment).then((resp) => {
+      var code = resp.data["code"].toString();
+      if (code === "0") {
+        setComment("");
+      } else {
+        console.log("fail!");
+      }
+    });
+  }
+
   if (isLoading) {
     return <div>loading...</div>;
   }
@@ -259,15 +283,18 @@ export function BookDetail() {
           </CardBody>
           <CardFooter>
             <div className="relative w-full">
-              <Textarea variant="static" placeholder="墨薮书评多逸事,何妨挥翰与题辞" rows={8} />
+              <Textarea variant="static" placeholder="墨薮书评多逸事,何妨挥翰与题辞" value={comment} onChange={handleCommentChange} rows={8} />
               <div className="flex w-full justify-between py-1.5">
                 <Avatar src={avatar_url} size="sm"></Avatar>
                 <div className="flex gap-2">
-                  <Button size="md" color="red" className="rounded-md ">
+                  <Button size="md" color="red" className="rounded-md" onClick={handleCommentCancel}>
                     算了
                   </Button>
-                  <Button size="md" color="green" className="rounded-md   ">
-                    写好了
+                  <Button size="md" color="blue" className="rounded-md ">
+                    暂存
+                  </Button>
+                  <Button size="md" color="green" className="rounded-md" onClick={handleCommentSubmit}>
+                    好了
                   </Button>
                 </div>
               </div>
