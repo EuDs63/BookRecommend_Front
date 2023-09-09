@@ -52,10 +52,17 @@ export function BookDetail() {
       }
     });
   }
-
+  // 组件挂载时，获取该书籍下的已有评论
   useEffect(() => {
     getCommentInfo(book_id);
-    // 在组件挂载时，从 localStorage 加载数据
+  }, []);
+
+  // 用户添加评论
+  const [comment, setComment] = useState("");
+  const [statusMessage, setStatusMessage] = useState(""); // 用于显示状态消息
+
+  // 当用户登录状态发生变化时，重新获取评论
+  useEffect(() => {
     const savedData = localStorage.getItem(savedCommentName);
     console.log(savedCommentName);
     console.log(savedData);
@@ -64,32 +71,39 @@ export function BookDetail() {
     }
   }, [user]);
 
-  // 用户添加评论
-  const [comment, setComment] = useState("");
-
   const handleCommentChange = (e) => {
-    setComment(e.target.value);
+    const value = e.target.value;
+    if (value.length <= 500) {
+      // 只有当输入长度不超过 500 时才更新状态
+      setComment(value);
+    }else{
+      setStatusMessage("要不再精简一下?");
+    }
   }
 
   const handleCommentCancel = () => {
     setComment("");
     localStorage.removeItem(savedCommentName);
+    setStatusMessage("已取消评论"); // 设置状态消息为已取消评论
   }
 
   const handleCommentSave = () => {
     // 将当前表单数据保存到 localStorage
     localStorage.setItem(savedCommentName, comment);
+    setTimeout(() => {
+      setStatusMessage("评论已暂存"); // 设置状态消息为评论已暂存
+    }, 1000);
   };
 
   const handleCommentSubmit = () => {
-    console.log(comment);
     addComment(book_id, user.user_id, comment).then((resp) => {
       var code = resp.data["code"].toString();
       if (code === "0") {
         setComment("");
         localStorage.removeItem(savedCommentName);
+        setStatusMessage("评论提交成功"); // 设置状态消息为评论已提交
       } else {
-        console.log("fail!");
+        setStatusMessage("评论提交失败");
       }
     });
   }
@@ -314,6 +328,9 @@ export function BookDetail() {
                     好了
                   </Button>
                 </div>
+                {statusMessage && (
+                  <div className="mt-2 text-green-500">{statusMessage}</div>
+                )}
               </div>
             </div>
           </CardFooter>
