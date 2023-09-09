@@ -34,7 +34,7 @@ export function CollectStatus({ user_id, book_id, collect_time, collect_type }) 
     return (
         <Popover open={openPopover} handler={setOpenPopover}>
             <PopoverHandler {...triggers}>
-                <Button className="w-full mt-5 border-solid text-base" color="blue-gray" ripple="false">{getCollectText(collect_type)}</Button>
+                <Button className="w-full mt-5 border-solid text-base" color="blue-gray" ripple={false}>{getCollectText(collect_type)}</Button>
             </PopoverHandler>
             <PopoverContent {...triggers} className="z-50 max-w-[24rem]">
                 <Typography

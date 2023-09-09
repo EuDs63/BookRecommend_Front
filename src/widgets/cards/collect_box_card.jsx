@@ -130,9 +130,6 @@ export function CollectBoxCard({
                     collect_type > 0 ? (
                         <>
                             < CollectStatus collect_type={collect_type} collect_time={collect_time} user_id={user_id} book_id={book_id}/>
-                            {/* <Typography variant="h6" className="font-normal blue-gray mb-2">
-                                {getCollectText()}
-                            </Typography> */}
                         </>
                     ) : (
                         <CollectSelect user_id={user_id} book_id={book_id} collect_type={collect_type}/>
