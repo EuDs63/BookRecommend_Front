@@ -47,7 +47,7 @@ export function ProfileInfoCard({ title, description, details }) {
                     variant="small"
                     className="font-normal text-blue-gray-500"
                   >
-                    {details[el]}
+                    {Array.isArray(details[el]) ? details[el].join(" ") : details[el]}
                   </Typography>
                 }
               </li>
