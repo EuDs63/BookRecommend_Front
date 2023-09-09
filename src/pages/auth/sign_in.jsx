@@ -24,6 +24,12 @@ export function SignIn() {
   const [open, setOpen] = useState(false);
   const navigateTo = useNavigate();
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSignIn();
+    }
+  };
+
   useEffect(() => {
     // 自动登录
     userAutoLogin().then((resp) => {
@@ -129,6 +135,7 @@ export function SignIn() {
               label="密码"
               size="lg"
               onChange={handlePasswordChange} value={password}
+              onKeyDown={handleKeyDown}
             />
             <div className="-ml-2.5">
               <Checkbox label="下次自动登录" checked={rememberMe}
@@ -170,12 +177,6 @@ export function SignIn() {
         </Card>
       </div>
       <div className="">
-        {/* <Alert
-              className="rounded-none border-l-4 border-[#2ec946] bg-[#2ec946]/10 font-medium text-[#2ec946]"
-            >
-              自动登录成功
-            </Alert> */}
-
         <Alert
           open={open} onClose={() => setOpen(false)} className="w-1/2 m-auto justify-center" color="green">
           自动登录验证成功,{secondsToShowAlert}秒后跳转到主页，或者点击<a href="/user/main">这里</a>跳转
