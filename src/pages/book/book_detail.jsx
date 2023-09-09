@@ -117,7 +117,7 @@ export function BookDetail() {
                 )}
               </div>
               <div className="">
-                <CollectBoxCard user_id={user.user_id} book_id={book_id} />
+                {isLoggedIn && (<CollectBoxCard user_id={user.user_id} book_id={book_id} />)}
               </div>
 
             </div>

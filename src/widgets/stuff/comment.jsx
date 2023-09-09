@@ -2,13 +2,14 @@ import {
     Avatar,
     Textarea,
     Button,
+    Typography,
 } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 import { addComment } from "@/utils/api";
 import { useState, useEffect } from "react";
 import { useUser } from "@/context/UserContext";
 
-export function Comment({book_id}) 
-{
+export function Comment({ book_id }) {
     const { isLoggedIn, user } = useUser(); // 使用useUser钩子来获取用户状态
     const avatar_url = import.meta.env.VITE_BASE_URL + '/' + user.avatar_path;
     let savedCommentName = `${book_id}_${user.user_id}_draftData`;
@@ -63,23 +64,40 @@ export function Comment({book_id})
     return (
         <div className="relative w-full">
             <Textarea variant="static" placeholder="墨薮书评多逸事,何妨挥翰与题辞" value={comment} onChange={handleCommentChange} rows={8} />
-            <div className="flex w-full justify-between py-1.5">
-                <Avatar src={avatar_url} size="sm"></Avatar>
-                <div className="flex gap-2">
-                    <Button size="md" color="red" className="rounded-md" onClick={handleCommentCancel}>
-                        算了
-                    </Button>
-                    <Button size="md" color="blue" className="rounded-md" onClick={handleCommentSave}>
-                        暂存
-                    </Button>
-                    <Button size="md" color="green" className="rounded-md" onClick={handleCommentSubmit}>
-                        好了
-                    </Button>
+            {isLoggedIn ? (
+                <div className="flex w-full justify-between py-1.5">
+                    <Avatar src={avatar_url} size="sm"></Avatar>
+                    <div className="flex gap-2">
+                        <Button size="md" color="red" className="rounded-md" onClick={handleCommentCancel}>
+                            算了
+                        </Button>
+                        <Button size="md" color="blue" className="rounded-md" onClick={handleCommentSave}>
+                            暂存
+                        </Button>
+                        <Button size="md" color="green" className="rounded-md" onClick={handleCommentSubmit}>
+                            好了
+                        </Button>
+                    </div>
+                    {statusMessage && (
+                        <div className="mt-2 text-green-500">{statusMessage}</div>
+                    )}
                 </div>
-                {statusMessage && (
-                    <div className="mt-2 text-green-500">{statusMessage}</div>
-                )}
-            </div>
+            ) : (
+                <Typography variant="small" className="mt-6 flex justify-center mb-2">
+                    <Link to="/auth/sign-in">
+                        <Typography
+                            as="span"
+                            variant="small"
+                            color="blue"
+                            className="ml-1 font-bold"
+                        >
+                            登录
+                        </Typography>
+                    </Link>
+                    以发表评论
+                </Typography>
+            )}
+
         </div>
     );
 }
