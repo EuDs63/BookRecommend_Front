@@ -62,6 +62,7 @@ export function CollectBoxCard({
         console.log(value)
         setRated(value)
         let add_rating = value * 2;
+        // 数据库中数据类型被定义为 db.DECIMAL(2, 1)，范围为-9.9 到 9.9，前端显示为0-5，所以需要乘以2
         if (value === 5) {
             add_rating = 9.9;
         }
@@ -103,7 +104,8 @@ export function CollectBoxCard({
                 setRating_time(rating.rating_time)
             }
         }
-
+        console.log(ratingRecord)
+        console.log(book_id)
     }, [ratingRecord]);
 
 
@@ -169,7 +171,7 @@ export function CollectBoxCard({
                     ) : (
                         <>
                             <div className="flex items-center gap-2 mt-5">
-                                <Rating value={rated} onChange={(value) => setRated(value)} />
+                                <Rating value={rated} onChange={handleRateChange} />
                                 <Typography color="blue-gray" className="font-medium">
                                     {getRatingText()}
                                 </Typography>
@@ -184,14 +186,10 @@ export function CollectBoxCard({
     );
 }
 
-CollectBoxCard.defaultProps = {
-    action: null,
-};
 
 CollectBoxCard.propTypes = {
-    user_id: PropTypes.isRequired,
-    book_id: PropTypes.isRequired,
-    action: PropTypes.node,
+    user_id: PropTypes.number.isRequired,
+    book_id: PropTypes.string.isRequired,
 };
 
 CollectBoxCard.displayName = "/src/widgets/cards/collect_box_card.jsx";

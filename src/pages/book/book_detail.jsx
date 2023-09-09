@@ -12,16 +12,8 @@ import {
   Switch,
   Tooltip,
   Button,
-  Rating,
   Spinner,
 } from "@material-tailwind/react";
-import {
-  HomeIcon,
-  ChatBubbleLeftEllipsisIcon,
-  Cog6ToothIcon,
-  PencilIcon,
-  HeartIcon,
-} from "@heroicons/react/24/solid";
 import { Link, useParams } from "react-router-dom";
 import { ProfileInfoCard, BookCommentsCard,CollectBoxCard } from "@/widgets/cards";
 import { recommendedBooksData } from "@/data";

@@ -18,7 +18,6 @@ export function ProfileInfoCard({ title, description, details, action }) {
         <Typography variant="h6" color="blue-gray">
           {title}
         </Typography>
-        {action}
       </CardHeader>
       <CardBody className="p-0">
         {description && (
@@ -67,7 +66,7 @@ ProfileInfoCard.defaultProps = {
 };
 
 ProfileInfoCard.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   description: PropTypes.node,
   details: PropTypes.object,
 };
