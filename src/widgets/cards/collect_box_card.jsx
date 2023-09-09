@@ -8,10 +8,11 @@ import {
     TabsHeader,
     Tab,
     Rating,
+    Radio,
 } from "@material-tailwind/react";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import { getCollect, getRating,addRating } from "@/utils/api";
+import { getCollect, getRating,addRating,addCollect } from "@/utils/api";
 import { CollectStatus } from "@/widgets/stuff";
 
 function mapRatingToInteger(rating) {
@@ -79,6 +80,14 @@ export function CollectBoxCard({
     const [collect_type, setCollect_type] = useState(0);
     const [rating_time, setRating_time] = useState("");
 
+    const [selectedValue, setSelectedValue] = useState(collect_type);
+
+    const handleRadioChange = (event) => {
+        const value = event.target.value;
+        setSelectedValue(value);
+        addCollect(book_id, user_id, value);
+      };
+
     if (isError) {
         console.log(isError)
     }
@@ -139,25 +148,47 @@ export function CollectBoxCard({
                             </Typography> */}
                         </>
                     ) : (
-                        <Tabs value="app" className="mt-5">
-                            <TabsHeader>
-                                <Tab value="app">
+                        <div className="flex gap-10">
+                        <Radio
+                            value= {1}
+                            checked={selectedValue === 1}
+                            onChange={handleRadioChange}
+                            className="border-gray-900/10 bg-gray-900/5 p-0 transition-all hover:before:opacity-0"
+                            label={
+                                <Typography color="blue-gray" className="font-normal">
                                     想看
-                                </Tab>
-                                <Tab value="message">
+                                </Typography>
+                            }
+                        />
+                        <Radio
+                            value={2}
+                            checked={selectedValue === 2}
+                            onChange={handleRadioChange}
+                            className="border-gray-900/10 bg-gray-900/5 p-0 transition-all hover:before:opacity-0"
+                            label={
+                                <Typography color="blue-gray" className="font-normal">
                                     在看
-                                </Tab>
-                                <Tab value="settings">
+                                </Typography>
+                            }
+                        />
+                        <Radio
+                            value= {3}
+                            checked={selectedValue === 3}
+                            onChange={handleRadioChange}
+                            className="border-gray-900/10 bg-gray-900/5 p-0 transition-all hover:before:opacity-0"
+                            label={
+                                <Typography color="blue-gray" className="font-normal">
                                     看过
-                                </Tab>
-                            </TabsHeader>
-                        </Tabs>
+                                </Typography>
+                            }
+                        />
+                    </div>
                     )
                 }
                 {
                     rating_time ? (
                         <>
-                            <Typography variant="h6" className="font-normal blue-gray mb-2">
+                            <Typography variant="h6" className="font-normal blue-gray my-2">
                                 我的评分
                             </Typography>
                             <div className="flex items-center gap-2 mt-5">
