@@ -23,7 +23,7 @@ import {
   HeartIcon,
 } from "@heroicons/react/24/solid";
 import { Link, useParams } from "react-router-dom";
-import { ProfileInfoCard, BookCommentsCard } from "@/widgets/cards";
+import { ProfileInfoCard, BookCommentsCard,CollectBoxCard } from "@/widgets/cards";
 import { recommendedBooksData } from "@/data";
 import { getBookInfomation, getAction, addComment } from "@/utils/api";
 import { useState, useEffect } from "react";
@@ -39,25 +39,6 @@ export function BookDetail() {
   const avatar_url = import.meta.env.VITE_BASE_URL + '/' + user.avatar_path;
   const { book_id } = useParams();
   const { data, isLoading, isError } = getBookInfomation(book_id, 1);
-  const [rated, setRated] = useState(4);
-
-  // 将 rated 的值映射到相应的评级文本
-  const getRatingText = () => {
-    switch (rated) {
-      case 1:
-        return "很差";
-      case 2:
-        return "较差";
-      case 3:
-        return "还行";
-      case 4:
-        return "推荐";
-      case 5:
-        return "力荐";
-      default:
-        return "";
-    }
-  };
 
   let savedCommentName = `${book_id}_${user.user_id}_draftData`;
   // 获取该书籍下的已有评论
@@ -203,35 +184,9 @@ export function BookDetail() {
                 )}
               </div>
               <div className="">
-
+                <CollectBoxCard user_id={user.user_id} book_id={book_id} />
               </div>
-              <Card>
-                <CardBody className="p-4 text-right">
-                  <Typography variant="h5" className="font-normal blue-gray mb-2">
-                    收藏盒
-                  </Typography>
-                  <Tabs value="app" className="mt-5">
-                    <TabsHeader>
-                      <Tab value="app">
-                        想看
-                      </Tab>
-                      <Tab value="message">
-                        在看
-                      </Tab>
-                      <Tab value="settings">
-                        看过
-                      </Tab>
-                    </TabsHeader>
-                  </Tabs>
-                  <div className="flex items-center gap-2 mt-5">
-                    <Rating value={4} onChange={(value) => setRated(value)} />
-                    <Typography color="blue-gray" className="font-medium">
-                      {getRatingText()}
-                    </Typography>
-                  </div>
-                </CardBody>
 
-              </Card>
             </div>
 
             <div className="px-4 pb-4 mt-12">
