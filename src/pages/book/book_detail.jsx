@@ -13,6 +13,7 @@ import {
   Tooltip,
   Button,
   IconButton,
+  Spinner,
 } from "@material-tailwind/react";
 import {
   HomeIcon,
@@ -109,7 +110,7 @@ export function BookDetail() {
   }
 
   if (isLoading) {
-    return <div>loading...</div>;
+    return <Spinner className="h-16 w-16 text-gray-900/50" />;
   }
   if (isError) {
     console.log(isError);
@@ -185,15 +186,12 @@ export function BookDetail() {
                 <Tabs value="app">
                   <TabsHeader>
                     <Tab value="app">
-                      <HomeIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
                       想看
                     </Tab>
                     <Tab value="message">
-                      <ChatBubbleLeftEllipsisIcon className="-mt-0.5 mr-2 inline-block h-5 w-5" />
                       在看
                     </Tab>
                     <Tab value="settings">
-                      <Cog6ToothIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
                       看过
                     </Tab>
                   </TabsHeader>
