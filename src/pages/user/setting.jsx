@@ -126,8 +126,8 @@ export function Setting() {
                             </div>
                         </div>
                     </div>
-                    <div className="gird-cols-1 mb-12 grid gap-12 px-4 lg:grid-cols-2 xl:grid-cols-2">
-                        <div>
+                    <div className="gird-cols-1 mb-12 grid gap-12 px-4 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2">
+                        <div className="flex gap-3">
                             <Typography variant="h4" color="blue-gray">
                                 修改密码
                             </Typography>
