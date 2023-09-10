@@ -2,7 +2,7 @@ import service from "@/utils/service";
 import fileService from "@/utils/fileService";
 //import fetcher from "@/utils/fetcherService";
 import useSWR from "swr";
-import { func } from "prop-types";
+import useSWRInfinite from "swr/infinite";
 
 export function userLogin(data) {
   return service({
@@ -77,6 +77,33 @@ export function getCollect(method,book_id,user_id){
   }
 }
 
+// 根据book_id获取收藏信息，用于“谁看这本书”
+export function getCollectByBookId(book_id){
+  const requestUrl = `/action/collect/1/${book_id}/0`
+  const {
+    data,
+    mutate,
+    size,
+    setSize,
+    isValidating,
+    isLoading
+  } = useSWRInfinite(
+    (index) =>
+      `${requestUrl}?&current_page=${
+        index + 1
+      }`,
+    fetchInfo
+  );
+  return {
+    data,
+    mutate,
+    size,
+    setSize,
+    isValidating,
+    isLoading
+  }
+};
+
 export function getRating(method,book_id,user_id){
   const requestUrl = `/action/rating/${method}/${book_id}/${user_id}`
   // 使用 SWR 钩子来获取数据
@@ -87,6 +114,9 @@ export function getRating(method,book_id,user_id){
     isError: error,
   }
 }
+
+
+
 
 export function getcategorybookInfo(category_id, page, per_page, order = 0) {
   return service({
