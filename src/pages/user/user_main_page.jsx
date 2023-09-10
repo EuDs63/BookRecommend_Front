@@ -2,29 +2,17 @@ import React from "react";
 import {
   Typography,
   Card,
-  CardHeader,
   CardBody,
 } from "@material-tailwind/react";
-import { Carousel, IconButton, Button } from "@material-tailwind/react";
-import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
-import { useParams, useLocation } from "react-router-dom";
+import { Carousel, IconButton } from "@material-tailwind/react";
+import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
-  ClockIcon,
-  CheckIcon,
-  EllipsisVerticalIcon,
-  ArrowUpIcon,
-} from "@heroicons/react/24/outline";
-import { Link, BrowserRouter, Route, Routes } from "react-router-dom";
-import {
-  willReadBookData,
-  readingBookData,
-  haveReadBookData,
-  bookCommentsData,
   recommendedBooksData,
 } from "@/data";
-import { ProfileInfoCard, BookCommentsCard } from "@/widgets/cards";
 import { useState, useEffect } from "react";
 import { getAction, getcategorybookInfo } from "@/utils/api";
+
 export function UserMainPage() {
   const { userid } = useParams(); // 获取路由参数
   useEffect(() => {

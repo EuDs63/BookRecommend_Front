@@ -3,12 +3,14 @@ import React, { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import {
   Card,
-  CardHeader,
   CardBody,
   Typography,
 } from "@material-tailwind/react";
-export function HaveReadPage() {
-  const { userid } = useParams(); // 获取路由参数
+import { useUser } from "@/context/UserContext";
+
+export function WillRead() {
+  const { isLoggedIn, user, logout, change_avatar } = useUser(); // 使用useUser钩子来获取用户状态
+  const userid = user.user_id;
   const { search } = useLocation();
   const queryParams = new URLSearchParams(search);
   //   const query = queryParams.get("query");
@@ -23,10 +25,10 @@ export function HaveReadPage() {
   useEffect(() => {
     // 在组件加载后执行的代码
     console.log(userid);
-    getReadingPageInfo();
+    getWillReadPageInfo();
     setCurrentPage(1);
   }, [userid]);
-  function getReadingPageInfo() {
+  function getWillReadPageInfo() {
     getAction(1, 2, 0, userid).then((resp) => {
       var code = resp.data["code"].toString();
       if (code === "0") {
@@ -35,7 +37,7 @@ export function HaveReadPage() {
         const collect_type = contents.map((content) => content.collect_type);
         const indices = [];
         collect_type.forEach((value, index) => {
-          if (value === 3) {
+          if (value === 1) {
             indices.push(index);
           }
         });
@@ -66,9 +68,7 @@ export function HaveReadPage() {
           bookData.push(bookObj);
         });
         setBookInfoData(bookData);
-        setBookCollectedTimeData(collect_time);
-        // setTotalPages(totalPages);
-        // setTotalRecords(totalRecords);
+        setBookCollectedTimeData(collect_time)
       } else {
         console.log("fail!");
       }
@@ -85,7 +85,7 @@ export function HaveReadPage() {
           fontWeight: "bold",
         }}
       >
-        我曾读过
+        我的想读榜单
       </Typography>
       <Card>
         {bookInfoData.map((book, index) => (
@@ -132,16 +132,7 @@ export function HaveReadPage() {
           </CardBody>
         ))}
       </Card>
-      <div>
-        {bookInfoData.length > 30 ? (
-          <span>读书谓已多，抚事知不足</span>
-        ) : bookInfoData.length >= 10 && bookInfoData.length <= 30 ? (
-          <span>欲穷千里目，更上一层楼</span>
-        ) : (
-          <span>玉不琢不成器，人不学不知理</span>
-        )}
-      </div>
     </div>
   );
 }
-export default HaveReadPage;
+export default WillRead;

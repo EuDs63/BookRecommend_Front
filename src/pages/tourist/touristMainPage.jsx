@@ -2,30 +2,15 @@ import React from "react";
 import {
   Typography,
   Card,
-  CardHeader,
   CardBody,
 } from "@material-tailwind/react";
-import { Carousel, IconButton, Button } from "@material-tailwind/react";
-import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
-import { useParams, useLocation } from "react-router-dom";
-import {
-  ClockIcon,
-  CheckIcon,
-  EllipsisVerticalIcon,
-  ArrowUpIcon,
-} from "@heroicons/react/24/outline";
-import { Link, BrowserRouter, Route, Routes } from "react-router-dom";
-import {
-  willReadBookData,
-  readingBookData,
-  haveReadBookData,
-  bookCommentsData,
-  recommendedBooksData,
-} from "@/data";
-import { ProfileInfoCard, BookCommentsCard } from "@/widgets/cards";
+import { Carousel, IconButton } from "@material-tailwind/react";
+import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { getAction, getcategorybookInfo } from "@/utils/api";
-export function UserMainPage() {
+import { getcategorybookInfo } from "@/utils/api";
+
+export function TouristMainPage() {
   const { userid } = useParams(); // 获取路由参数
   useEffect(() => {
     getCategoryBookInfo(1, setnewLiteratureData, 1);
@@ -40,7 +25,6 @@ export function UserMainPage() {
     getCategoryBookInfo(4, setConcernLifeData, 2);
     getCategoryBookInfo(5, setConcernManagementData, 2);
     getCategoryBookInfo(6, setConcernTechnologyData, 2);
-    getCommentInfo(userid);
     // 继续添加其他范围和对应的数据更新函数
   }, []);
   function getCategoryBookInfo(range, setDataFunction, type) {
@@ -54,20 +38,9 @@ export function UserMainPage() {
       }
     });
   }
-  function getCommentInfo(user_id) {
-    getAction(2, 2, 0, user_id).then((resp) => {
-      var code = resp.data["code"].toString();
-      if (code === "0") {
-        setUserComments(resp.data["content"]);
-      } else {
-        console.log("fail!");
-      }
-    });
-  }
 
   const [selectedTab, setSelectedTab] = useState("culture"); // 初始选中的标签为文化
   const [recommendTab, setRecommendTab] = useState("culture"); // 初始选中的标签为文化
-  const [userComments, setUserComments] = useState([]);
   function generateContent(selectedTab, type) {
     const tabs = [
       "culture",
@@ -124,11 +97,10 @@ export function UserMainPage() {
             {new Array(length).fill("").map((_, i) => (
               <span
                 key={i}
-                className={`block h-1 cursor-pointer rounded-2xl transition-all content-[''] ${
-                  activeIndex === i
+                className={`block h-1 cursor-pointer rounded-2xl transition-all content-[''] ${activeIndex === i
                     ? "w-8 bg-blue-gray-300 text-white"
                     : "w-4 bg-blue-gray-100 text-blue-gray-700"
-                }`}
+                  }`}
                 onClick={() => setActiveIndex(i)}
               />
             ))}
@@ -205,7 +177,7 @@ export function UserMainPage() {
       <div className="flex justify-between space-x-4">
         {books.map((book, index) => (
           <div key={index} className="flex flex-col items-center">
-            <Link to={`/dashboard/home?query=${book.book_id}`}>
+            <Link to={`/book/${book.book_id}`}>
               <img
                 src={`https://images.weserv.nl/?url=${book.cover_image_url}`}
                 alt={book.title}
@@ -245,54 +217,48 @@ export function UserMainPage() {
     return (
       <div className="flex">
         <div
-          className={`cursor-pointer ${
-            tab === "culture" ? "font-bold text-black" : "text-gray-500"
-          }`}
+          className={`cursor-pointer ${tab === "culture" ? "font-bold text-black" : "text-gray-500"
+            }`}
           onClick={() => onTabClick("culture")}
         >
           文化
         </div>
         <div className="mx-1"></div>
         <div
-          className={`cursor-pointer ${
-            tab === "literature" ? "font-bold text-black" : "text-gray-500"
-          }`}
+          className={`cursor-pointer ${tab === "literature" ? "font-bold text-black" : "text-gray-500"
+            }`}
           onClick={() => onTabClick("literature")}
         >
           文学
         </div>
         <div className="mx-1"></div>
         <div
-          className={`cursor-pointer ${
-            tab === "life" ? "font-bold text-black" : "text-gray-500"
-          }`}
+          className={`cursor-pointer ${tab === "life" ? "font-bold text-black" : "text-gray-500"
+            }`}
           onClick={() => onTabClick("life")}
         >
           生活
         </div>
         <div className="mx-1"></div>
         <div
-          className={`cursor-pointer ${
-            tab === "popularity" ? "font-bold text-black" : "text-gray-500"
-          }`}
+          className={`cursor-pointer ${tab === "popularity" ? "font-bold text-black" : "text-gray-500"
+            }`}
           onClick={() => onTabClick("popularity")}
         >
           流行
         </div>
         <div className="mx-1"></div>
         <div
-          className={`cursor-pointer ${
-            tab === "technology" ? "font-bold text-black" : "text-gray-500"
-          }`}
+          className={`cursor-pointer ${tab === "technology" ? "font-bold text-black" : "text-gray-500"
+            }`}
           onClick={() => onTabClick("technology")}
         >
           科技
         </div>
         <div className="mx-1"></div>
         <div
-          className={`cursor-pointer ${
-            tab === "management" ? "font-bold text-black" : "text-gray-500"
-          }`}
+          className={`cursor-pointer ${tab === "management" ? "font-bold text-black" : "text-gray-500"
+            }`}
           onClick={() => onTabClick("management")}
         >
           经管
@@ -343,93 +309,11 @@ export function UserMainPage() {
         <CarouselDefault selectedTab={recommendTab} type={2} />
         {/* 添加其他标签对应的内容 */}
       </div>
-      <div className="p-4 shadow-md">
-        <Typography variant="h4" className="mb-2 font-bold text-blue-gray-300">
-          猜你想看
-        </Typography>
-        <BookList books={recommendedBooksData.slice(0, 6)} />
-      </div>
-      <div className="my-12"></div>{" "}
-      {/* 使用 my-12 类来添加垂直间距，也可以根据需要调整数字部分 */}
-      <div>
-        <Typography variant="h4" color="blue-gray" className="mb-3">
-          我的书评
-        </Typography>
-        <ul className="flex flex-col gap-1">
-          <Card>
-            {userComments.length > 0 ? (
-              userComments.map((comment, index) => (
-                <div className="max-h-50 w-full overflow-y-auto">
-                  <div key={index} className="mb-4">
-                    <CardBody
-                      key={index}
-                      style={{
-                        overflow: "hidden",
-                        height: "235px",
-                        display: "flex",
-                      }}
-                    >
-                      <div>
-                        <Link to={`/dashboard/home?query=${comment.book_id}`}>
-                          <img
-                            src={`https://images.weserv.nl/?url=${comment.cover_image_url}`}
-                            className="h-48 w-36 rounded-lg shadow-lg shadow-blue-gray-500/40"
-                          />
-                        </Link>
-                      </div>
-                      <div style={{ marginLeft: "20px", flex: 1 }}>
-                        <div>
-                          <Typography
-                            style={{
-                              color: "black",
-                              fontSize: "22px",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            {comment.title}
-                          </Typography>
-                        </div>
-                        {/* <div>
-                          <Typography style={{ color: "blue" }}>
-                            {book.author}
-                          </Typography>
-                        </div> */}
-                        <div
-                          style={{
-                            display: "-webkit-box",
-                            WebkitBoxOrient: "vertical",
-                            WebkitLineClamp: 3,
-                            overflow: "hidden",
-                          }}
-                        >
-                          <Typography>{comment.content}</Typography>
-                        </div>
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "flex-end",
-                          }}
-                        >
-                          <Typography>{comment.create_time} 评</Typography>
-                        </div>
-                      </div>
-                    </CardBody>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div>
-                {/* 当 userComments 为空时的内容 */}
-                <Typography className="font-mono text-2xl font-bold text-black">
-                  墨薮书评多逸事,何妨挥翰与题辞
-                </Typography>
-              </div>
-            )}
-          </Card>
-        </ul>
-      </div>
+
+
+
     </div>
   );
 }
 
-export default UserMainPage;
+export default TouristMainPage;

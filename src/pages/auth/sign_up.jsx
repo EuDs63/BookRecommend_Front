@@ -5,25 +5,21 @@ import {
   CardBody,
   CardFooter,
   Input,
-  Checkbox,
   Button,
   Typography,
 } from "@material-tailwind/react";
 
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import { userRegister, userInfo } from "@/utils/api"
-import { useUser } from "../../UserContext";
+import { userRegister } from "@/utils/api"
+import { useUser } from "@/context/UserContext";
 export function SignUp() {
 
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [password_confirmation, setPassword_confirmation] = useState("");
     const { isLoggedIn, setIsLoggedIn } = useUser(); // 使用useUser钩子来获取用户状态
-    const handleLogout = () => {
-      // 在用户点击登出按钮时更新用户状态
-      setIsLoggedIn(false);
-    };
+
     const handleSignInContext = () => {
       // 在用户点击登出按钮时更新用户状态
       setIsLoggedIn(true);
@@ -47,9 +43,8 @@ export function SignUp() {
       var code = resp.data['code'].toString();
       var message = resp.data['msg'];
       if (code === '0') {
-        //getUserInfo(form.email);
         alert(message);
-        navigateTo('/home');//这里应该打开一个标签推荐页面
+        navigateTo('/auth/sign-in');//这里应该打开一个标签推荐页面
         handleSignInContext();
       } else {
         console.log(username + " try to sign up, but fail");
@@ -86,20 +81,20 @@ export function SignUp() {
             className="mb-4 grid h-28 place-items-center"
           >
             <Typography variant="h3" color="white">
-              Sign Up
+              注册
             </Typography>
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
-            <Input label="Name" size="lg" onChange={handleUserNameChange}/>
-            <Input type="password" label="Password" size="lg" onChange={handlePasswordChange} />
-            <Input type="password" label="Confirm your password" size="lg" onChange={handlePassword_confirmationChange} />
+            <Input label="用户名" size="lg" onChange={handleUserNameChange} className="required"/>
+            <Input type="password" label="密码" size="lg" onChange={handlePasswordChange} />
+            <Input type="password" label="确认密码" size="lg" onChange={handlePassword_confirmationChange} />
           </CardBody>
           <CardFooter className="pt-0">
             <Button variant="gradient" fullWidth onClick={handleSignUp}>
-              Sign Up
+              注册
             </Button>
             <Typography variant="small" className="mt-6 flex justify-center">
-              Already have an account?
+              已有账号？
               <Link to="/auth/sign-in">
                 <Typography
                   as="span"
@@ -107,7 +102,7 @@ export function SignUp() {
                   color="blue"
                   className="ml-1 font-bold"
                 >
-                  Sign in
+                  登录
                 </Typography>
               </Link>
             </Typography>

@@ -3,6 +3,7 @@ import { Cog6ToothIcon } from "@heroicons/react/24/solid";
 import { IconButton } from "@material-tailwind/react";
 import {
   ChartPieIcon,
+  UserPlusIcon,
   TagIcon,
 } from "@heroicons/react/24/solid";
 import {
@@ -14,20 +15,30 @@ import {
 import routes from "@/routes";
 import { useMaterialTailwindController, setOpenConfigurator } from "@/context";
 
-export function Tourist() {
+export function User() {
   const [dispatch] = useMaterialTailwindController();
 
   const navbarRoutes = [
     {
       name: "首页",
-      path: "/tourist/main",
+      path: "/user/main",
       icon: ChartPieIcon,
+    },
+    {
+      name: "个人主页",
+      path: "/user/profile",
+      icon: UserPlusIcon,
     },
     {
       name: "分类浏览",
       path: "/book/category",
       icon: TagIcon,
-  },
+    },
+    {
+      name: "设置",
+      path: "/user/setting",
+      icon: UserPlusIcon,
+    },
   ];
 
 
@@ -51,7 +62,7 @@ export function Tourist() {
         <Routes>
           {routes.map(
             ({ layout, pages }) =>
-              layout === "tourist" &&
+              layout === "user" &&
               pages.map(({ path, element }) => (
                 <Route exact path={path} element={element} />
               ))
@@ -65,6 +76,6 @@ export function Tourist() {
   );
 }
 
-Tourist.displayName = "/src/layout/tourist.jsx";
+User.displayName = "/src/layout/user.jsx";
 
-export default Tourist;
+export default User;

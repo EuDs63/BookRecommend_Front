@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { Dashboard, Auth,Tourist } from "@/layouts";
+import { Dashboard, Auth, Book, User, Tourist } from "@/layouts";
 
 function App() {
   return (
@@ -7,7 +7,9 @@ function App() {
       <Route path="/dashboard/*" element={<Dashboard />} />
       <Route path="/auth/*" element={<Auth />} />
       <Route path="/tourist/*" element={<Tourist />} />
-      <Route path="*" element={<Navigate to="/dashboard/main" replace />} />
+      <Route path="/user/*" element={<User />} />
+      <Route path="/book/*" element={<Book />} />
+      <Route path="*" element={<Navigate to="/auth/sign-in" replace />} />
     </Routes>
   );
 }

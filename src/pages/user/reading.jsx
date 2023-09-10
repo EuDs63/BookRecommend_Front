@@ -7,8 +7,11 @@ import {
   CardBody,
   Typography,
 } from "@material-tailwind/react";
-export function HaveReadPage() {
-  const { userid } = useParams(); // 获取路由参数
+import { useUser } from "@/context/UserContext";
+
+export function Reading() {
+  const { isLoggedIn, user, logout, change_avatar } = useUser(); // 使用useUser钩子来获取用户状态
+  const userid = user.user_id;
   const { search } = useLocation();
   const queryParams = new URLSearchParams(search);
   //   const query = queryParams.get("query");
@@ -35,7 +38,7 @@ export function HaveReadPage() {
         const collect_type = contents.map((content) => content.collect_type);
         const indices = [];
         collect_type.forEach((value, index) => {
-          if (value === 3) {
+          if (value === 2) {
             indices.push(index);
           }
         });
@@ -85,7 +88,7 @@ export function HaveReadPage() {
           fontWeight: "bold",
         }}
       >
-        我曾读过
+        我的在读榜单
       </Typography>
       <Card>
         {bookInfoData.map((book, index) => (
@@ -132,16 +135,7 @@ export function HaveReadPage() {
           </CardBody>
         ))}
       </Card>
-      <div>
-        {bookInfoData.length > 30 ? (
-          <span>读书谓已多，抚事知不足</span>
-        ) : bookInfoData.length >= 10 && bookInfoData.length <= 30 ? (
-          <span>欲穷千里目，更上一层楼</span>
-        ) : (
-          <span>玉不琢不成器，人不学不知理</span>
-        )}
-      </div>
     </div>
   );
 }
-export default HaveReadPage;
+export default Reading;

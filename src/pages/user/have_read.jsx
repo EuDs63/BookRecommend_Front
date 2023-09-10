@@ -3,12 +3,14 @@ import React, { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import {
   Card,
-  CardHeader,
   CardBody,
   Typography,
 } from "@material-tailwind/react";
-export function HaveReadPage() {
-  const { userid } = useParams(); // 获取路由参数
+import { useUser } from "@/context/UserContext";
+
+export function HaveRead() {
+  const { isLoggedIn, user, logout, change_avatar } = useUser(); // 使用useUser钩子来获取用户状态
+  const userid = user.user_id;
   const { search } = useLocation();
   const queryParams = new URLSearchParams(search);
   //   const query = queryParams.get("query");
@@ -144,4 +146,4 @@ export function HaveReadPage() {
     </div>
   );
 }
-export default HaveReadPage;
+export default HaveRead;
