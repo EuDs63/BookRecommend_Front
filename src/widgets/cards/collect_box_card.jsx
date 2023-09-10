@@ -7,8 +7,8 @@ import {
 } from "@material-tailwind/react";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import { getCollect, getRating,addRating } from "@/utils/api";
-import { CollectStatus,CollectSelect } from "@/widgets/stuff";
+import { getCollect, getRating, addRating } from "@/utils/api";
+import { CollectStatus, CollectSelect } from "@/widgets/stuff";
 
 function mapRatingToInteger(rating) {
     // 将0到10范围内的评分映射到0到5的整数范围
@@ -62,7 +62,7 @@ export function CollectBoxCard({
         if (value === 5) {
             add_rating = 9.9;
         }
-        addRating(book_id,user_id,add_rating).then((response) => {
+        addRating(book_id, user_id, add_rating).then((response) => {
             console.log(response.data);
         });
     }
@@ -78,17 +78,18 @@ export function CollectBoxCard({
     if (isError) {
         console.log(isError)
     }
-    if(isError1){
+    if (isError1) {
         console.log(isError1)
     }
     useEffect(() => {
         if (collectRecord) {
-            const length = collectRecord.content.length
-            if (length > 0) {
-                const collect = collectRecord.content[length - 1];
+            if (collectRecord.length > 0) {
+                console.log(collectRecord);
+                const collect = collectRecord[0];
                 setCollect_time(collect.collect_time);
                 setCollect_type(collect.collect_type);
             }
+
         }
 
     }, [collectRecord]);
@@ -129,10 +130,10 @@ export function CollectBoxCard({
                 {
                     collect_type > 0 ? (
                         <>
-                            < CollectStatus collect_type={collect_type} collect_time={collect_time} user_id={user_id} book_id={book_id}/>
+                            < CollectStatus collect_type={collect_type} collect_time={collect_time} user_id={user_id} book_id={book_id} />
                         </>
                     ) : (
-                        <CollectSelect user_id={user_id} book_id={book_id} collect_type={collect_type}/>
+                        <CollectSelect user_id={user_id} book_id={book_id} collect_type={collect_type} />
                     )
                 }
                 {
