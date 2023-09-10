@@ -11,7 +11,7 @@ import {
 } from "@/widgets/layout";
 import routes from "@/routes";
 import { useUser } from "@/context/UserContext";
-import { BookTimeline } from "@/widgets/stuff";
+import { CollectTimeline } from "@/widgets/stuff";
 import { useParams } from "react-router-dom";
 
 export function Book() {

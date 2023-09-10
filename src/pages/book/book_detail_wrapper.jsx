@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { BookDetail } from "@/pages/book";
-import { BookTimeline } from "@/widgets/stuff";
+import { CollectTimeline } from "@/widgets/stuff";
 
 
 // 导出包裹后的组件
@@ -13,7 +13,7 @@ export function BookDetailWrapper() {
                 <BookDetail book_id={book_id}/>
             </div>
             <div className="w-1/3">
-                <BookTimeline book_id={book_id}/>
+                <CollectTimeline book_id={book_id}/>
             </div>
         </>
     );

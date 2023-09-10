@@ -19,7 +19,7 @@ import { useUser } from "@/context/UserContext";
 import { useState } from "react";
 import { changePassword, changeAvatar } from "@/utils/api";
 import { useNavigate } from 'react-router-dom';
-import { ActionTimeline,BookTimeline } from "@/widgets/stuff";
+import { CollectTimeline } from "@/widgets/stuff";
 
 export function Setting() {
     const { isLoggedIn, user, logout, change_avatar } = useUser(); // 使用useUser钩子来获取用户状态
@@ -225,9 +225,8 @@ export function Setting() {
                     </div>
                 </CardBody>
             </Card>
-            <ActionTimeline />
 
-            <BookTimeline />
+            <CollectTimeline user_id={user.user_id}/>
         </>
     );
 }

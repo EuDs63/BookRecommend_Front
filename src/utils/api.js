@@ -104,6 +104,33 @@ export function getCollectByBookId(book_id){
   }
 };
 
+// 根据user_id获取收藏信息，用于“时光机-collect”
+export function getCollectByUserId(user_id){
+  const requestUrl = `/action/collect/2/0/${user_id}`
+  const {
+    data,
+    mutate,
+    size,
+    setSize,
+    isValidating,
+    isLoading
+  } = useSWRInfinite(
+    (index) =>
+      `${requestUrl}?&current_page=${
+        index + 1
+      }`,
+    fetchInfo
+  );
+  return {
+    data,
+    mutate,
+    size,
+    setSize,
+    isValidating,
+    isLoading
+  }
+};
+
 export function getRating(method,book_id,user_id){
   const requestUrl = `/action/rating/${method}/${book_id}/${user_id}`
   // 使用 SWR 钩子来获取数据

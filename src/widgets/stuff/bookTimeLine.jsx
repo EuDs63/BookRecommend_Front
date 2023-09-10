@@ -24,7 +24,7 @@ function getCollectText(username, type) {
     const info = () => {
         switch (type) {
             case 1:
-                return username + " 想看这本书 ";
+                return " 想看这本书 ";
             case 2:
                 return " 在看这本书 ";
             case 3:
