@@ -125,24 +125,6 @@ export function Setting() {
                                 </Typography>
                             </div>
                         </div>
-                        <div className="w-96">
-                            <Tabs value="app">
-                                <TabsHeader>
-                                    <Tab value="app">
-                                        <HomeIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
-                                        App
-                                    </Tab>
-                                    <Tab value="message">
-                                        <ChatBubbleLeftEllipsisIcon className="-mt-0.5 mr-2 inline-block h-5 w-5" />
-                                        Message
-                                    </Tab>
-                                    <Tab value="settings">
-                                        <Cog6ToothIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
-                                        Settings
-                                    </Tab>
-                                </TabsHeader>
-                            </Tabs>
-                        </div>
                     </div>
                     <div className="gird-cols-1 mb-12 grid gap-12 px-4 lg:grid-cols-2 xl:grid-cols-2">
                         <div>

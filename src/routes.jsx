@@ -1,6 +1,5 @@
 import {
   HomeIcon,
-  UserCircleIcon,
   TableCellsIcon,
   BellIcon,
   ArrowRightOnRectangleIcon,
@@ -10,7 +9,7 @@ import {
 import { DashBoard, Tables, Notifications } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
 import { Setting,UserProfile,WillRead,Reading,HaveRead,UserMainPage } from "@/pages/user";
-import { Category, Search, TagSearch,BookDetail } from "@/pages/book";
+import { Category, Search, TagSearch,BookDetailWrapper } from "@/pages/book";
 import { TouristMainPage } from "@/pages/tourist";
 
 const icon = {
@@ -139,7 +138,7 @@ export const routes = [
         icon: <BellIcon {...icon} />,
         name: "书籍详情",
         path: ":book_id",
-        element: <BookDetail />,
+        element: <BookDetailWrapper />,
       },
     ],
   },

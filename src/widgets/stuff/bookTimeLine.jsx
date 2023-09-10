@@ -16,6 +16,7 @@ import {
 } from "@material-tailwind/react";
 import { useEffect } from "react";
 import { getCollectByBookId } from "@/utils/api";
+import { Link, useParams } from "react-router-dom";
 
 const PAGE_SIZE = 5;
 
@@ -36,7 +37,11 @@ function getCollectText(username, type) {
     return username + info();
 };
 
-export function BookTimeline() {
+export function BookTimeline({ book_id }) {
+    if (book_id === undefined) {
+        return null;
+    }
+
     // size: 页数
     const {
         data,
@@ -45,10 +50,7 @@ export function BookTimeline() {
         setSize,
         isValidating,
         isLoading
-    } = getCollectByBookId(22);
-    if (data) {
-        console.log(data);
-    }
+    } = getCollectByBookId(book_id);
 
     const issues = data ? [].concat(...data) : [];
 
@@ -56,7 +58,7 @@ export function BookTimeline() {
         isLoading || (size > 0 && data && typeof data[size - 1] === "undefined");
     const isEmpty = data?.[0]?.length === 0;
     const isReachingEnd =
-        isEmpty || (data && data[data.length - 1]?.length < PAGE_SIZE);
+        isEmpty || (data && data[data.length - 1]?.foundlength < PAGE_SIZE);
 
     useEffect(() => {
         setSize(1);
@@ -64,15 +66,15 @@ export function BookTimeline() {
 
     return (
         <div>
-            <Card className="w-[25rem]">
+            <Card className="w-auto mt-8 ml-5 ">
                 <CardBody>
                     <Typography variant="h5" color="blue-gray" className="mb-2">
-                        谁看这本书
+                        谁看这本书?
                     </Typography>
-                    {isEmpty ? <p>Yay, no issues found.</p> : null}
+                    {isEmpty ? <p>好像还没人看过呢</p> : null}
                     <div className="w-auto">
                         <Timeline>
-                            {issues.map((issue,index) => {
+                            {issues.map((issue, index) => {
                                 return (
                                     <TimelineItem className="h-28">
                                         {index !== issues.length - 1 && (
@@ -97,23 +99,26 @@ export function BookTimeline() {
                         </Timeline>
                     </div>
                 </CardBody>
-                <ButtonGroup variant="text" className="w-full" fullWidth>
-                    <Button
-                        disabled={isLoadingMore || isReachingEnd}
-                        onClick={() => setSize(size + 1)}
-                        size="sm"
-                    >
-                        {isLoadingMore
-                            ? "loading..."
-                            : isReachingEnd
-                                ? "没有啦"
-                                : "加载更多"}
-                    </Button>
-                    <Button disabled={!size} onClick={() => setSize(0)}
-                        size="sm">
-                        清空
-                    </Button>
-                </ButtonGroup>
+                {isEmpty ? null : (
+                    <ButtonGroup variant="text" className="w-full" fullWidth>
+                        <Button
+                            disabled={isLoadingMore || isReachingEnd}
+                            onClick={() => setSize(size + 1)}
+                            size="sm"
+                        >
+                            {isLoadingMore
+                                ? "loading..."
+                                : isReachingEnd
+                                    ? "没有啦"
+                                    : "加载更多"}
+                        </Button>
+                        <Button disabled={!size} onClick={() => setSize(0)}
+                            size="sm">
+                            清空
+                        </Button>
+                    </ButtonGroup>
+                )}
+
             </Card>
 
         </div>
