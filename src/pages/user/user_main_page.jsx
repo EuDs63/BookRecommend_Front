@@ -12,9 +12,11 @@ import {
 } from "@/data";
 import { useState, useEffect } from "react";
 import { getAction, getcategorybookInfo } from "@/utils/api";
+import { useUser } from "@/context/UserContext";
 
 export function UserMainPage() {
-  const { userid } = useParams(); // 获取路由参数
+  const { user } = useUser(); // 使用useUser钩子来获取用户状态
+  const userid = user.user_id; // 获取路由参数
   useEffect(() => {
     getCategoryBookInfo(1, setnewLiteratureData, 1);
     getCategoryBookInfo(2, setnewPopularityData, 1);
@@ -193,7 +195,7 @@ export function UserMainPage() {
       <div className="flex justify-between space-x-4">
         {books.map((book, index) => (
           <div key={index} className="flex flex-col items-center">
-            <Link to={`/dashboard/home?query=${book.book_id}`}>
+            <Link to={`/book/${book.book_id}`}>
               <img
                 src={`https://images.weserv.nl/?url=${book.cover_image_url}`}
                 alt={book.title}
@@ -358,7 +360,7 @@ export function UserMainPage() {
                       }}
                     >
                       <div>
-                        <Link to={`/dashboard/home?query=${comment.book_id}`}>
+                        <Link to={`/book/${comment.book_id}`}>
                           <img
                             src={`https://images.weserv.nl/?url=${comment.cover_image_url}`}
                             className="h-48 w-36 rounded-lg shadow-lg shadow-blue-gray-500/40"
@@ -377,11 +379,6 @@ export function UserMainPage() {
                             {comment.title}
                           </Typography>
                         </div>
-                        {/* <div>
-                          <Typography style={{ color: "blue" }}>
-                            {book.author}
-                          </Typography>
-                        </div> */}
                         <div
                           style={{
                             display: "-webkit-box",
