@@ -1,5 +1,5 @@
 /**
- * 书籍详情页的侧边栏：谁看这本书
+ * 个人主页的侧边栏：我的读书记录
  */
 import {
     Timeline,
@@ -58,7 +58,7 @@ export function CollectTimeline({ user_id }) {
         isLoading || (size > 0 && data && typeof data[size - 1] === "undefined");
     const isEmpty = data?.[0]?.length === 0;
     const isReachingEnd =
-        isEmpty || (data && data[data.length - 1]?.foundlength < PAGE_SIZE);
+        isEmpty || (data && data[data.length - 1]?.length < PAGE_SIZE);
 
     useEffect(() => {
         setSize(1);
@@ -112,7 +112,7 @@ export function CollectTimeline({ user_id }) {
                             {isLoadingMore
                                 ? "loading..."
                                 : isReachingEnd
-                                    ? "没有啦"
+                                    ? "无了"
                                     : "加载更多"}
                         </Button>
                         <Button disabled={!size} onClick={() => setSize(0)}

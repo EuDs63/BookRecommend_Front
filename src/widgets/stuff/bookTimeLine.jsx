@@ -58,7 +58,7 @@ export function BookTimeline({ book_id }) {
         isLoading || (size > 0 && data && typeof data[size - 1] === "undefined");
     const isEmpty = data?.[0]?.length === 0;
     const isReachingEnd =
-        isEmpty || (data && data[data.length - 1]?.foundlength < PAGE_SIZE);
+        isEmpty || (data && data[data.length - 1]?.length < PAGE_SIZE);
 
     useEffect(() => {
         setSize(1);
@@ -109,7 +109,7 @@ export function BookTimeline({ book_id }) {
                             {isLoadingMore
                                 ? "loading..."
                                 : isReachingEnd
-                                    ? "没有啦"
+                                    ? "无了"
                                     : "加载更多"}
                         </Button>
                         <Button disabled={!size} onClick={() => setSize(0)}
