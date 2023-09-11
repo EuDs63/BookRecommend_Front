@@ -28,6 +28,7 @@ export function SearchBar() {
         navigate(`/book/search?query=${searchText}`);
     };
 
+    
     function handleClick() {
         addToHistory(searchText);
         navigate(`/book/search?query=${searchText}`);
@@ -50,13 +51,18 @@ export function SearchBar() {
                             label="书名、作者"
                             onChange={handleInputChange}
                             value={searchText}
-                            // onKeyDown={handleKeyDown}
+                        // onKeyDown={handleKeyDown}
                         />
                     </MenuHandler>
                     <MenuList className="max-h-36">
                         {searchHistory.map((item, index) => (
                             <MenuItem key={index} onClick={() => { setSearchText(item) }}>{item}</MenuItem>
                         ))}
+                        {
+                            searchHistory.length == 0 ? (<MenuItem>暂无搜索历史</MenuItem>) : 
+                            (<MenuItem onClick={clearHistory} className=" text-red-500">清空搜索历史</MenuItem>)
+                        }
+
                     </MenuList>
                 </Menu>
             </div>
