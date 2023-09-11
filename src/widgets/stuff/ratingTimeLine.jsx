@@ -17,6 +17,7 @@ import {
 import { useEffect } from "react";
 import { getRatingByUserId } from "@/utils/api";
 import { Link } from "react-router-dom";
+import { RatingStar } from "@/widgets/stuff";
 
 const PAGE_SIZE = 5;
 
@@ -74,7 +75,8 @@ export function RatingTimeline({ user_id }) {
                                                 </TimelineIcon>
                                                 <div className="flex flex-col gap-1">
                                                     <Typography variant="h6" color="blue-gray">
-                                                        { issue.rating }
+                                                        {`《${issue.title}》`}
+                                                        <RatingStar rating={issue.rating} />
                                                     </Typography>
                                                     <Typography variant="small" color="gray" className="font-normal">
                                                         {issue.rating_time}

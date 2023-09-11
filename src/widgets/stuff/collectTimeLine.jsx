@@ -41,6 +41,9 @@ export function CollectTimeline({ user_id }) {
     if (user_id === undefined) {
         return null;
     }
+    if (user_id === null) {
+        return null;
+    }
 
     // size: 页数
     const {

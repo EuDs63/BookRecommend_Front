@@ -55,7 +55,6 @@ export function CollectBoxCard({
     };
 
     const handleRateChange = (value) => {
-        console.log(value)
         setRated(value)
         let add_rating = value * 2;
         // 数据库中数据类型被定义为 db.DECIMAL(2, 1)，范围为-9.9 到 9.9，前端显示为0-5，所以需要乘以2
@@ -81,10 +80,10 @@ export function CollectBoxCard({
     if (isError1) {
         console.log(isError1)
     }
+    // 设置收藏时间和收藏类型
     useEffect(() => {
         if (collectRecord) {
             if (collectRecord.length > 0) {
-                console.log(collectRecord);
                 const collect = collectRecord[0];
                 setCollect_time(collect.collect_time);
                 setCollect_type(collect.collect_type);
@@ -93,7 +92,7 @@ export function CollectBoxCard({
         }
 
     }, [collectRecord]);
-
+    // 设置评分时间和评分
     useEffect(() => {
         if (ratingRecord) {
             const length = ratingRecord.content.length;
@@ -104,21 +103,6 @@ export function CollectBoxCard({
             }
         }
     }, [ratingRecord]);
-
-
-    // 将collect_type的值映射到相应的收藏文本
-    const getCollectText = () => {
-        switch (collect_type) {
-            case 1:
-                return "我想看这本书 ";
-            case 2:
-                return "我在看这本书 ";
-            case 3:
-                return "我看过这本书";
-            default:
-                return "";
-        }
-    };
 
     return (
         <Card>
