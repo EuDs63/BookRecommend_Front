@@ -6,47 +6,15 @@ import {
     CardBody,
     Avatar,
     Typography,
+    Spinner,
 } from "@material-tailwind/react";
-
-import {
-    HomeIcon,
-    ChatBubbleLeftEllipsisIcon,
-    Cog6ToothIcon,
-} from "@heroicons/react/24/solid";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getAction } from "@/utils/api";
+import { getAction, getUserInfomation } from "@/utils/api";
 import { useUser } from "@/context/UserContext";
 import { useParams } from "react-router-dom";
 
-// 三个按钮
-function BookFilter({
-    willReadBookNum,
-    readingBookNum,
-    haveReadBookNum, }) {
-    return (
-        <div className="space-x-4">
-            <Link to={`/user/wish`}>
-                <button className="rounded-md bg-blue-500 py-2 px-4 text-white">
-                    <HomeIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
-                    想读 ({willReadBookNum} 本)
-                </button>
-            </Link>
-            <Link to={`/user/do`}>
-                <button className="rounded-md bg-green-500 py-2 px-4 text-white">
-                    <ChatBubbleLeftEllipsisIcon className="-mt-0.5 mr-2 inline-block h-5 w-5" />
-                    在读 ({readingBookNum} 本)
-                </button>
-            </Link>
-            <Link to={`/user/collect`}>
-                <button className="rounded-md bg-yellow-500 py-2 px-4 text-white">
-                    <Cog6ToothIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
-                    读过 ({haveReadBookNum} 本)
-                </button>
-            </Link>
-        </div>
-    );
-}
+
 
 // 书籍列表
 function BookList({ books }) {
@@ -89,7 +57,35 @@ function BookList({ books }) {
 
 export function OtherUserProfile() {
     const { user } = useUser(); // 使用useUser钩子来获取用户状态
-    const avatar_url = import.meta.env.VITE_BASE_URL + '/' + user.avatar_path;
+    const { user_id } = useParams(); // 获取URL中的book_id参数
+
+    useEffect(() => {
+        // 判断user_id和当前用户是否相同
+        if (user_id === user.user_id) {
+            // 重定向到自己的个人主页
+            window.location.href = "/user/profile";
+        }
+    }, [user_id, user]);
+
+
+    // 获取用户信息
+    const { data, isLoading, isError } = getUserInfomation(user_id);
+    // 处理加载状态
+    if (isLoading) {
+        return <Spinner className="h-16 w-16 text-gray-900/50" />;
+    }
+    //处理错误状态
+    if (isError) {
+        console.log(isError);
+        return <div>error</div>;
+    }
+    if (data) {
+        if (data.code == -1) {
+            return <div>还没有这个用户</div>;
+        }
+    }
+    const other_user = data.user;
+    const avatar_url = import.meta.env.VITE_BASE_URL + '/' + other_user.avatar_path;
 
 
     const [willReadBookData, setWillReadBookData] = useState([]);
@@ -102,12 +98,11 @@ export function OtherUserProfile() {
         getPageInfo(1, setWillReadBookData);
         getPageInfo(2, setReadingBookData);
         getPageInfo(3, setHaveReadBookData);
-        //setCurrentPage(1);
     }, []);
 
     function getPageInfo(type, setFuction) {
         //type=1:想读，type=2：在读,type=3:读过
-        getAction(1, 2, 0, user.user_id).then((resp) => {
+        getAction(1, 2, 0, other_user.user_id).then((resp) => {
             var code = resp.data["code"].toString();
             if (code === "0") {
                 const contents = resp.data["content"];
@@ -167,24 +162,16 @@ export function OtherUserProfile() {
                                     color="blue-gray"
                                     className="mb-1"
                                 >
-                                    {user.username}
+                                    {other_user.username}
                                 </Typography>
                                 <Typography
                                     variant="paragraph"
                                     className="font-normal text-blue-gray-600"
                                 >
-                                    "{user.register_time}加入"
+                                    "{other_user.register_time}加入"
                                 </Typography>
                             </div>
                         </div>
-                    </div>
-                    <div>
-                        <BookFilter
-                            userid={user.user_id}
-                            willReadBookNum={willReadBookData.length}
-                            readingBookNum={readingBookData.length}
-                            haveReadBookNum={haveReadBookData.length}
-                        />
                     </div>
                     <div>
                         <div className="mb-4 border-b border-blue-gray-200 p-4 pb-4">

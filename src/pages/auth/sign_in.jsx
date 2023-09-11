@@ -54,7 +54,7 @@ export function SignIn() {
 
         // 在计时结束时进行页面跳转
         setTimeout(() => {
-          window.location.href = '/user/main'; // 将网址替换为您希望跳转的网址
+          window.location.href = '/user/main'; 
           clearInterval(timer); // 清除定时器
         }, secondsToShowAlert * 1000);
 

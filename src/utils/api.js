@@ -66,6 +66,18 @@ export function getBookInfomation(book_id, info_type) {
   };
 }
 
+export function getUserInfomation(user_id) {
+  const requestUrl = `/user/${user_id}`;
+  // 使用 SWR 钩子来获取数据
+  const { data, error, isLoading } = useSWR(requestUrl, fetchInfo);
+
+  return {
+    data: data,
+    isLoading,
+    isError: error,
+  };
+}
+
 export function getUserInfo(user_id) {
   return service({
     url: `/user/${user_id}`,
