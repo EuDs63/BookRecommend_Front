@@ -12,7 +12,6 @@ import { Setting,UserProfileWrapper,WillRead,Reading,HaveRead,UserMainPage,UserC
 
 import { Category, Search, TagSearch,BookDetailWrapper } from "@/pages/book";
 import { TouristMainPage } from "@/pages/tourist";
-import UserCollect from "./pages/user/user_collect";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
