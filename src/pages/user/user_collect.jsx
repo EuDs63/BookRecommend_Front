@@ -6,12 +6,12 @@ import {
   ButtonGroup,
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
-import { getCommentByUserId } from "@/utils/api";
+import { getCollectByUserId } from "@/utils/api";
 import { useEffect } from "react";
 import { useUser } from "@/context/UserContext";
 const PAGE_SIZE = 5;
 
-export function UserComment() {
+export function UserCollect() {
   const { user } = useUser(); // 使用useUser钩子来获取用户状态
   const user_id = user.user_id; // 获取路由参数
 
@@ -20,10 +20,30 @@ export function UserComment() {
   }
   // size: 页数
   const { data, mutate, size, setSize, isValidating, isLoading } =
-    getCommentByUserId(user_id, PAGE_SIZE);
-  console.log(data);
+    getCollectByUserId(user_id, PAGE_SIZE);
   const issues = data ? [].concat(...data) : [];
-
+  const bookDatas = [];
+  issues.map((issue) => {
+    const author = issue.book.author;
+    const description = issue.book.description;
+    const book_id = issue.book.book_id;
+    const cover_image_url = issue.book.cover_image_url;
+    const rating_avg = issue.book.rating_avg;
+    const title = issue.book.title;
+    const collect_time = issue.collect_time;
+    const collect_type = issue.collect_type;
+    const bookObj = {
+      author,
+      description,
+      book_id,
+      cover_image_url,
+      rating_avg,
+      title,
+      collect_time,
+      collect_type,
+    };
+    bookDatas.push(bookObj);
+  });
   const isLoadingMore =
     isLoading || (size > 0 && data && typeof data[size - 1] === "undefined");
   const isEmpty = data?.[0]?.length === 0;
@@ -37,19 +57,22 @@ export function UserComment() {
   return (
     <div>
       <Typography variant="h4" color="blue-gray" className="mb-3">
-        我的书评
+        我的读书记录
       </Typography>
       <ul className="flex flex-col gap-1">
         <Card>
-          {issues.length > 0 ? (
-            issues.map((issue, index) => (
+          {bookDatas.length > 0 ? (
+            bookDatas.map((bookData, index) => (
               <div className="max-h-50 w-full overflow-y-auto">
                 <div key={index} className="mb-4">
-                  <CardBody key={index} className="h-235 flex overflow-hidden">
+                  <CardBody
+                    key={bookData.book_id}
+                    className="h-235 flex overflow-hidden"
+                  >
                     <div>
-                      <Link to={`/book/${issue.book_id}`}>
+                      <Link to={`/book/${bookData.book_id}`}>
                         <img
-                          src={`https://images.weserv.nl/?url=${issue.cover_image_url}`}
+                          src={`https://images.weserv.nl/?url=${bookData.cover_image_url}`}
                           className="h-48 w-36 rounded-lg shadow-lg shadow-blue-gray-500/40"
                         />
                       </Link>
@@ -57,14 +80,34 @@ export function UserComment() {
                     <div className="ml-20 flex-1">
                       <div>
                         <Typography className="text-22 font-bold text-black">
-                          {issue.title}
+                          {bookData.title}{" "}
+                          <span className="line-clamp-3 overflow-hidden">
+                            {bookData.rating_avg} 分
+                          </span>
+                        </Typography>
+                      </div>
+                      <div>
+                        <Typography style={{ color: "blue" }}>
+                          {bookData.author}
                         </Typography>
                       </div>
                       <div className="line-clamp-3 overflow-hidden">
-                        <Typography>{issue.content}</Typography>
+                        <Typography>{bookData.description}</Typography>
                       </div>
                       <div className="flex justify-end">
-                        <Typography>{issue.create_time} 评</Typography>
+                        <Typography>
+                          在 {bookData.collect_time} 我加入了
+                        </Typography>
+                        <Typography>
+                          {bookData.collect_type === 1
+                            ? "想读"
+                            : bookData.collect_type === 2
+                            ? "在读"
+                            : bookData.collect_type === 3
+                            ? "读过"
+                            : ""}
+                          清单
+                        </Typography>
                       </div>
                     </div>
                   </CardBody>
@@ -103,4 +146,4 @@ export function UserComment() {
   );
 }
 
-export default UserComment;
+export default UserCollect;

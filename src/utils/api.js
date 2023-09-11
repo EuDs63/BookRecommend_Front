@@ -218,7 +218,15 @@ export function getRecommendByBookId(book_id) {
   };
 }
 
-
+export function getRecommendByUserId(user_id) {
+  return service({
+    url: `/book/getrec`,
+    method: "post",
+    data: {
+      user_id: user_id,
+    },
+  });
+}
 export function getcategorybookInfo(category_id, page, per_page, order = 0) {
   return service({
     url: `/book/category`,

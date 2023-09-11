@@ -85,7 +85,7 @@ git branch -d 本地分支名 #删除本次任务所用的本地分支（也可�
 - 密码(password):字符串类型,varchar(256)
 - 注册时间(register_time):日期时间类型,datetime
 - 是否为管理员(is_admin): 枚举类型,tinyint(1), 1表示管理员,0表示普通用户
-  
+
 ### 用户收藏表(User_Collect)
 - 收藏ID(collect_id): 整数,自动增长,主键
 - 收藏类型(collect_type): tinyint,1:想看，2：再看，3：看过
@@ -163,9 +163,9 @@ git branch -d 本地分支名 #删除本次任务所用的本地分支（也可�
   # 遍历用户的收藏记录
   for user_collect in user_collects:
       book_id = user_collect.book_id
-      
+
       # 检查是否已经输出了相同的书籍
-      if book_id not in outputted_books:          
+      if book_id not in outputted_books:
           # 将书籍添加到已输出的集合中
           outputted_books.add(book_id)
   ```
