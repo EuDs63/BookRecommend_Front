@@ -16,7 +16,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { useMaterialTailwindController, setOpenSidenav } from "@/context";
 import { useUser } from "../../context/UserContext";
-import logoImage from "../../../public/img/logo-一本好书.png";
+import logoImage from "/img/logo-一本好书.png";
 export function DashboardNavbar() {
   const [controller, dispatch] = useMaterialTailwindController();
   const { fixedNavbar, openSidenav } = controller;

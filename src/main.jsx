@@ -4,7 +4,7 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "@material-tailwind/react";
 import { MaterialTailwindControllerProvider } from "@/context";
-import "../public/css/tailwind.css";
+import "/public/css/tailwind.css";
 import { UserProvider } from "./context/UserContext";
 import { Provider } from 'react-redux'; // 导入 Provider
 import { PersistGate } from 'redux-persist/integration/react'; // 导入 PersistGate
