@@ -78,7 +78,7 @@ export function UserMainPage() {
         { data: newTechnologyData, setter: setnewTechnologyData },
         { data: newManagementData, setter: setnewManagementData },
       ];
-    } else {
+    } else if(type === 2){
       dataSets = [
         { data: concernCultureData, setter: setConcernCultureData },
         { data: concernLiteratureData, setter: setConcernLiteratureData },
@@ -87,6 +87,9 @@ export function UserMainPage() {
         { data: concernTechnologyData, setter: setConcernTechnologyData },
         { data: concernManagementData, setter: setConcernManagementData },
       ];
+    }
+    else{
+
     }
 
     const index = tabs.indexOf(selectedTab);
@@ -189,6 +192,7 @@ export function UserMainPage() {
   const [concernPopularityData, setConcernPopularityData] = useState([]);
   const [concernTechnologyData, setConcernTechnologyData] = useState([]);
   const [concernManagementData, setConcernManagementData] = useState([]);
+  const [itemRecommendData, setItemRecommendData] = useState([]);
   function BookList({ books }) {
     return (
       <div className="flex justify-between space-x-4">
