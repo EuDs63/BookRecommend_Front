@@ -75,7 +75,7 @@ export function RatingTimeline({ user_id }) {
                                                 </TimelineIcon>
                                                 <div className="flex flex-col gap-1">
                                                     <Typography variant="h6" color="blue-gray">
-                                                        {`《${issue.title}》`}
+                                                        {`《${issue.title}》`} 
                                                         <RatingStar rating={issue.rating} />
                                                     </Typography>
                                                     <Typography variant="small" color="gray" className="font-normal">
