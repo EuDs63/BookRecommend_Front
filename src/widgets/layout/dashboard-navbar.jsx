@@ -1,5 +1,6 @@
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import React, {
+  Avatar,
   Navbar,
   Typography,
   Button,
@@ -25,11 +26,11 @@ export function DashboardNavbar() {
   const { pathname } = useLocation();
   const [layout, page] = pathname.split("/").filter((el) => el !== "");
   const { isLoggedIn, setIsLoggedIn, user, logout } = useUser(); // 使用useUser钩子来获取用户状态
-
+  const avatar_url = import.meta.env.VITE_BASE_URL + '/' + user.avatar_path;
   const handleLogout = () => {
     // 在用户点击登出按钮时更新用户状态
     setIsLoggedIn(false);
-    navigate(`/tourist/main/:userid`);
+    navigate(`/tourist/main`);
 
     logout();
   };
@@ -40,7 +41,7 @@ export function DashboardNavbar() {
     setSearchText(e.target.value);
   };
   const handleSearchClick = () => {
-    navigate(`/dashboard/search?query=${searchText}`);
+    navigate(`/book/search?query=${searchText}`);
   };
 
 
@@ -104,22 +105,16 @@ export function DashboardNavbar() {
             <Bars3Icon strokeWidth={3} className="h-6 w-6 text-blue-gray-500" />
           </IconButton>
           {isLoggedIn ? (
-            <Link to="/dashboard/tables">
+            <Link to="/user/setting">
               <Button
                 variant="text"
                 color="blue-gray"
                 className="hidden items-center gap-1 px-4 xl:flex"
               >
-                <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
-                {user.username}
+                <Avatar src={avatar_url} alt="avatar" />
+
+                {/* {user.username} */}
               </Button>
-              <IconButton
-                variant="text"
-                color="blue-gray"
-                className="grid xl:hidden"
-              >
-                <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
-              </IconButton>
             </Link>
           ) : (
             <Link to="/auth/sign-in">

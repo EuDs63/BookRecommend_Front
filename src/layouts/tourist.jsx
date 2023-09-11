@@ -3,9 +3,7 @@ import { Cog6ToothIcon } from "@heroicons/react/24/solid";
 import { IconButton } from "@material-tailwind/react";
 import {
   ChartPieIcon,
-  UserIcon,
-  UserPlusIcon,
-  ArrowRightOnRectangleIcon,
+  TagIcon,
 } from "@heroicons/react/24/solid";
 import {
   DashboardNavbar,
@@ -26,15 +24,10 @@ export function Tourist() {
       icon: ChartPieIcon,
     },
     {
-      name: "个人主页",
-      path: "/dashboard/:userid",
-      icon: UserPlusIcon,
-    },
-    {
-      name: "想读",
-      path: "/dashboard/:userid/will-read",
-      icon: UserPlusIcon,
-    },
+      name: "分类浏览",
+      path: "/book/category",
+      icon: TagIcon,
+  },
   ];
 
 

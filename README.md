@@ -140,3 +140,41 @@ git branch -d 本地分支名 #删除本次任务所用的本地分支（也可�
    2. 根据 "记住密码" 选项存储 token：如果用户选择了 "记住密码"，则将 token 存储在 localStorage 中；否则，将 token 存储在 sessionStorage 中。
    3. 在应用程序启动时检查存储中是否存在有效的 token：在你的应用程序启动时（例如，在 App.js 或主页加载时），检查 localStorage 和 sessionStorage 中是否存在有效的 token。
    4. 如果存在有效的 token，自动登录用户
+
+### 2023年9月9日
+这两天看了[https://blog.skk.moe/post/why-you-should-not-fetch-data-directly-in-use-effect/](为什么你不应该在 React 中直接使用 useEffect 从 API 获取数据),再加上这段时间来自己的体验，以及晚上的时候使用useSWR的畅快感，真后悔没早用。
+
+搜索历史功能 Collapse
+
+侧边栏：
+- book： 谁读这本书?、热门标签
+- user：时间线（评论、收藏）
+
+### 2023年9月10日
+- 问题：在user/profile这个页面中，一本书可能同时出现在“在读”和“已读”两栏中
+- 目前想到的解决方式：定制该页面所调用的接口，后端接口类似于
+  ```python
+  # 查询用户的收藏记录，按时间由新到旧排序
+  user_collects = UserCollect.query.filter_by(user_id=user_id).order_by(desc(UserCollect.collect_time)).all()
+
+  # 用于跟踪已经输出的书籍
+  outputted_books = set()
+
+  # 遍历用户的收藏记录
+  for user_collect in user_collects:
+      book_id = user_collect.book_id
+      
+      # 检查是否已经输出了相同的书籍
+      if book_id not in outputted_books:          
+          # 将书籍添加到已输出的集合中
+          outputted_books.add(book_id)
+  ```
+
+### 2023年9月11日
+待做：
+1. 搜索历史记录
+2. 嵌入富文本编辑器，长评功能实现
+3. 侧边栏显示 热门标签
+4. 左上角更换为logo
+5. 主页侧边栏添加：“全站动态”
+6. 实现其他用户的页面

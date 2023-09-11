@@ -6,6 +6,7 @@ import {
   MobileNav,
   Typography,
   Button,
+  Collapse,
   IconButton,
 } from "@material-tailwind/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
@@ -68,15 +69,25 @@ export function Navbar({ brandName, routes, action }) {
           )}
         </IconButton>
       </div>
-      <MobileNav open={openNav}>
+      {/* <MobileNav open={openNav}>
         <div className="container mx-auto">
           {navList}
           {React.cloneElement(action, {
             className: "w-full block lg:hidden",
           })}
         </div>
-      </MobileNav>
-    </MTNavbar>
+      </MobileNav> */}
+      <Collapse open={openNav}>
+        <div className="container mx-auto">
+          {navList}
+          {React.cloneElement(action, {
+            className: "w-full block lg:hidden",
+          })}
+        </div>
+      </Collapse>
+
+    </MTNavbar >
+
   );
 }
 
