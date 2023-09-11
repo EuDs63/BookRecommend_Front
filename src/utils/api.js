@@ -69,6 +69,13 @@ export function bookInfo(book_id, info_type) {
   });
 }
 
+export function getUserInfo(user_id) {
+  return service({
+    url: `/user/${user_id}`,
+    method: "get",
+  });
+}
+
 export function getcategorybookInfo(category_id, page, per_page, order = 0) {
   return service({
     url: `/book/category`,
@@ -119,12 +126,6 @@ export function getAction(type, method, book_id, user_id) {
   });
 }
 
-export function commentInfo() {
-  return service(
-    {}
-  );
-}
-
 export function changePassword(origin_password,new_password) {
   return service(
     {
@@ -137,3 +138,5 @@ export function changePassword(origin_password,new_password) {
     }
   );
 }
+
+
