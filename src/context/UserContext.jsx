@@ -61,8 +61,16 @@ export function UserProvider({ children }) {
     dispatch(updateLoginStatus(false)); // 更新登录状态
   };
 
+  const change_avatar = (avatar_path) => {
+    setUser({ ...user, avatar_path });
+    // 更新 Redux 状态
+    dispatch(updateUser({ ...user, avatar_path }));
+  };
+
+
+
   return (
-    <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn, user, login, logout }}>
+    <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn, user, login, logout,change_avatar }}>
       {children}
     </UserContext.Provider>
   );
