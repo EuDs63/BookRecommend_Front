@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import { ProfileInfoCard, BookCommentsCard,CollectBoxCard } from "@/widgets/cards";
 import { Comment } from "@/widgets/stuff";
 import { recommendedBooksData } from "@/data";
-import { getBookInfomation, getAction, addComment } from "@/utils/api";
+import { getBookInfomation, getAction } from "@/utils/api";
 import { useState, useEffect } from "react";
 import { useUser } from "@/context/UserContext";
 

@@ -11,8 +11,6 @@ import {
 } from "@/widgets/layout";
 import routes from "@/routes";
 import { useUser } from "@/context/UserContext";
-import { CollectTimeline } from "@/widgets/stuff";
-import { useParams } from "react-router-dom";
 
 export function Book() {
     const { isLoggedIn } = useUser(); // 使用useUser钩子来获取用户状态

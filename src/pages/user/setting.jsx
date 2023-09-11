@@ -225,8 +225,6 @@ export function Setting() {
                     </div>
                 </CardBody>
             </Card>
-
-            <CollectTimeline user_id={user.user_id}/>
         </>
     );
 }

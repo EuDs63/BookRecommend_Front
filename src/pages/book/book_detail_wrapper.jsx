@@ -8,14 +8,14 @@ export function BookDetailWrapper() {
     const { book_id } = useParams(); // 获取URL中的book_id参数
 
     return (
-        <>
+        <div className="flex flex-row">
             <div className="w-2/3">
                 <BookDetail book_id={book_id}/>
             </div>
             <div className="w-1/3">
                 <BookTimeline book_id={book_id}/>
             </div>
-        </>
+        </div>
     );
 }
 

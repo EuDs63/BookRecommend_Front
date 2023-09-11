@@ -190,21 +190,21 @@ export function UserProfile() {
               <Typography variant="h4" className="mb-2 text-blue-gray-300">
                 想读
               </Typography>
-              <BookList books={willReadBookData.slice(0, 6)} />
+              <BookList books={willReadBookData.slice(0, 5)} />
             </div>
 
             <div className="mb-4 border-b border-blue-gray-200 p-4 pb-4">
               <Typography variant="h4" className="mb-2 text-blue-gray-300">
                 在读
               </Typography>
-              <BookList books={readingBookData.slice(0, 6)} />
+              <BookList books={readingBookData.slice(0, 5)} />
             </div>
 
             <div className="p-4">
               <Typography variant="h4" className="mb-2 text-blue-gray-300">
                 已读
               </Typography>
-              <BookList books={haveReadBookData.slice(0, 6)} />
+              <BookList books={haveReadBookData.slice(0, 5)} />
             </div>
           </div>
         </CardBody>

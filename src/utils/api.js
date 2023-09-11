@@ -120,8 +120,62 @@ export function getCollectByUserId(user_id) {
   };
 }
 
-export function getRating(method, book_id, user_id) {
-  const requestUrl = `/action/rating/${method}/${book_id}/${user_id}`;
+// 根据user_id获取评论信息，用于“时光机-comment”
+export function getCommentByUserId(user_id){
+  const requestUrl = `/action/comment/2/0/${user_id}`
+  const {
+    data,
+    mutate,
+    size,
+    setSize,
+    isValidating,
+    isLoading
+  } = useSWRInfinite(
+    (index) =>
+      `${requestUrl}?&current_page=${
+        index + 1
+      }`,
+    fetchInfo
+  );
+  return {
+    data,
+    mutate,
+    size,
+    setSize,
+    isValidating,
+    isLoading
+  }
+}
+
+// 根据user_id获取评分信息，用于“时光机-rating”
+export function getRatingByUserId(user_id){
+  const requestUrl = `/action/rating/2/0/${user_id}`
+  const {
+    data,
+    mutate,
+    size,
+    setSize,
+    isValidating,
+    isLoading
+  } = useSWRInfinite(
+    (index) =>
+      `${requestUrl}?&current_page=${
+        index + 1
+      }`,
+    fetchInfo
+  );
+  return {
+    data,
+    mutate,
+    size,
+    setSize,
+    isValidating,
+    isLoading
+  }
+}
+
+export function getRating(method,book_id,user_id){
+  const requestUrl = `/action/rating/${method}/${book_id}/${user_id}`
   // 使用 SWR 钩子来获取数据
   const { data, error, isLoading } = useSWR(requestUrl, fetchInfo);
   return {
@@ -180,34 +234,6 @@ export function getAction(type, method, book_id, user_id) {
     },
   });
 }
-
-//export function changePassword(origin_password, new_password) {}
-// async function fetchUserAction(requestUrl, postData) {
-//   try {
-//     const response = await service.post(requestUrl, postData); // 发出 Axios 请求
-//     return response.data; // 返回从后端获取的数据
-//   } catch (error) {
-//     throw error; // 抛出错误以供 SWR 处理
-//   }
-// }
-
-// export function getUserAction(type, method, book_id, user_id) {
-//   const requestUrl = `/action/get`
-//   const postData = {
-//     type: type,
-//     method: method,
-//     book_id: book_id,
-//     user_id: user_id,
-//   }
-//   // 使用 SWR 钩子来获取数据
-//   const { data, error, isLoading } = useSWR(['/action/get', postData], fetchUserAction);
-
-//   return {
-//     data: data,
-//     isLoading,
-//     isError: error,
-//   }
-// }
 
 export function addComment(book_id, user_id, content) {
   return service({
