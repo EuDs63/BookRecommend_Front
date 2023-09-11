@@ -25,10 +25,10 @@ export function CommentTimeline({ user_id }) {
     if (user_id === undefined) {
         return null;
     }
-    if (user_id === null){
+    if (user_id === null) {
         return null;
     }
-    console.log(user_id);   
+    console.log(user_id);
     // size: 页数
     const {
         data,
@@ -74,7 +74,9 @@ export function CommentTimeline({ user_id }) {
                                                 </TimelineIcon>
                                                 <div className="flex flex-col gap-1">
                                                     <Typography variant="h6" color="blue-gray">
-                                                        {issue.content}
+                                                        {issue.content.length > 20
+                                                            ? issue.content.substring(0, 20) + "..."
+                                                            : issue.content}
                                                     </Typography>
                                                     <Typography variant="small" color="gray" className="font-normal">
                                                         {issue.create_time}
