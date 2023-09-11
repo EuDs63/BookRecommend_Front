@@ -1,32 +1,44 @@
 import {
-    Collapse,
     Button,
     Input,
-    Card,
-    CardBody,
-    Typography,
     Menu,
     MenuHandler,
     MenuList,
     MenuItem,
 } from "@material-tailwind/react";
+import { connect } from 'react-redux';
+// import { addToSearchHistory, clearSearchHistory } from '@/Redux/actions';
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useSearchHistory } from "@/context/SearchHistoryContext"
+
+
 export function SearchBar() {
     const navigate = useNavigate();
     const [searchText, setSearchText] = useState("");
+
+    const { searchHistory, addToHistory, clearHistory } = useSearchHistory(); // 使用自定义 Hook
+
     const handleInputChange = (e) => {
-        setOpen(true);
         setSearchText(e.target.value);
     };
 
     const handleSearchClick = () => {
+        addToHistory(searchText);
         navigate(`/book/search?query=${searchText}`);
     };
 
-    const [open, setOpen] = useState(false);
+    function handleClick() {
+        addToHistory(searchText);
+        navigate(`/book/search?query=${searchText}`);
+    }
 
-    const toggleOpen = () => setOpen((cur) => !cur);
+    // const handleKeyDown = (event) => {
+    //     if (event.key === 'Enter') {
+    //         //event.preventDefault(); // 阻止默认的 Enter 键行为
+    //         handleClick(); // 调用搜索点击处理函数
+    //     }
+    // };
 
     return (
         <>
@@ -38,10 +50,13 @@ export function SearchBar() {
                             label="书名、作者"
                             onChange={handleInputChange}
                             value={searchText}
+                            // onKeyDown={handleKeyDown}
                         />
                     </MenuHandler>
                     <MenuList className="max-h-36">
-                        <MenuItem>Menu Item 1</MenuItem>
+                        {searchHistory.map((item, index) => (
+                            <MenuItem key={index} onClick={() => { setSearchText(item) }}>{item}</MenuItem>
+                        ))}
                     </MenuList>
                 </Menu>
             </div>
