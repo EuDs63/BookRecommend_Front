@@ -1,6 +1,5 @@
-import { useParams } from "react-router-dom";
 import { UserProfile } from "@/pages/user";
-import { CollectTimeline } from "@/widgets/stuff";
+import { CollectTimeline,CommentTimeline } from "@/widgets/stuff";
 import { useUser } from "@/context/UserContext";
 
 // 导出包裹后的组件
@@ -14,6 +13,7 @@ export function UserProfileWrapper() {
             </div>
             <div className="w-1/3">
                 <CollectTimeline user_id={user.user_id}/>
+                <CommentTimeline user_id={user.user_id}/>
             </div>
         </div>
     );

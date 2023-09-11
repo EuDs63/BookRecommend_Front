@@ -131,6 +131,33 @@ export function getCollectByUserId(user_id){
   }
 };
 
+// 根据user_id获取评论信息，用于“时光机-comment”
+export function getCommentByUserId(user_id){
+  const requestUrl = `/action/comment/2/0/${user_id}`
+  const {
+    data,
+    mutate,
+    size,
+    setSize,
+    isValidating,
+    isLoading
+  } = useSWRInfinite(
+    (index) =>
+      `${requestUrl}?&current_page=${
+        index + 1
+      }`,
+    fetchInfo
+  );
+  return {
+    data,
+    mutate,
+    size,
+    setSize,
+    isValidating,
+    isLoading
+  }
+}
+
 export function getRating(method,book_id,user_id){
   const requestUrl = `/action/rating/${method}/${book_id}/${user_id}`
   // 使用 SWR 钩子来获取数据
