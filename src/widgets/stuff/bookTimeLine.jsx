@@ -82,14 +82,16 @@ export function BookTimeline({ book_id }) {
                                         )}
                                         <TimelineHeader className="relative rounded-xl border border-blue-gray-50 bg-white py-3 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5 border-none">
                                             <TimelineIcon className="p-0" variant="ghost">
+                                                <Link to={`/user/${issue.user_id}`}>
                                                 <Avatar size="sm" src={import.meta.env.VITE_BASE_URL + '/' + issue.avatar_path} alt="user 1" />
+                                                </Link>
                                             </TimelineIcon>
                                             <div className="flex flex-col gap-1">
                                                 <Typography variant="h6" color="blue-gray">
                                                     {getCollectText(issue.username, issue.collect_type)}
                                                 </Typography>
                                                 <Typography variant="small" color="gray" className="font-normal">
-                                                    {issue.collect_time}
+                                                    {issue.collect_time} 
                                                 </Typography>
                                             </div>
                                         </TimelineHeader>

@@ -33,13 +33,12 @@ export function RatingTimeline({ user_id }) {
   const { data, mutate, size, setSize, isValidating, isLoading } =
     getRatingByUserId(user_id, PAGE_SIZE);
 
-  const issues = data ? [].concat(...data) : [];
-
-  const isLoadingMore =
-    isLoading || (size > 0 && data && typeof data[size - 1] === "undefined");
-  const isEmpty = data?.[0]?.length === 0;
-  const isReachingEnd =
-    isEmpty || (data && data[data.length - 1]?.length < PAGE_SIZE);
+    const issues = data ? [].concat(...data) : [];
+    const isLoadingMore =
+        isLoading || (size > 0 && data && typeof data[size - 1] === "undefined");
+    const isEmpty = data?.[0]?.length === 0;
+    const isReachingEnd =
+        isEmpty || (data && data[data.length - 1]?.length < PAGE_SIZE);
 
   useEffect(() => {
     setSize(1);

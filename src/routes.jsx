@@ -8,7 +8,8 @@ import {
 } from "@heroicons/react/24/solid";
 import { DashBoard, Tables, Notifications } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
-import { Setting,UserProfileWrapper,WillRead,Reading,HaveRead,UserMainPage,UserComment, UserRating} from "@/pages/user";
+import { Setting,UserProfileWrapper,WillRead,Reading,HaveRead,UserMainPage,UserComment, UserRating, OtherUserProfile, UserCollect} from "@/pages/user";
+
 import { Category, Search, TagSearch,BookDetailWrapper } from "@/pages/book";
 import { TouristMainPage } from "@/pages/tourist";
 import UserCollect from "./pages/user/user_collect";
@@ -129,6 +130,10 @@ export const routes = [
         path: "/userCollect",
         element: <UserCollect />,
       },
+       { name: "其他用户的首页",
+        path: ":user_id",
+        element: <OtherUserProfile />,
+      }
     ],
   },
   {
