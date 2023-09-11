@@ -54,19 +54,65 @@ function BookList({ books }) {
     );
 }
 
+function getPageInfo(user_id,type, setFuction) {
+    //type=1:想读，type=2：在读,type=3:读过
+    getAction(1, 2, 0, user_id).then((resp) => {
+        var code = resp.data["code"].toString();
+        if (code === "0") {
+            const contents = resp.data["content"];
+            const collect_type = contents.map((content) => content.collect_type);
+            const indices = [];
+            collect_type.forEach((value, index) => {
+                if (value === type) {
+                    indices.push(index);
+                }
+            });
+            const books = indices.map((index) => contents[index].book);
+            const collect_time = indices.map(
+                (index) => contents[index].collect_time
+            );
+            const bookData = [];
+            books.forEach((book) => {
+                const author = book.author;
+                const book_id = book.book_id;
+                const image = book.cover_image_url;
+                const des = book.description;
+                const rate = book.rating_avg;
+                const name = book.title;
+                const publisher = book.publisher;
+                const date = book.publish_date;
+                const bookObj = {
+                    author,
+                    book_id,
+                    image,
+                    des,
+                    rate,
+                    name,
+                    publisher,
+                    date,
+                };
+                bookData.push(bookObj);
+            });
+            setFuction(bookData);
+        } else {
+            console.log("fail!");
+        }
+    });
+}
 
 export function OtherUserProfile() {
-    const { user } = useUser(); // 使用useUser钩子来获取用户状态
     const { user_id } = useParams(); // 获取URL中的book_id参数
 
-    useEffect(() => {
-        // 判断user_id和当前用户是否相同
-        if (user_id === user.user_id) {
-            // 重定向到自己的个人主页
-            window.location.href = "/user/profile";
-        }
-    }, [user_id, user]);
+    const [willReadBookData, setWillReadBookData] = useState([]);
+    const [readingBookData, setReadingBookData] = useState([]);
+    const [haveReadBookData, setHaveReadBookData] = useState([]);
 
+    useEffect(() => {
+        // 在组件加载后执行的代码
+        getPageInfo(user_id,1, setWillReadBookData);
+        getPageInfo(user_id,2, setReadingBookData);
+        getPageInfo(user_id,3, setHaveReadBookData);
+    }, []);
 
     // 获取用户信息
     const { data, isLoading, isError } = getUserInfomation(user_id);
@@ -74,7 +120,7 @@ export function OtherUserProfile() {
     if (isLoading) {
         return <Spinner className="h-16 w-16 text-gray-900/50" />;
     }
-    //处理错误状态
+    // //处理错误状态
     if (isError) {
         console.log(isError);
         return <div>error</div>;
@@ -83,77 +129,30 @@ export function OtherUserProfile() {
         if (data.code == -1) {
             return <div>还没有这个用户</div>;
         }
-    }
-    const other_user = data.user;
-    const avatar_url = import.meta.env.VITE_BASE_URL + '/' + other_user.avatar_path;
+
+        const other_user = data.user;
+        const avatar_url = import.meta.env.VITE_BASE_URL + '/' + other_user.avatar_path;
+
+        const { user } = useUser(); // 使用useUser钩子来获取用户状态
+
+        if (user_id == user.user_id) {
+            console.log("!!");
+            // 重定向到自己的个人主页
+            window.location.href = "/user/profile";
+        }
 
 
-    const [willReadBookData, setWillReadBookData] = useState([]);
-    const [readingBookData, setReadingBookData] = useState([]);
-    const [haveReadBookData, setHaveReadBookData] = useState([]);
 
 
-    useEffect(() => {
-        // 在组件加载后执行的代码
-        getPageInfo(1, setWillReadBookData);
-        getPageInfo(2, setReadingBookData);
-        getPageInfo(3, setHaveReadBookData);
-    }, []);
 
-    function getPageInfo(type, setFuction) {
-        //type=1:想读，type=2：在读,type=3:读过
-        getAction(1, 2, 0, other_user.user_id).then((resp) => {
-            var code = resp.data["code"].toString();
-            if (code === "0") {
-                const contents = resp.data["content"];
-                const collect_type = contents.map((content) => content.collect_type);
-                const indices = [];
-                collect_type.forEach((value, index) => {
-                    if (value === type) {
-                        indices.push(index);
-                    }
-                });
-                const books = indices.map((index) => contents[index].book);
-                const collect_time = indices.map(
-                    (index) => contents[index].collect_time
-                );
-                const bookData = [];
-                books.forEach((book) => {
-                    const author = book.author;
-                    const book_id = book.book_id;
-                    const image = book.cover_image_url;
-                    const des = book.description;
-                    const rate = book.rating_avg;
-                    const name = book.title;
-                    const publisher = book.publisher;
-                    const date = book.publish_date;
-                    const bookObj = {
-                        author,
-                        book_id,
-                        image,
-                        des,
-                        rate,
-                        name,
-                        publisher,
-                        date,
-                    };
-                    bookData.push(bookObj);
-                });
-                setFuction(bookData);
-            } else {
-                console.log("fail!");
-            }
-        });
-    }
-
-    return (
-        <>
-            <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url(https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80)] bg-cover	bg-center">
-                <div className="absolute inset-0 h-full w-full bg-blue-500/50" />
-            </div>
-            <Card className="mx-3 -mt-16 mb-6 lg:mx-4">
-                <CardBody className="p-4">
-                    <div className="mb-10 flex items-center justify-between gap-6">
+        return (
+            <>
+                <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url(https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80)] bg-cover	bg-center">
+                    <div className="absolute inset-0 h-full w-full bg-blue-500/50" />
+                </div>
+                <Card className="mx-3 -mt-16 mb-6 lg:mx-4">
+                    <CardBody className="p-4">
+                        <div className="mb-10 flex items-center justify-between gap-6">
                         <div className="flex items-center gap-6">
                             <Avatar src={avatar_url} alt="user.username" variant="square" className="h-20 w-20 rounded-lg shadow-lg shadow-blue-gray-500/40" />
                             <div className="ml-10">
@@ -173,7 +172,7 @@ export function OtherUserProfile() {
                             </div>
                         </div>
                     </div>
-                    <div>
+                        <div>
                         <div className="mb-4 border-b border-blue-gray-200 p-4 pb-4">
                             <Typography variant="h4" className="mb-2 text-blue-gray-300">
                                 想读
@@ -195,10 +194,14 @@ export function OtherUserProfile() {
                             <BookList books={haveReadBookData.slice(0, 5)} />
                         </div>
                     </div>
-                </CardBody>
-            </Card>
-        </>
-    );
+                    </CardBody>
+                </Card>
+            </>
+        );
+
+    }
+
+
 }
 
 export default OtherUserProfile;
