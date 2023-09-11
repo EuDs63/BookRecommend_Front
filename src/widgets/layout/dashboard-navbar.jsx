@@ -14,19 +14,16 @@ import {
   Bars3Icon,
   ArrowRightOnRectangleIcon,
 } from "@heroicons/react/24/solid";
-import {
-  useMaterialTailwindController,
-  setOpenSidenav,
-} from "@/context";
+import { useMaterialTailwindController, setOpenSidenav } from "@/context";
 import { useUser } from "../../context/UserContext";
-
+import logoImage from "../../../public/img/logo-一本好书.png";
 export function DashboardNavbar() {
   const [controller, dispatch] = useMaterialTailwindController();
   const { fixedNavbar, openSidenav } = controller;
   const { pathname } = useLocation();
   const [layout, page] = pathname.split("/").filter((el) => el !== "");
   const { isLoggedIn, setIsLoggedIn, user, logout } = useUser(); // 使用useUser钩子来获取用户状态
-  const avatar_url = import.meta.env.VITE_BASE_URL + '/' + user.avatar_path;
+  const avatar_url = import.meta.env.VITE_BASE_URL + "/" + user.avatar_path;
   const handleLogout = () => {
     // 在用户点击登出按钮时更新用户状态
     setIsLoggedIn(false);
@@ -44,53 +41,33 @@ export function DashboardNavbar() {
     navigate(`/book/search?query=${searchText}`);
   };
 
-
   return (
     <Navbar
       color={fixedNavbar ? "white" : "transparent"}
-      className={`rounded-xl transition-all ${fixedNavbar
+      className={`rounded-xl transition-all ${
+        fixedNavbar
           ? "sticky top-4 z-40 py-3 shadow-md shadow-blue-gray-500/5"
           : "px-0 py-1"
-        }`}
+      }`}
       fullWidth
       blurred={fixedNavbar}
     >
       <div className="flex flex-col-reverse justify-between gap-6 md:flex-row md:items-center">
         <div className="capitalize">
-          <Breadcrumbs
-            className={`bg-transparent p-0 transition-all ${fixedNavbar ? "mt-1" : ""
-              }`}
-          >
-            <Link to={`/${layout}`}>
-              <Typography
-                variant="small"
-                color="blue-gray"
-                className="font-normal opacity-50 transition-all hover:text-blue-500 hover:opacity-100"
-              >
-                {layout}
-              </Typography>
-            </Link>
-            <Typography
-              variant="small"
-              color="blue-gray"
-              className="font-normal"
-            >
-              {page}
-            </Typography>
-          </Breadcrumbs>
-          <Typography variant="paragraph" color="blue-gray">
-            {page}
-          </Typography>
+          <img src={logoImage} alt="一本好书" className="h-16" />
         </div>
         <div className="flex items-center">
-
           <div className="mr-auto md:mr-0 md:w-56">
-            <Input label="书名、作者" onChange={handleInputChange} value={searchText} />
+            <Input
+              label="书名、作者"
+              onChange={handleInputChange}
+              value={searchText}
+            />
           </div>
           <Button
             variant="filled"
             color="blue-gray"
-            className="hidden md:flex ml-2"
+            className="ml-2 hidden md:flex"
             onClick={handleSearchClick}
           >
             搜索
@@ -136,19 +113,12 @@ export function DashboardNavbar() {
             </Link>
           )}
           {isLoggedIn ? (
-            <IconButton
-              variant="text"
-              color="blue-gray"
-              onClick={handleLogout}
-            >
+            <IconButton variant="text" color="blue-gray" onClick={handleLogout}>
               <ArrowRightOnRectangleIcon className="h-5 w-5 text-blue-gray-500" />
             </IconButton>
           ) : (
-            <div>
-            </div>
+            <div></div>
           )}
-
-
         </div>
       </div>
     </Navbar>
