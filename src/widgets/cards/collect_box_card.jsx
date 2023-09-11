@@ -7,8 +7,8 @@ import {
 } from "@material-tailwind/react";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import { getCollect, getRating,addRating } from "@/utils/api";
-import { CollectStatus,CollectSelect } from "@/widgets/stuff";
+import { getCollect, getRating, addRating } from "@/utils/api";
+import { CollectStatus, CollectSelect } from "@/widgets/stuff";
 
 function mapRatingToInteger(rating) {
     // 将0到10范围内的评分映射到0到5的整数范围
@@ -55,14 +55,13 @@ export function CollectBoxCard({
     };
 
     const handleRateChange = (value) => {
-        console.log(value)
         setRated(value)
         let add_rating = value * 2;
         // 数据库中数据类型被定义为 db.DECIMAL(2, 1)，范围为-9.9 到 9.9，前端显示为0-5，所以需要乘以2
         if (value === 5) {
             add_rating = 9.9;
         }
-        addRating(book_id,user_id,add_rating).then((response) => {
+        addRating(book_id, user_id, add_rating).then((response) => {
             console.log(response.data);
         });
     }
@@ -78,21 +77,22 @@ export function CollectBoxCard({
     if (isError) {
         console.log(isError)
     }
-    if(isError1){
+    if (isError1) {
         console.log(isError1)
     }
+    // 设置收藏时间和收藏类型
     useEffect(() => {
         if (collectRecord) {
-            const length = collectRecord.content.length
-            if (length > 0) {
-                const collect = collectRecord.content[length - 1];
+            if (collectRecord.length > 0) {
+                const collect = collectRecord[0];
                 setCollect_time(collect.collect_time);
                 setCollect_type(collect.collect_type);
             }
+
         }
 
     }, [collectRecord]);
-
+    // 设置评分时间和评分
     useEffect(() => {
         if (ratingRecord) {
             const length = ratingRecord.content.length;
@@ -104,21 +104,6 @@ export function CollectBoxCard({
         }
     }, [ratingRecord]);
 
-
-    // 将collect_type的值映射到相应的收藏文本
-    const getCollectText = () => {
-        switch (collect_type) {
-            case 1:
-                return "我想看这本书 ";
-            case 2:
-                return "我在看这本书 ";
-            case 3:
-                return "我看过这本书";
-            default:
-                return "";
-        }
-    };
-
     return (
         <Card>
             <CardBody className="p-4 text-right">
@@ -129,10 +114,10 @@ export function CollectBoxCard({
                 {
                     collect_type > 0 ? (
                         <>
-                            < CollectStatus collect_type={collect_type} collect_time={collect_time} user_id={user_id} book_id={book_id}/>
+                            < CollectStatus collect_type={collect_type} collect_time={collect_time} user_id={user_id} book_id={book_id} />
                         </>
                     ) : (
-                        <CollectSelect user_id={user_id} book_id={book_id} collect_type={collect_type}/>
+                        <CollectSelect user_id={user_id} book_id={book_id} collect_type={collect_type} />
                     )
                 }
                 {

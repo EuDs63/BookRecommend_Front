@@ -9,11 +9,11 @@ import {
   Button,
   Spinner,
 } from "@material-tailwind/react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ProfileInfoCard, BookCommentsCard,CollectBoxCard } from "@/widgets/cards";
 import { Comment } from "@/widgets/stuff";
 import { recommendedBooksData } from "@/data";
-import { getBookInfomation, getAction, addComment } from "@/utils/api";
+import { getBookInfomation, getAction } from "@/utils/api";
 import { useState, useEffect } from "react";
 import { useUser } from "@/context/UserContext";
 
@@ -22,9 +22,8 @@ import { useUser } from "@/context/UserContext";
 //需要在userEffect函数里fetch评论
 //useEffect函数需要四个操作:1. fetch一个详细信息 2. 推荐算法 3. fetch四个推荐信息 4. fectch评论
 
-export function BookDetail() {
+export function BookDetail({book_id}) {
   const { isLoggedIn, user } = useUser(); // 使用useUser钩子来获取用户状态
-  const { book_id } = useParams();
   const { data, isLoading, isError } = getBookInfomation(book_id, 1);
 
   // 获取该书籍下的已有评论
@@ -54,6 +53,11 @@ export function BookDetail() {
     return <div>error</div>;
   }
   if (data) {
+    if (data.code == -1) {
+      return <div>还没有这么多书</div>;
+    }
+
+
     const book = data.book;
     return (
       <div>

@@ -1,6 +1,5 @@
 import {
   HomeIcon,
-  UserCircleIcon,
   TableCellsIcon,
   BellIcon,
   ArrowRightOnRectangleIcon,
@@ -9,8 +8,8 @@ import {
 } from "@heroicons/react/24/solid";
 import { DashBoard, Tables, Notifications } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
-import { Setting,UserProfile,WillRead,Reading,HaveRead,UserMainPage } from "@/pages/user";
-import { Category, Search, TagSearch,BookDetail } from "@/pages/book";
+import { Setting,UserProfileWrapper,WillRead,Reading,HaveRead,UserMainPage,UserComment,OtherUserProfile} from "@/pages/user";
+import { Category, Search, TagSearch,BookDetailWrapper } from "@/pages/book";
 import { TouristMainPage } from "@/pages/tourist";
 
 const icon = {
@@ -85,7 +84,7 @@ export const routes = [
         icon: <BellIcon {...icon} />,
         name: "个人主页",
         path: "/profile",
-        element: <UserProfile />,
+        element: <UserProfileWrapper />,
       },
       {
         icon: <BellIcon {...icon} />,
@@ -111,6 +110,18 @@ export const routes = [
         path: "/setting",
         element: <Setting />,
       },
+      {
+        icon: <BellIcon {...icon} />,
+        name: "用户评论",
+        path: "/comment",
+        element: <UserComment />,
+      },
+      {
+        icon: <BellIcon {...icon} />,
+        name: "其他用户的首页",
+        path: ":user_id",
+        element: <OtherUserProfile />,
+      }
     ],
   },
   {
@@ -139,7 +150,7 @@ export const routes = [
         icon: <BellIcon {...icon} />,
         name: "书籍详情",
         path: ":book_id",
-        element: <BookDetail />,
+        element: <BookDetailWrapper />,
       },
     ],
   },

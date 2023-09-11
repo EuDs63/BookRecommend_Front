@@ -5,16 +5,17 @@ import {
   CardBody,
 } from "@material-tailwind/react";
 import { Carousel, IconButton } from "@material-tailwind/react";
-import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import {
   recommendedBooksData,
 } from "@/data";
 import { useState, useEffect } from "react";
 import { getAction, getcategorybookInfo } from "@/utils/api";
+import { useUser } from "@/context/UserContext";
 
 export function UserMainPage() {
-  const { userid } = useParams(); // 获取路由参数
+  const { user } = useUser(); // 使用useUser钩子来获取用户状态
+  const userid = user.user_id; // 获取路由参数
   useEffect(() => {
     getCategoryBookInfo(1, setnewLiteratureData, 1);
     getCategoryBookInfo(2, setnewPopularityData, 1);
@@ -193,7 +194,7 @@ export function UserMainPage() {
       <div className="flex justify-between space-x-4">
         {books.map((book, index) => (
           <div key={index} className="flex flex-col items-center">
-            <Link to={`/dashboard/home?query=${book.book_id}`}>
+            <Link to={`/book/${book.book_id}`}>
               <img
                 src={`https://images.weserv.nl/?url=${book.cover_image_url}`}
                 alt={book.title}
@@ -338,84 +339,6 @@ export function UserMainPage() {
         <BookList books={recommendedBooksData.slice(0, 6)} />
       </div>
       <div className="my-12"></div>{" "}
-      {/* 使用 my-12 类来添加垂直间距，也可以根据需要调整数字部分 */}
-      <div>
-        <Typography variant="h4" color="blue-gray" className="mb-3">
-          我的书评
-        </Typography>
-        <ul className="flex flex-col gap-1">
-          <Card>
-            {userComments.length > 0 ? (
-              userComments.map((comment, index) => (
-                <div className="max-h-50 w-full overflow-y-auto">
-                  <div key={index} className="mb-4">
-                    <CardBody
-                      key={index}
-                      style={{
-                        overflow: "hidden",
-                        height: "235px",
-                        display: "flex",
-                      }}
-                    >
-                      <div>
-                        <Link to={`/dashboard/home?query=${comment.book_id}`}>
-                          <img
-                            src={`https://images.weserv.nl/?url=${comment.cover_image_url}`}
-                            className="h-48 w-36 rounded-lg shadow-lg shadow-blue-gray-500/40"
-                          />
-                        </Link>
-                      </div>
-                      <div style={{ marginLeft: "20px", flex: 1 }}>
-                        <div>
-                          <Typography
-                            style={{
-                              color: "black",
-                              fontSize: "22px",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            {comment.title}
-                          </Typography>
-                        </div>
-                        {/* <div>
-                          <Typography style={{ color: "blue" }}>
-                            {book.author}
-                          </Typography>
-                        </div> */}
-                        <div
-                          style={{
-                            display: "-webkit-box",
-                            WebkitBoxOrient: "vertical",
-                            WebkitLineClamp: 3,
-                            overflow: "hidden",
-                          }}
-                        >
-                          <Typography>{comment.content}</Typography>
-                        </div>
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "flex-end",
-                          }}
-                        >
-                          <Typography>{comment.create_time} 评</Typography>
-                        </div>
-                      </div>
-                    </CardBody>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div>
-                {/* 当 userComments 为空时的内容 */}
-                <Typography className="font-mono text-2xl font-bold text-black">
-                  墨薮书评多逸事,何妨挥翰与题辞
-                </Typography>
-              </div>
-            )}
-          </Card>
-        </ul>
-      </div>
     </div>
   );
 }

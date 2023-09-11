@@ -1,8 +1,6 @@
 import {
     Card,
     CardBody,
-    CardHeader,
-    CardFooter,
     Avatar,
     Typography,
     Tabs,
@@ -21,6 +19,7 @@ import { useUser } from "@/context/UserContext";
 import { useState } from "react";
 import { changePassword, changeAvatar } from "@/utils/api";
 import { useNavigate } from 'react-router-dom';
+import { CollectTimeline } from "@/widgets/stuff";
 
 export function Setting() {
     const { isLoggedIn, user, logout, change_avatar } = useUser(); // 使用useUser钩子来获取用户状态
@@ -126,27 +125,9 @@ export function Setting() {
                                 </Typography>
                             </div>
                         </div>
-                        <div className="w-96">
-                            <Tabs value="app">
-                                <TabsHeader>
-                                    <Tab value="app">
-                                        <HomeIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
-                                        App
-                                    </Tab>
-                                    <Tab value="message">
-                                        <ChatBubbleLeftEllipsisIcon className="-mt-0.5 mr-2 inline-block h-5 w-5" />
-                                        Message
-                                    </Tab>
-                                    <Tab value="settings">
-                                        <Cog6ToothIcon className="-mt-1 mr-2 inline-block h-5 w-5" />
-                                        Settings
-                                    </Tab>
-                                </TabsHeader>
-                            </Tabs>
-                        </div>
                     </div>
-                    <div className="gird-cols-1 mb-12 grid gap-12 px-4 lg:grid-cols-2 xl:grid-cols-2">
-                        <div>
+                    <div className="gird-cols-1 mb-12 grid gap-12 px-4 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2">
+                        <div className="flex gap-3">
                             <Typography variant="h4" color="blue-gray">
                                 修改密码
                             </Typography>

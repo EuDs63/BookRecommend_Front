@@ -1,3 +1,6 @@
+/**
+ * 用户个人主页
+ */
 import {
   Card,
   CardBody,
@@ -45,6 +48,7 @@ function BookFilter({
   );
 }
 
+// 书籍列表
 function BookList({ books }) {
   if (books.length === 0) {
     return <div className="text-4xl text-gray-300">这里空空的...</div>;
@@ -86,22 +90,22 @@ export function UserProfile() {
   const { user } = useUser(); // 使用useUser钩子来获取用户状态
   const avatar_url = import.meta.env.VITE_BASE_URL + '/' + user.avatar_path;
 
-  const { search } = useLocation();
-  const queryParams = new URLSearchParams(search);
+  //const { search } = useLocation();
+  //const queryParams = new URLSearchParams(search);
   const [willReadBookData, setWillReadBookData] = useState([]);
   const [readingBookData, setReadingBookData] = useState([]);
   const [haveReadBookData, setHaveReadBookData] = useState([]);
-  const currentPageParam = queryParams.get("page");
-  const [currentPage, setCurrentPage] = useState(
-    currentPageParam ? parseInt(currentPageParam) : 1
-  );
+  // const currentPageParam = queryParams.get("page");
+  // const [currentPage, setCurrentPage] = useState(
+  //   currentPageParam ? parseInt(currentPageParam) : 1
+  // );
 
   useEffect(() => {
     // 在组件加载后执行的代码
     getPageInfo(1, setWillReadBookData);
     getPageInfo(2, setReadingBookData);
     getPageInfo(3, setHaveReadBookData);
-    setCurrentPage(1);
+    //setCurrentPage(1);
   }, []);
 
   function getPageInfo(type, setFuction) {
@@ -190,21 +194,21 @@ export function UserProfile() {
               <Typography variant="h4" className="mb-2 text-blue-gray-300">
                 想读
               </Typography>
-              <BookList books={willReadBookData.slice(0, 6)} />
+              <BookList books={willReadBookData.slice(0, 5)} />
             </div>
 
             <div className="mb-4 border-b border-blue-gray-200 p-4 pb-4">
               <Typography variant="h4" className="mb-2 text-blue-gray-300">
                 在读
               </Typography>
-              <BookList books={readingBookData.slice(0, 6)} />
+              <BookList books={readingBookData.slice(0, 5)} />
             </div>
 
             <div className="p-4">
               <Typography variant="h4" className="mb-2 text-blue-gray-300">
                 已读
               </Typography>
-              <BookList books={haveReadBookData.slice(0, 6)} />
+              <BookList books={haveReadBookData.slice(0, 5)} />
             </div>
           </div>
         </CardBody>

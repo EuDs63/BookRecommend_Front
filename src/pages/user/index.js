@@ -4,3 +4,6 @@ export * from "@/pages/user/will_read";
 export * from "@/pages/user/reading";
 export * from "@/pages/user/have_read";
 export * from "@/pages/user/user_main_page";
+export * from "@/pages/user/user_profile_wrapper";
+export * from "@/pages/user/user_comment";
+export * from "@/pages/user/other_user_porifle";

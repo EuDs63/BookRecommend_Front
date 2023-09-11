@@ -6,7 +6,7 @@ import {
 import { useLocation } from "react-router-dom";
 import { booksearch } from "@/utils/api";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 
 export function Search() {
@@ -27,7 +27,6 @@ export function Search() {
             setCurrentPage(currentPageParam !== null ? parseInt(currentPageParam) : 1)
             var code = resp.data['code'].toString();
             if (code === '0') {
-                console.log("success!");
                 const books = resp.data['books'];
                 const totalPages = resp.data['total_pages'];
                 const totalRecords = resp.data['total_records']
@@ -53,9 +52,6 @@ export function Search() {
                     }
                     bookData.push(bookObj)
                 });
-                console.log(bookData)
-                console.log(totalPages)
-                console.log(totalRecords)
                 setBookInfoData(bookData)
                 setTotalPages(totalPages)
                 setTotalRecords(totalRecords)
@@ -79,7 +75,7 @@ export function Search() {
                 {bookInfoData.map((book, index) => (
                     <CardBody
                         key={index}
-                        style={{ overflow: "hidden", height: "235px", display: "flex" }}
+                        className="overflow-hidden h-235 flex"
                     >
                         <Link to={`/book/${book.book_id}`}>
                             <img
