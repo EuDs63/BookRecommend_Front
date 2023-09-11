@@ -93,7 +93,6 @@ export function SignIn() {
       var message = resp.data["msg"];
       var token = resp.data["token"];
       if (code === "0") {
-        alert(message);
         navigateTo("/user/main");
         handleSignInContext(resp.data["user"], token);
       } else {

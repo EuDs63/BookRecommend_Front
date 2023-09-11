@@ -41,7 +41,6 @@ export function RatingTimeline({ user_id }) {
     } = getRatingByUserId(user_id,PAGE_SIZE);
 
     const issues = data ? [].concat(...data) : [];
-
     const isLoadingMore =
         isLoading || (size > 0 && data && typeof data[size - 1] === "undefined");
     const isEmpty = data?.[0]?.length === 0;
