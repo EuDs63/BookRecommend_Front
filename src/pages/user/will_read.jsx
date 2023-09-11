@@ -79,11 +79,7 @@ export function WillRead() {
       <Typography
         variant="h6"
         color="black"
-        style={{
-          color: "black",
-          fontSize: "22px",
-          fontWeight: "bold",
-        }}
+        className="text-black text-22 font-bold"
       >
         我的想读榜单
       </Typography>
@@ -91,7 +87,7 @@ export function WillRead() {
         {bookInfoData.map((book, index) => (
           <CardBody
             key={index}
-            style={{ overflow: "hidden", height: "235px", display: "flex" }}
+            className="overflow-hidden h-235 flex"
           >
             <div>
               <img

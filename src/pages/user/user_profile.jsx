@@ -90,22 +90,22 @@ export function UserProfile() {
   const { user } = useUser(); // 使用useUser钩子来获取用户状态
   const avatar_url = import.meta.env.VITE_BASE_URL + '/' + user.avatar_path;
 
-  const { search } = useLocation();
-  const queryParams = new URLSearchParams(search);
+  //const { search } = useLocation();
+  //const queryParams = new URLSearchParams(search);
   const [willReadBookData, setWillReadBookData] = useState([]);
   const [readingBookData, setReadingBookData] = useState([]);
   const [haveReadBookData, setHaveReadBookData] = useState([]);
-  const currentPageParam = queryParams.get("page");
-  const [currentPage, setCurrentPage] = useState(
-    currentPageParam ? parseInt(currentPageParam) : 1
-  );
+  // const currentPageParam = queryParams.get("page");
+  // const [currentPage, setCurrentPage] = useState(
+  //   currentPageParam ? parseInt(currentPageParam) : 1
+  // );
 
   useEffect(() => {
     // 在组件加载后执行的代码
     getPageInfo(1, setWillReadBookData);
     getPageInfo(2, setReadingBookData);
     getPageInfo(3, setHaveReadBookData);
-    setCurrentPage(1);
+    //setCurrentPage(1);
   }, []);
 
   function getPageInfo(type, setFuction) {

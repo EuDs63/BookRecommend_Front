@@ -24,15 +24,14 @@ export function HaveRead() {
   //   const [totalRecords, setTotalRecords] = useState("");
   useEffect(() => {
     // 在组件加载后执行的代码
-    console.log(userid);
     getReadingPageInfo();
     setCurrentPage(1);
   }, [userid]);
+
   function getReadingPageInfo() {
     getAction(1, 2, 0, userid).then((resp) => {
       var code = resp.data["code"].toString();
       if (code === "0") {
-        console.log("success!");
         const contents = resp.data["content"];
         const collect_type = contents.map((content) => content.collect_type);
         const indices = [];
@@ -69,31 +68,41 @@ export function HaveRead() {
         });
         setBookInfoData(bookData);
         setBookCollectedTimeData(collect_time);
-        // setTotalPages(totalPages);
-        // setTotalRecords(totalRecords);
       } else {
         console.log("fail!");
       }
     });
   }
+
+  const intro = () => {
+    if (bookInfoData.length > 30) {
+      return "读书谓已多，抚事知不足";
+    } else if (bookInfoData.length >= 10 && bookInfoData.length <= 30) {
+      return "欲穷千里目，更上一层楼";
+    } else {
+      return "玉不琢不成器，人不学不知理";
+    }
+  }
+
   return (
     <div>
       <Typography
         variant="h6"
         color="black"
-        style={{
-          color: "black",
-          fontSize: "22px",
-          fontWeight: "bold",
-        }}
+        className="text-black text-22 font-bold"
       >
         我曾读过
       </Typography>
+      <div>
+        <Typography className="text-black text-22 mb-5">
+          {intro()}
+        </Typography>
+      </div>
       <Card>
         {bookInfoData.map((book, index) => (
           <CardBody
             key={index}
-            style={{ overflow: "hidden", height: "235px", display: "flex" }}
+            className="overflow-hidden h-235 flex"
           >
             <div>
               <img
@@ -101,14 +110,10 @@ export function HaveRead() {
                 className="h-48 w-36 rounded-lg shadow-lg shadow-blue-gray-500/40"
               />
             </div>
-            <div style={{ marginLeft: "20px", flex: 1 }}>
+            <div className="ml-20 flex-1">
               <div>
                 <Typography
-                  style={{
-                    color: "black",
-                    fontSize: "22px",
-                    fontWeight: "bold",
-                  }}
+                  className="text-black text-22 font-bold"
                 >
                   {book.name}
                 </Typography>
@@ -134,15 +139,7 @@ export function HaveRead() {
           </CardBody>
         ))}
       </Card>
-      <div>
-        {bookInfoData.length > 30 ? (
-          <span>读书谓已多，抚事知不足</span>
-        ) : bookInfoData.length >= 10 && bookInfoData.length <= 30 ? (
-          <span>欲穷千里目，更上一层楼</span>
-        ) : (
-          <span>玉不琢不成器，人不学不知理</span>
-        )}
-      </div>
+
     </div>
   );
 }

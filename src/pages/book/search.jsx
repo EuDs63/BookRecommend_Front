@@ -75,7 +75,7 @@ export function Search() {
                 {bookInfoData.map((book, index) => (
                     <CardBody
                         key={index}
-                        style={{ overflow: "hidden", height: "235px", display: "flex" }}
+                        className="overflow-hidden h-235 flex"
                     >
                         <Link to={`/book/${book.book_id}`}>
                             <img
