@@ -19,7 +19,7 @@ import { getRatingByUserId } from "@/utils/api";
 import { Link } from "react-router-dom";
 import { RatingStar } from "@/widgets/stuff";
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 3;
 
 
 export function RatingTimeline({ user_id }) {
@@ -38,7 +38,7 @@ export function RatingTimeline({ user_id }) {
         setSize,
         isValidating,
         isLoading
-    } = getRatingByUserId(user_id);
+    } = getRatingByUserId(user_id,PAGE_SIZE);
 
     const issues = data ? [].concat(...data) : [];
 

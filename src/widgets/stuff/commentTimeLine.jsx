@@ -18,7 +18,7 @@ import { useEffect } from "react";
 import { getCommentByUserId } from "@/utils/api";
 import { Link } from "react-router-dom";
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 3;
 
 
 export function CommentTimeline({ user_id }) {
@@ -36,7 +36,7 @@ export function CommentTimeline({ user_id }) {
         setSize,
         isValidating,
         isLoading
-    } = getCommentByUserId(user_id);
+    } = getCommentByUserId(user_id, PAGE_SIZE);
 
     const issues = data ? [].concat(...data) : [];
 
@@ -54,9 +54,12 @@ export function CommentTimeline({ user_id }) {
         <div>
             <Card className="w-auto mt-8 ml-5 ">
                 <CardBody>
-                    <Typography variant="h5" color="blue-gray" className="mb-2">
-                        我的评论记录
-                    </Typography>
+                    <Link to={`/user/comment`}>
+                        <Typography variant="h5" color="blue-gray" className="mb-2">
+                            我的评论记录
+                        </Typography>
+                    </Link>
+
                     {isEmpty ? <p>没有记录呢</p> : null}
                     <div className="w-auto">
                         <Timeline>

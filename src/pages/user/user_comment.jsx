@@ -26,7 +26,7 @@ export function UserComment() {
         setSize,
         isValidating,
         isLoading
-    } = getCommentByUserId(user_id);
+    } = getCommentByUserId(user_id,PAGE_SIZE);
 
     const issues = data ? [].concat(...data) : [];
 
