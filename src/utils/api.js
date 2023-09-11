@@ -142,9 +142,6 @@ export function getRating(method,book_id,user_id){
   }
 }
 
-
-
-
 export function getcategorybookInfo(category_id, page, per_page, order = 0) {
   return service({
     url: `/book/category`,
@@ -194,33 +191,6 @@ export function getAction(type, method, book_id, user_id) {
     },
   });
 }
-
-// async function fetchUserAction(requestUrl, postData) {
-//   try {
-//     const response = await service.post(requestUrl, postData); // 发出 Axios 请求
-//     return response.data; // 返回从后端获取的数据
-//   } catch (error) {
-//     throw error; // 抛出错误以供 SWR 处理
-//   }
-// }
-
-// export function getUserAction(type, method, book_id, user_id) {
-//   const requestUrl = `/action/get`
-//   const postData = {
-//     type: type,
-//     method: method,
-//     book_id: book_id,
-//     user_id: user_id,
-//   }
-//   // 使用 SWR 钩子来获取数据
-//   const { data, error, isLoading } = useSWR(['/action/get', postData], fetchUserAction);
-
-//   return {
-//     data: data,
-//     isLoading,
-//     isError: error,
-//   }
-// }
 
 export function addComment(book_id, user_id, content) {
   return service({

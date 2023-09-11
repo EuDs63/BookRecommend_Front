@@ -8,14 +8,14 @@ export function UserProfileWrapper() {
     const { user } = useUser(); // 使用useUser钩子来获取用户状态
 
     return (
-        <>
+        <div className="flex flex-row">
             <div className="w-2/3">
                 <UserProfile />
             </div>
             <div className="w-1/3">
                 <CollectTimeline user_id={user.user_id}/>
             </div>
-        </>
+        </div>
     );
 }
 

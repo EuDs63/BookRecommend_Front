@@ -59,7 +59,7 @@ export function User() {
         <div className="container relative z-40 mx-auto p-4">
           <Navbar routes={navbarRoutes} />
         </div>
-        <div className="flex">
+        <div>
           <Routes>
             {routes.map(
               ({ layout, pages }) =>
@@ -68,7 +68,7 @@ export function User() {
                   <Route exact path={path} element={element} />
                 ))
             )}
-          </Routes>       
+          </Routes>
         </div>
 
         <div className="text-blue-gray-600">
