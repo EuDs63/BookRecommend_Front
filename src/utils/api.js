@@ -105,7 +105,7 @@ export function getCollectByBookId(book_id){
 };
 
 // 根据user_id获取收藏信息，用于“时光机-collect”
-export function getCollectByUserId(user_id){
+export function getCollectByUserId(user_id,page_size){
   const requestUrl = `/action/collect/2/0/${user_id}`
   const {
     data,
@@ -118,7 +118,7 @@ export function getCollectByUserId(user_id){
     (index) =>
       `${requestUrl}?&current_page=${
         index + 1
-      }`,
+      }&page_size=${page_size}`,
     fetchInfo
   );
   return {

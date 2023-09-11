@@ -8,7 +8,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { DashBoard, Tables, Notifications } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
-import { Setting,UserProfileWrapper,WillRead,Reading,HaveRead,UserMainPage } from "@/pages/user";
+import { Setting,UserProfileWrapper,WillRead,Reading,HaveRead,UserMainPage,UserComment} from "@/pages/user";
 import { Category, Search, TagSearch,BookDetailWrapper } from "@/pages/book";
 import { TouristMainPage } from "@/pages/tourist";
 
@@ -110,6 +110,12 @@ export const routes = [
         path: "/setting",
         element: <Setting />,
       },
+      {
+        icon: <BellIcon {...icon} />,
+        name: "用户评论",
+        path: "/comment",
+        element: <UserComment />,
+      }
     ],
   },
   {

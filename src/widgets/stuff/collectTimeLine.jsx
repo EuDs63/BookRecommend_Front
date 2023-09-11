@@ -18,7 +18,7 @@ import { useEffect } from "react";
 import { getCollectByUserId } from "@/utils/api";
 import { Link } from "react-router-dom";
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 3;
 
 function getCollectText(title, type) {
     const info = () => {
@@ -53,7 +53,7 @@ export function CollectTimeline({ user_id }) {
         setSize,
         isValidating,
         isLoading
-    } = getCollectByUserId(user_id);
+    } = getCollectByUserId(user_id,PAGE_SIZE);
 
     const issues = data ? [].concat(...data) : [];
 

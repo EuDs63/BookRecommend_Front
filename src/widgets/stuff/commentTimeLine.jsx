@@ -28,7 +28,6 @@ export function CommentTimeline({ user_id }) {
     if (user_id === null) {
         return null;
     }
-    console.log(user_id);
     // size: 页数
     const {
         data,
