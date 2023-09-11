@@ -200,47 +200,56 @@ export function UserMainPage() {
   const [concernPopularityData, setConcernPopularityData] = useState([]);
   const [concernTechnologyData, setConcernTechnologyData] = useState([]);
   const [concernManagementData, setConcernManagementData] = useState([]);
-  function BookList({ books }) {
-    return (
-      <div className="flex justify-between space-x-4">
-        {books.map((book, index) => (
-          <div key={index} className="flex flex-col items-center">
-            <Link to={`/dashboard/home?query=${book.book_id}`}>
-              <img
-                src={`https://images.weserv.nl/?url=${book.cover_image_url}`}
-                alt={book.title}
-                className="h-40 w-32 rounded-md"
-              />
-            </Link>
-            <Typography variant="h5" color="gray-500" className="mt-1 mb-2">
-              <span
-                className="max-w-xs overflow-hidden truncate whitespace-nowrap"
-                title={book.title} // 鼠标悬浮时显示完整文本
-              >
-                {book.title.length > 5
-                  ? book.title.substr(0, 5) + "..."
-                  : book.title}
-              </span>
-            </Typography>
-            <Typography
-              variant="small"
-              color="gray-500"
-              className="mt-1 mb-2 font-[YourChosenFont]"
+function BookList({ books }) {
+  const booksPerRow = 6; // 每行显示的书籍数量
+
+  // 计算每本书的宽度，以确保每行有6本
+  const bookWidth = `calc(100% / ${booksPerRow})`;
+
+  return (
+    <div className="-mx-2 flex flex-wrap">
+      {books.map((book, index) => (
+        <div key={index} className={`w-full ${bookWidth} mb-4 px-2`}>
+          <Link to={`/dashboard/home?query=${book.book_id}`}>
+            <img
+              src={`https://images.weserv.nl/?url=${book.cover_image_url}`}
+              alt={book.title}
+              className="h-40 w-32 rounded-md"
+            />
+          </Link>
+          <Typography variant="h5" color="gray-500" className="mt-1 mb-2">
+            <span
+              className="max-w-xs overflow-hidden truncate whitespace-nowrap"
+              title={book.title}
             >
-              <span
-                className="max-w-xs overflow-hidden truncate whitespace-nowrap"
-                title={book.author} // 鼠标悬浮时显示完整文本
-              >
-                {book.author.length > 10
-                  ? book.author.substr(0, 5) + "..."
-                  : book.author}
-              </span>
-            </Typography>
-          </div>
-        ))}
-      </div>
-    );
-  }
+              {book.title.length > 5
+                ? book.title.substr(0, 5) + "..."
+                : book.title}
+            </span>
+          </Typography>
+          <Typography
+            variant="small"
+            color="gray-500"
+            className="mt-1 mb-2 font-[YourChosenFont]"
+          >
+            <span
+              className="max-w-xs overflow-hidden truncate whitespace-nowrap"
+              title={book.author}
+            >
+              {book.author.length > 10
+                ? book.author.substr(0, 5) + "..."
+                : book.author}
+            </span>
+          </Typography>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+
+
+
   function MyTab({ tab, onTabClick }) {
     return (
       <div className="flex">

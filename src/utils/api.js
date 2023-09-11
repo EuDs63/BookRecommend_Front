@@ -14,9 +14,9 @@ export function userLogin(data) {
 
 export function userAutoLogin() {
   return service({
-    url: '/user/auto_login',
-    method: 'get'
-  })
+    url: "/user/auto_login",
+    method: "get",
+  });
 }
 
 export function userRegister(userData) {
@@ -55,7 +55,7 @@ async function fetchInfo(requestUrl) {
 //info_type 为1 ：对应bookDetailsData
 //info_type 为0 ,对应recommendedBooksData
 export function getBookInfomation(book_id, info_type) {
-  const requestUrl = `/book/${book_id}/${info_type}`
+  const requestUrl = `/book/${book_id}/${info_type}`;
   // 使用 SWR 钩子来获取数据
   const { data, error, isLoading } = useSWR(requestUrl, fetchInfo);
 
@@ -63,46 +63,44 @@ export function getBookInfomation(book_id, info_type) {
     data: data,
     isLoading,
     isError: error,
-  }
+  };
 }
 
-export function getCollect(method,book_id,user_id){
-  const requestUrl = `/action/collect/${method}/${book_id}/${user_id}`
+export function getUserInfo(user_id) {
+  return service({
+    url: `/user/${user_id}`,
+    method: "get",
+  });
+}
+
+export function getCollect(method, book_id, user_id) {
+  const requestUrl = `/action/collect/${method}/${book_id}/${user_id}`;
   // 使用 SWR 钩子来获取数据
   const { data, error, isLoading } = useSWR(requestUrl, fetchInfo);
   return {
-    collectRecord : data,
+    collectRecord: data,
     isLoading,
     isError: error,
-  }
+  };
 }
 
 // 根据book_id获取收藏信息，用于“谁看这本书”
-export function getCollectByBookId(book_id){
-  const requestUrl = `/action/collect/1/${book_id}/0`
-  const {
-    data,
-    mutate,
-    size,
-    setSize,
-    isValidating,
-    isLoading
-  } = useSWRInfinite(
-    (index) =>
-      `${requestUrl}?&current_page=${
-        index + 1
-      }`,
-    fetchInfo
-  );
+export function getCollectByBookId(book_id) {
+  const requestUrl = `/action/collect/1/${book_id}/0`;
+  const { data, mutate, size, setSize, isValidating, isLoading } =
+    useSWRInfinite(
+      (index) => `${requestUrl}?&current_page=${index + 1}`,
+      fetchInfo
+    );
   return {
     data,
     mutate,
     size,
     setSize,
     isValidating,
-    isLoading
-  }
-};
+    isLoading,
+  };
+}
 
 // 根据user_id获取收藏信息，用于“时光机-collect”
 export function getCollectByUserId(user_id,page_size){
@@ -127,9 +125,9 @@ export function getCollectByUserId(user_id,page_size){
     size,
     setSize,
     isValidating,
-    isLoading
-  }
-};
+    isLoading,
+  };
+}
 
 // 根据user_id获取评论信息，用于“时光机-comment”
 export function getCommentByUserId(user_id,page_size){
@@ -190,10 +188,10 @@ export function getRating(method,book_id,user_id){
   // 使用 SWR 钩子来获取数据
   const { data, error, isLoading } = useSWR(requestUrl, fetchInfo);
   return {
-    ratingRecord : data,
+    ratingRecord: data,
     isLoading,
     isError: error,
-  }
+  };
 }
 
 export function getcategorybookInfo(category_id, page, per_page, order = 0) {
@@ -224,13 +222,13 @@ export function booksearch(keyword, page, per_page, method) {
 export function gettagbookInfo(tag_id, page, per_page) {
   return service({
     url: `/book/tag`,
-    method: 'get',
+    method: "get",
     params: {
       tag_id: tag_id,
       page: page,
       per_page: per_page,
-    }
-  })
+    },
+  });
 }
 
 export function getAction(type, method, book_id, user_id) {
@@ -272,7 +270,7 @@ export function addCollect(book_id, user_id, collect_type) {
   });
 }
 
-export function addRating(book_id,user_id,rating){
+export function addRating(book_id, user_id, rating) {
   return service({
     url: `/action/add`,
     method: "post",
@@ -285,18 +283,15 @@ export function addRating(book_id,user_id,rating){
   });
 }
 
-
 export function changePassword(origin_password, new_password) {
-  return service(
-    {
-      url: "/user/update_password",
-      method: "post",
-      data: {
-        "origin_password": origin_password,
-        "new_password": new_password
-      },
-    }
-  );
+  return service({
+    url: "/user/update_password",
+    method: "post",
+    data: {
+      origin_password: origin_password,
+      new_password: new_password,
+    },
+  });
 }
 
 // 封装文件上传 API
@@ -304,7 +299,8 @@ export function changeAvatar(file, info) {
   const formData = new FormData();
   formData.append("avatar", file); // 'avatar' 是后端接受文件的字段名
   formData.append("user_id", info.user_id);
-  return fileService.post("/user/upload_avatar", formData)
+  return fileService
+    .post("/user/upload_avatar", formData)
     .then((response) => {
       // 处理上传成功后的响应
       console.log("上传成功", response.data);
