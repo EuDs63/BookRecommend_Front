@@ -1,5 +1,5 @@
 import { UserProfile } from "@/pages/user";
-import { CollectTimeline,CommentTimeline } from "@/widgets/stuff";
+import { CollectTimeline,CommentTimeline,RatingTimeline } from "@/widgets/stuff";
 import { useUser } from "@/context/UserContext";
 
 // 导出包裹后的组件
@@ -14,6 +14,7 @@ export function UserProfileWrapper() {
             <div className="w-1/3">
                 <CollectTimeline user_id={user.user_id}/>
                 <CommentTimeline user_id={user.user_id}/>
+                <RatingTimeline user_id={user.user_id}/>
             </div>
         </div>
     );
