@@ -8,6 +8,7 @@ const initialState = {
     username: '',      // 用户名
     avatar_path: '',    // 头像路径
     register_time: "",  // 注册时间
+    searchHistory: [], // 初始搜索历史为空数组
 };
 
 const userReducer = (state = initialState, action) => {
@@ -23,6 +24,10 @@ const userReducer = (state = initialState, action) => {
                 ...state,
                 isLoggedIn: action.payload,
             };
+        case 'ADD_TO_SEARCH_HISTORY':
+            return { ...state, searchHistory: [...state.searchHistory, action.payload] };
+        case 'CLEAR_SEARCH_HISTORY':
+            return { ...state, searchHistory: [] };
         default:
             return state;
     }
