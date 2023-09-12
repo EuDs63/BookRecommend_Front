@@ -189,7 +189,7 @@ export function UserMainPage() {
       const { data, setter } = dataSets[index];
       return Array.from({ length: 5 }, (_, i) => (
         <div key={i}>
-          <BookList books={data.slice(i * 6, (i + 1) * 6)} />
+          <BookList books={data.slice(i * 5, (i + 1) * 5)} />
         </div>
       ));
     }

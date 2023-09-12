@@ -109,7 +109,7 @@ export function ArticleList({ book_id }) {
                         </Button>
                         <Button disabled={!size} onClick={() => setSize(0)}
                             size="sm">
-                            清空
+                            折叠
                         </Button>
                     </ButtonGroup>
                 )}

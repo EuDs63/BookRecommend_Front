@@ -7,7 +7,7 @@ import {
   TagIcon,
 } from "@heroicons/react/24/solid";
 import { SignIn, SignUp } from "@/pages/auth";
-import { Setting, UserProfileWrapper, WillRead, Reading, HaveRead, UserMainPage, UserComment, UserRating, OtherUserProfile, UserCollect } from "@/pages/user";
+import { Setting, UserProfileWrapper, WillRead, Reading, HaveRead, UserMainPage, UserComment, UserRating, OtherUserProfile, UserCollect,UserMainpageWrapper } from "@/pages/user";
 
 import { Category, Search, TagSearch, BookDetailWrapper,MyEditor,Article } from "@/pages/book";
 import { TouristMainPage } from "@/pages/tourist";
@@ -55,7 +55,7 @@ export const routes = [
         icon: <BellIcon {...icon} />,
         name: "用户首页",
         path: "/main",
-        element: <UserMainPage />,
+        element: <UserMainpageWrapper />,
       },
       {
         icon: <BellIcon {...icon} />,
