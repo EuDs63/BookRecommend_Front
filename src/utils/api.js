@@ -345,3 +345,14 @@ export function changeAvatar(file, info) {
       throw error; // 可以抛出错误供上层调用处理
     });
 }
+
+// 根据article_id获取长评信息
+export function getArticle(article_id) {
+  const requestUrl = `/article/view/${article_id}`;
+  const { data, error, isLoading } = useSWR(requestUrl, fetchInfo);
+  return {
+    data,
+    isLoading,
+    isError: error,
+  };
+}
