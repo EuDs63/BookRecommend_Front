@@ -136,7 +136,7 @@ export function UserCollect() {
                   : "加载更多"}
               </Button>
               <Button disabled={!size} onClick={() => setSize(0)} size="sm">
-                清空
+                折叠
               </Button>
             </ButtonGroup>
           )}
