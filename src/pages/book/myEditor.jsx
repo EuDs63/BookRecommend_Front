@@ -20,7 +20,6 @@ export function MyEditor() {
     if (book_id === null) {
         return null;
     }
-    console.log(book_id);
     const [editor, setEditor] = useState(null) // 存储 editor 实例
     const [html, setHtml] = useState('<p>hello</p>')
     const [statusMessage, setStatusMessage] = useState(""); // 用于显示状态消息
@@ -48,7 +47,7 @@ export function MyEditor() {
     };
 
     const handleArticleCancel = () => {
-        setHtml('<p>hello&nbsp;<strong>world</strong>.</p>\n<p><br></p>')
+        setHtml('');
         localStorage.removeItem(savedCommentName);
         setStatusMessage("已取消评论"); // 设置状态消息为已取消评论
     }
@@ -68,7 +67,9 @@ export function MyEditor() {
         addArticle(book_id, user_id, editor.getHtml(), article_title).then((resp) => {
             var code = resp.data["code"].toString();
             if (code === "0") {
+                setHtml('');
                 setStatusMessage("提交成功");
+                window.location.href = `/book/${book_id}`;
             } else {
                 setStatusMessage("提交失败");
             }

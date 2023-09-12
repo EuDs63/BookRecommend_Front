@@ -128,7 +128,8 @@ export function BookDetail({book_id}) {
 
             <CategoryRecommend book_id={book_id} />        
             <div className="my-12"></div>
-            <div>
+            <ArticleList book_id={book_id} />
+            <div className="mt-5">
               <Typography variant="h4" color="blue-gray" className="mb-3">
                 短评
               </Typography>
@@ -155,7 +156,7 @@ export function BookDetail({book_id}) {
                 )
               }
             </div>
-            <ArticleList book_id={book_id} />
+
           </CardBody>
           <CardFooter>
             <Comment book_id ={book_id}/>

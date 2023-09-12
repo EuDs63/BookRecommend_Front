@@ -6,24 +6,21 @@ export function BookCommentsCard({
   avatar_path,
   username,
   content,
-  book_id,
-  comment_id,
   user_id,
   create_time,
-  action,
 }) {
   const avatar_url = import.meta.env.VITE_BASE_URL + '/' + avatar_path;
   return (
-    <div className="flex items-center justify-between gap-4 rounded-lg bg-white p-4 shadow-md">
-      <div className="flex items-center gap-4">
+    <div className="flex items-center  gap-5 rounded-lg bg-white p-4 shadow-md">
+      <div className="flex gap-5">
         <Link to={`/user/${user_id}`}>
           <Avatar
             src={avatar_url}
             alt={username}
-            className="h-12 w-12 rounded-full shadow-lg"
+            className="h-12 w-12 shadow-lg overflow-visible"
           />
         </Link>
-        <div>
+        <div className="ml-2">
           <Typography
             variant="small"
             color="blue-gray"
@@ -41,7 +38,6 @@ export function BookCommentsCard({
           </div>
         </div>
       </div>
-      {action}
     </div>
   );
 }
