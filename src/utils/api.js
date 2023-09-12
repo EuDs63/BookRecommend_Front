@@ -66,6 +66,18 @@ export function getBookInfomation(book_id, info_type) {
   };
 }
 
+export function getUserInfomation(user_id) {
+  const requestUrl = `/user/${user_id}`;
+  // 使用 SWR 钩子来获取数据
+  const { data, error, isLoading } = useSWR(requestUrl, fetchInfo);
+
+  return {
+    data: data,
+    isLoading,
+    isError: error,
+  };
+}
+
 export function getUserInfo(user_id) {
   return service({
     url: `/user/${user_id}`,
@@ -183,6 +195,7 @@ export function getRatingByUserId(user_id,page_size){
   }
 }
 
+// 根据user_id获取评分信息，用于“时光机-comment”
 export function getRating(method,book_id,user_id){
   const requestUrl = `/action/rating/${method}/${book_id}/${user_id}`
   // 使用 SWR 钩子来获取数据
@@ -194,6 +207,26 @@ export function getRating(method,book_id,user_id){
   };
 }
 
+// 根据book_id获取推荐信息
+export function getRecommendByBookId(book_id) {
+  const requestUrl = `/book/recommendationByBookId/${book_id}`;
+  const { data, error, isLoading } = useSWR(requestUrl, fetchInfo);
+  return {
+    data,
+    isLoading,
+    isError: error,
+  };
+}
+
+export function getRecommendByUserId(user_id) {
+  const requestUrl = `/book/getrec/${user_id}`;
+  const { data, error, isLoading } = useSWR(requestUrl, fetchInfo);
+  return {
+    data,
+    isLoading,
+    isError: error,
+  };
+}
 export function getcategorybookInfo(category_id, page, per_page, order = 0) {
   return service({
     url: `/book/category`,

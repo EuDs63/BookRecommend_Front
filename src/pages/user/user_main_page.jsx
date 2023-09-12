@@ -1,21 +1,34 @@
 import React from "react";
-import {
-  Typography,
-  Card,
-  CardBody,
-} from "@material-tailwind/react";
+import { Typography, Card, CardBody } from "@material-tailwind/react";
 import { Carousel, IconButton } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
-import {
-  recommendedBooksData,
-} from "@/data";
 import { useState, useEffect } from "react";
-import { getAction, getcategorybookInfo, getrecommend } from "@/utils/api";
+import {
+  getAction,
+  getcategorybookInfo,
+  getRecommendByUserId,
+} from "@/utils/api";
 import { useUser } from "@/context/UserContext";
+import service from "@/utils/service";
 
 export function UserMainPage() {
   const { user } = useUser(); // 使用useUser钩子来获取用户状态
   const userid = user.user_id; // 获取路由参数
+  const recommendationBooks = [];
+  console.log(user);
+  const [newCultureData, setnewCultureData] = useState([]);
+  const [newLiteratureData, setnewLiteratureData] = useState([]);
+  const [newLifeData, setnewLifeData] = useState([]);
+  const [newPopularityData, setnewPopularityData] = useState([]);
+  const [newTechnologyData, setnewTechnologyData] = useState([]);
+  const [newManagementData, setnewManagementData] = useState([]);
+  const [concernCultureData, setConcernCultureData] = useState([]);
+  const [concernLiteratureData, setConcernLiteratureData] = useState([]);
+  const [concernLifeData, setConcernLifeData] = useState([]);
+  const [concernPopularityData, setConcernPopularityData] = useState([]);
+  const [concernTechnologyData, setConcernTechnologyData] = useState([]);
+  const [concernManagementData, setConcernManagementData] = useState([]);
+  const [itemRecommendData, setItemRecommendData] = useState([]);
   useEffect(() => {
     getCategoryBookInfo(1, setnewLiteratureData, 1);
     getCategoryBookInfo(2, setnewPopularityData, 1);
@@ -30,7 +43,7 @@ export function UserMainPage() {
     getCategoryBookInfo(5, setConcernManagementData, 2);
     getCategoryBookInfo(6, setConcernTechnologyData, 2);
     getCommentInfo(userid);
-    getRecommendBookInfo(3);
+    getRecommendation(userid);
     // 继续添加其他范围和对应的数据更新函数
   }, []);
   function getCategoryBookInfo(range, setDataFunction, type) {
@@ -64,6 +77,39 @@ export function UserMainPage() {
       }
     });
   }
+  async function getRecommendation(user_id) {
+    try {
+      getRecommendByUserId(user_id).then((resp) => {
+        //const { data } = await getRecommendByUserId(user_id);
+        console.log(resp.data);
+        console.log("hahaha");
+        const recommendationBooks = [];
+        if (resp.data && resp.data.books) {
+          resp.data.books.map((book) => {
+            const author = book.author;
+            const description = book.description;
+            const book_id = book.book_id;
+            const cover_image_url = book.cover_image_url;
+            const rating_avg = book.rating_avg;
+            const title = book.title;
+            const bookObj = {
+              author,
+              description,
+              book_id,
+              cover_image_url,
+              rating_avg,
+              title,
+            };
+            recommendationBooks.push(bookObj);
+          });
+        setItemRecommendData(recommendationBooks);
+        }
+      });
+    } catch (error) {
+      // 处理错误
+      console.error(error);
+    }
+  }
 
   const [selectedTab, setSelectedTab] = useState("culture"); // 初始选中的标签为文化
   const [recommendTab, setRecommendTab] = useState("culture"); // 初始选中的标签为文化
@@ -89,7 +135,7 @@ export function UserMainPage() {
         { data: newTechnologyData, setter: setnewTechnologyData },
         { data: newManagementData, setter: setnewManagementData },
       ];
-    } else {
+    } else if (type === 2) {
       dataSets = [
         { data: concernCultureData, setter: setConcernCultureData },
         { data: concernLiteratureData, setter: setConcernLiteratureData },
@@ -98,6 +144,7 @@ export function UserMainPage() {
         { data: concernTechnologyData, setter: setConcernTechnologyData },
         { data: concernManagementData, setter: setConcernManagementData },
       ];
+    } else {
     }
 
     const index = tabs.indexOf(selectedTab);
@@ -188,18 +235,80 @@ export function UserMainPage() {
     );
   }
 
-  const [newCultureData, setnewCultureData] = useState([]);
-  const [newLiteratureData, setnewLiteratureData] = useState([]);
-  const [newLifeData, setnewLifeData] = useState([]);
-  const [newPopularityData, setnewPopularityData] = useState([]);
-  const [newTechnologyData, setnewTechnologyData] = useState([]);
-  const [newManagementData, setnewManagementData] = useState([]);
-  const [concernCultureData, setConcernCultureData] = useState([]);
-  const [concernLiteratureData, setConcernLiteratureData] = useState([]);
-  const [concernLifeData, setConcernLifeData] = useState([]);
-  const [concernPopularityData, setConcernPopularityData] = useState([]);
-  const [concernTechnologyData, setConcernTechnologyData] = useState([]);
-  const [concernManagementData, setConcernManagementData] = useState([]);
+  function CarouselRecommendation(books) {
+    return (
+      <Carousel
+        className="rounded-xl"
+        navigation={({ setActiveIndex, activeIndex, length }) => (
+          <div className="absolute bottom-0 left-2/4 z-50 flex -translate-x-2/4 gap-2">
+            {new Array(length).fill("").map((_, i) => (
+              <span
+                key={i}
+                className={`block h-1 cursor-pointer rounded-2xl transition-all content-[''] ${
+                  activeIndex === i
+                    ? "w-8 bg-blue-gray-300 text-white"
+                    : "w-4 bg-blue-gray-100 text-blue-gray-700"
+                }`}
+                onClick={() => setActiveIndex(i)}
+              />
+            ))}
+          </div>
+        )}
+        prevArrow={({ handlePrev }) => (
+          <IconButton
+            variant="text"
+            color="bg-blue-gray-300"
+            size="lg"
+            onClick={handlePrev}
+            className="!absolute top-2/4 left-4 -translate-y-2/4"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="h-6 w-6 text-blue-500" // 按钮的颜色为深蓝色
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+              />
+            </svg>
+          </IconButton>
+        )}
+        nextArrow={({ handleNext }) => (
+          <IconButton
+            variant="text"
+            color="gray"
+            size="lg"
+            onClick={handleNext}
+            className="!absolute top-2/4 !right-4 -translate-y-2/4"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="h-6 w-6 text-blue-500" // 按钮的颜色为深蓝色
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+              />
+            </svg>
+          </IconButton>
+        )}
+      >
+        {/* <BookList books={books.slice(0, 5)} />
+        <BookList books={books.slice(5, 10)} /> */}
+      </Carousel>
+    );
+  }
+
   function BookList({ books }) {
     return (
       <div className="flex justify-between space-x-4">
@@ -356,7 +465,7 @@ export function UserMainPage() {
         <Typography variant="h4" className="mb-2 font-bold text-blue-gray-300">
           猜你想看
         </Typography>
-        <BookList books={recommendedBooksData.slice(0, 6)} />
+        <CarouselRecommendation books={itemRecommendData} />
       </div>
       <div className="my-12"></div>{" "}
     </div>

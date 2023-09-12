@@ -8,7 +8,8 @@ import {
 } from "@heroicons/react/24/solid";
 import { DashBoard, Tables, Notifications } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
-import { Setting,UserProfileWrapper,WillRead,Reading,HaveRead,UserMainPage,UserComment} from "@/pages/user";
+import { Setting,UserProfileWrapper,WillRead,Reading,HaveRead,UserMainPage,UserComment, UserRating, OtherUserProfile, UserCollect} from "@/pages/user";
+
 import { Category, Search, TagSearch,BookDetailWrapper } from "@/pages/book";
 import { TouristMainPage } from "@/pages/tourist";
 
@@ -115,6 +116,22 @@ export const routes = [
         name: "用户评论",
         path: "/comment",
         element: <UserComment />,
+      },
+      {
+        icon: <BellIcon {...icon} />,
+        name: "用户评分",
+        path: "/userRating",
+        element: <UserRating />,
+      },
+      {
+        icon: <BellIcon {...icon} />,
+        name: "用户阅读",
+        path: "/userCollect",
+        element: <UserCollect />,
+      },
+       { name: "其他用户的首页",
+        path: ":user_id",
+        element: <OtherUserProfile />,
       }
     ],
   },

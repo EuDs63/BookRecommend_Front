@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { Avatar, Typography } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 
 export function BookCommentsCard({
   avatar_path,
@@ -7,6 +8,7 @@ export function BookCommentsCard({
   content,
   book_id,
   comment_id,
+  user_id,
   create_time,
   action,
 }) {
@@ -14,11 +16,13 @@ export function BookCommentsCard({
   return (
     <div className="flex items-center justify-between gap-4 rounded-lg bg-white p-4 shadow-md">
       <div className="flex items-center gap-4">
-        <Avatar
-          src={avatar_url}
-          alt={username}
-          className="h-12 w-12 rounded-full shadow-lg"
-        />
+        <Link to={`/user/${user_id}`}>
+          <Avatar
+            src={avatar_url}
+            alt={username}
+            className="h-12 w-12 rounded-full shadow-lg"
+          />
+        </Link>
         <div>
           <Typography
             variant="small"
