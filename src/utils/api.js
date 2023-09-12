@@ -388,30 +388,3 @@ export function addArticle(book_id, user_id, content, article_title) {
     },
   });
 }
->>>>>>> 3d5094eecc4b4e99489205738cb02dfd2a79c571
-
-// 根据article_id获取长评信息
-export function getArticle(article_id) {
-  const requestUrl = `/action/article/view/${article_id}`;
-  const { data, error, isLoading } = useSWR(requestUrl, fetchInfo);
-  return {
-    data,
-    isLoading,
-    isError: error,
-  };
-}
-
-// 添加article
-export function addArticle(book_id, user_id, content, article_title) {
-  return service({
-    url: `/action/add`,
-    method: "post",
-    data: {
-      type: 4,
-      book_id: book_id,
-      user_id: user_id,
-      content: content,
-      article_title: article_title
-    },
-  });
-}
