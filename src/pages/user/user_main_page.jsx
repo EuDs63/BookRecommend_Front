@@ -10,7 +10,7 @@ import {
   recommendedBooksData,
 } from "@/data";
 import { useState, useEffect } from "react";
-import { getAction, getcategorybookInfo } from "@/utils/api";
+import { getAction, getcategorybookInfo, getrecommend } from "@/utils/api";
 import { useUser } from "@/context/UserContext";
 
 export function UserMainPage() {
@@ -30,6 +30,7 @@ export function UserMainPage() {
     getCategoryBookInfo(5, setConcernManagementData, 2);
     getCategoryBookInfo(6, setConcernTechnologyData, 2);
     getCommentInfo(userid);
+    getRecommendBookInfo(3);
     // 继续添加其他范围和对应的数据更新函数
   }, []);
   function getCategoryBookInfo(range, setDataFunction, type) {
@@ -42,6 +43,16 @@ export function UserMainPage() {
         console.log("fail!");
       }
     });
+  }
+  function getRecommendBookInfo(user_id) {
+    getrecommend(user_id).then((resp)=>{
+        var code = resp.data["code"].toString();
+        if (code === "0") {
+            console.log(resp.data["book_id"]);
+          } else {
+            console.log("fail!");
+          }
+    })
   }
   function getCommentInfo(user_id) {
     getAction(2, 2, 0, user_id).then((resp) => {
@@ -292,26 +303,34 @@ export function UserMainPage() {
 
   return (
     <div>
+
       <div className="mb-4 border-b border-blue-gray-200 p-4 pb-4 shadow-md">
         <div className="flex items-center">
+            
           <Typography
             variant="h4"
             className="mb-2 font-bold text-blue-gray-300"
           >
             新书速递
           </Typography>
+
           <div className="mx-1">
             {/* 中间的空格 */}
             {/* 使用 mx-1 来添加水平间距 */}
           </div>
+
           <MyTab tab={selectedTab} onTabClick={setSelectedTab} />
+
         </div>
+
         <div className="my-3"></div>{" "}
         {/* 使用 my-12 类来添加垂直间距，也可以根据需要调整数字部分 */}
         {/* 根据选中的标签显示不同的内容 */}
         <CarouselDefault selectedTab={selectedTab} type={1} />
         {/* 添加其他标签对应的内容 */}
+
       </div>
+
       <div className="mb-4 border-b border-blue-gray-200 p-4 pb-4 shadow-md">
         <div className="flex items-center">
           <Typography
@@ -332,6 +351,7 @@ export function UserMainPage() {
         <CarouselDefault selectedTab={recommendTab} type={2} />
         {/* 添加其他标签对应的内容 */}
       </div>
+
       <div className="p-4 shadow-md">
         <Typography variant="h4" className="mb-2 font-bold text-blue-gray-300">
           猜你想看

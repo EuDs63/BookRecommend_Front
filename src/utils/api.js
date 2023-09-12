@@ -312,3 +312,13 @@ export function changeAvatar(file, info) {
       throw error; // 可以抛出错误供上层调用处理
     });
 }
+
+export function getrecommend(user_id) {
+    return service({
+        url: "/book/getrec",
+        method: "post",
+        data: {
+            user_id: user_id
+        },
+      });
+}
