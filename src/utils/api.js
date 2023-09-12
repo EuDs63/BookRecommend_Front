@@ -114,6 +114,25 @@ export function getCollectByBookId(book_id) {
   };
 }
 
+// 根据book_id获取长评
+export function getArticleRecordByBookId(book_id) {
+  const requestUrl = `/action/article/1/${book_id}/0`;
+  const { data, mutate, size, setSize, isValidating, isLoading } =
+    useSWRInfinite(
+      (index) => `${requestUrl}?&current_page=${index + 1}`,
+      fetchInfo
+    );
+  return {
+    data,
+    mutate,
+    size,
+    setSize,
+    isValidating,
+    isLoading,
+  };
+}
+
+
 // 根据user_id获取收藏信息，用于“时光机-collect”
 export function getCollectByUserId(user_id, page_size) {
   const requestUrl = `/action/collect/2/0/${user_id}`
