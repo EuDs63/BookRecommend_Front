@@ -71,6 +71,11 @@ export function Search() {
                 }}>
                 搜索结果
             </Typography>
+            {bookInfoData.length === 0 ? (
+  <div>
+    <p>搜索不到结果</p>
+  </div>
+) : (
             <Card>
                 {bookInfoData.map((book, index) => (
                     <CardBody
@@ -198,8 +203,8 @@ export function Search() {
                         </div>
                     </div>
                 </div>
-
             </Card>
+        )}
         </div>
     );
 }
