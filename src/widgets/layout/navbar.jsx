@@ -10,7 +10,7 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-export function Navbar({ brandName, routes, action }) {
+export function Navbar({routes, action }) {
   const [openNav, setOpenNav] = React.useState(false);
   React.useEffect(() => {
     window.addEventListener(
@@ -45,12 +45,6 @@ export function Navbar({ brandName, routes, action }) {
     <MTNavbar className="p-3">
       <div className="container mx-auto flex items-center justify-between text-blue-gray-900">
         <Link to="/">
-          <Typography
-            variant="small"
-            className="mr-4 ml-2 cursor-pointer py-1.5 font-bold"
-          >
-            {brandName}
-          </Typography>
         </Link>
         <div className="hidden lg:block">{navList}</div>
         {React.cloneElement(action, {
@@ -92,7 +86,7 @@ export function Navbar({ brandName, routes, action }) {
 }
 
 Navbar.defaultProps = {
-  brandName: "一本好书",
+
   action: (
     <a
       href="https://www.creative-tim.com/product/material-tailwind-dashboard-react"
@@ -102,7 +96,6 @@ Navbar.defaultProps = {
 };
 
 Navbar.propTypes = {
-  brandName: PropTypes.string,
   routes: PropTypes.arrayOf(PropTypes.object).isRequired,
   action: PropTypes.node,
 };

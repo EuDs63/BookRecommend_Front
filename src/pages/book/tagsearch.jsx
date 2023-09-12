@@ -79,7 +79,7 @@ export function TagSearch() {
                 {bookInfoData.map((book, index) => (
                     <CardBody
                         key={index}
-                        style={{ overflow: "hidden", height: "235px", display: "flex" }}
+                        className="overflow-hidden h-235 flex"
                     >
                         <div>
                             <Link to={`/book/${book.book_id}`}>

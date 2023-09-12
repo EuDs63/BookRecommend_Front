@@ -32,8 +32,8 @@ import { ProfileInfoCard, MessageCard } from "@/widgets/cards";
 import WillReadPage from "./willReadPage.jsx";
 import ReadingPage from "./readingPage.jsx";
 import HaveReadPage from "./haveReadPage.jsx";
-import { userProfileData } from "@/data";
 import { getAction } from "@/utils/api";
+import { getUserInfo } from "@/utils/api";
 function BookFilter({
   userid,
   willReadBookNum,
@@ -73,7 +73,7 @@ function BookList({ books }) {
     <div key={index} className="flex flex-col items-center">
       <Link to={`/dashboard/home?query=${book.book_id}`}>
         <img
-          src={`https://images.weserv.nl/?url=${book.cover_image_url}`}
+          src={`https://images.weserv.nl/?url=${book.image}`}
           alt={book.title}
           className="h-40 w-32 rounded-md"
         />
@@ -109,6 +109,7 @@ export function UserProfile() {
   const [willReadBookData, setWillReadBookData] = useState([]);
   const [readingBookData, setReadingBookData] = useState([]);
   const [haveReadBookData, setHaveReadBookData] = useState([]);
+  const [userProfileData, setUserProfileData] = useState();
   const currentPageParam = queryParams.get("page");
   const [currentPage, setCurrentPage] = useState(
     currentPageParam ? parseInt(currentPageParam) : 1
@@ -121,8 +122,26 @@ export function UserProfile() {
     getPageInfo(1, setWillReadBookData);
     getPageInfo(2, setReadingBookData);
     getPageInfo(3, setHaveReadBookData);
+    fetchUserInfo(userid);
     setCurrentPage(1);
   }, [userid]);
+
+async function fetchUserInfo() {
+  try {
+    const resp = await getUserInfo(userid);
+    var code = resp.data["code"].toString();
+    if (code === "0") {
+      console.log("success!");
+      const user = resp.data["user"];
+      setUserProfileData(user);
+    } else {
+      console.log("fail!");
+    }
+  } catch (error) {
+    console.error("Error fetching user info:", error);
+  }
+}
+
 
   function getPageInfo(type, setFuction) {
     //type=1:想读，type=2：在读,type=3:读过
@@ -181,59 +200,26 @@ export function UserProfile() {
         <CardBody className="p-4">
           <div className="mb-10 flex items-center justify-between gap-6">
             <div className="flex items-center gap-6">
-              {userProfileData.map(
-                (
-                  {
-                    user_img,
-                    user_id,
-                    username,
-                    password,
-                    register_time,
-                    is_admin,
-                  },
-                  index // 添加索引参数
-                ) => (
-                  <div key={user_id} className="flex items-center">
-                    {index === 0 && ( // 仅在索引为0（即第一个对象）时渲染
-                      <>
-                        <img
-                          src={user_img}
-                          alt={username}
-                          className="h-20 w-20 rounded-lg shadow-lg shadow-blue-gray-500/40"
-                        />
-                        <div className="ml-10">
-                          <Typography
-                            variant="h3"
-                            color="blue-gray"
-                            className="mb-1"
-                          >
-                            {username}
-                          </Typography>
-                          {/* <Typography
-                            variant="lead"
-                            className="font-normal text-blue-gray-600"
-                          >
-                            {author}
-                          </Typography> */}
-                          {/* <Typography
-                            variant="lead"
-                            className="font-normal text-blue-gray-600"
-                          >
-                            {rating_avg} / 10.0分 {rating_num}人评分{" "}
-                            {comment_count}个评论
-                          </Typography> */}
-                          <Typography
-                            variant="paragraph"
-                            className="font-normal text-blue-gray-600"
-                          >
-                            "{register_time}加入"
-                          </Typography>
-                        </div>
-                      </>
-                    )}
+              <div key={userid} className="flex items-center">
+                <>
+                  <img
+                    src={userProfileData.avatar_path}
+                    alt={username}
+                    className="h-20 w-20 rounded-lg shadow-lg shadow-blue-gray-500/40"
+                  />
+                  <div className="ml-10">
+                    <Typography variant="h3" color="blue-gray" className="mb-1">
+                      {userProfileData.username}
+                    </Typography>
+                    <Typography
+                      variant="paragraph"
+                      className="font-normal text-blue-gray-600"
+                    >
+                      "{userProfileData.register_time}加入"
+                    </Typography>
                   </div>
-                )
-              )}
+                </>
+              </div>
             </div>
           </div>
           <div>
@@ -249,21 +235,21 @@ export function UserProfile() {
               <Typography variant="h4" className="mb-2 text-blue-gray-300">
                 想读
               </Typography>
-              <BookList books={willReadBookData.slice(0, 6)} />
+              <BookList books={willReadBookData.slice(0, 5)} />
             </div>
 
             <div className="mb-4 border-b border-blue-gray-200 p-4 pb-4">
               <Typography variant="h4" className="mb-2 text-blue-gray-300">
                 在读
               </Typography>
-              <BookList books={readingBookData.slice(0, 6)} />
+              <BookList books={readingBookData.slice(0, 5)} />
             </div>
 
             <div className="p-4">
               <Typography variant="h4" className="mb-2 text-blue-gray-300">
                 已读
               </Typography>
-              <BookList books={haveReadBookData.slice(0, 6)} />
+              <BookList books={haveReadBookData.slice(0, 5)} />
             </div>
           </div>
         </CardBody>

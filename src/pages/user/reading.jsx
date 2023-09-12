@@ -82,19 +82,15 @@ export function Reading() {
       <Typography
         variant="h6"
         color="black"
-        style={{
-          color: "black",
-          fontSize: "22px",
-          fontWeight: "bold",
-        }}
+        className="text-black text-22 font-bold"
       >
-        我的在读榜单
+        我正在读
       </Typography>
       <Card>
         {bookInfoData.map((book, index) => (
           <CardBody
             key={index}
-            style={{ overflow: "hidden", height: "235px", display: "flex" }}
+            className="overflow-hidden h-235 flex"
           >
             <div>
               <img
@@ -102,14 +98,10 @@ export function Reading() {
                 className="h-48 w-36 rounded-lg shadow-lg shadow-blue-gray-500/40"
               />
             </div>
-            <div style={{ marginLeft: "20px", flex: 1 }}>
+            <div className="ml-20 flex-1">
               <div>
                 <Typography
-                  style={{
-                    color: "black",
-                    fontSize: "22px",
-                    fontWeight: "bold",
-                  }}
+                  className="text-black text-22 font-bold"
                 >
                   {book.name}
                 </Typography>

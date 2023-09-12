@@ -1,5 +1,5 @@
 /**
- * 书籍详情页的侧边栏：谁看这本书
+ * 个人主页的侧边栏：我的评论记录
  */
 import {
     Timeline,
@@ -15,33 +15,19 @@ import {
     ButtonGroup,
 } from "@material-tailwind/react";
 import { useEffect } from "react";
-import { getCollectByBookId } from "@/utils/api";
-import { Link, useParams } from "react-router-dom";
+import { getCommentByUserId } from "@/utils/api";
+import { Link } from "react-router-dom";
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 3;
 
-function getCollectText(username, type) {
-    const info = () => {
-        switch (type) {
-            case 1:
-                return " 想看这本书 ";
-            case 2:
-                return " 在看这本书 ";
-            case 3:
-                return " 看过这本书";
-            default:
-                return "";
-        }
 
-    };
-    return username + info();
-};
-
-export function BookTimeline({ book_id }) {
-    if (book_id === undefined) {
+export function CommentTimeline({ user_id }) {
+    if (user_id === undefined) {
         return null;
     }
-
+    if (user_id === null) {
+        return null;
+    }
     // size: 页数
     const {
         data,
@@ -50,7 +36,7 @@ export function BookTimeline({ book_id }) {
         setSize,
         isValidating,
         isLoading
-    } = getCollectByBookId(book_id);
+    } = getCommentByUserId(user_id, PAGE_SIZE);
 
     const issues = data ? [].concat(...data) : [];
 
@@ -68,10 +54,13 @@ export function BookTimeline({ book_id }) {
         <div>
             <Card className="w-auto mt-8 ml-5 ">
                 <CardBody>
-                    <Typography variant="h5" color="blue-gray" className="mb-2">
-                        谁看这本书?
-                    </Typography>
-                    {isEmpty ? <p>好像还没人看过呢</p> : null}
+                    <Link to={`/user/comment`}>
+                        <Typography variant="h5" color="blue-gray" className="mb-2">
+                            我的评论记录
+                        </Typography>
+                    </Link>
+
+                    {isEmpty ? <p>没有记录呢</p> : null}
                     <div className="w-auto">
                         <Timeline>
                             {issues.map((issue, index) => {
@@ -80,21 +69,24 @@ export function BookTimeline({ book_id }) {
                                         {index !== issues.length - 1 && (
                                             <TimelineConnector className="!w-[78px]" />
                                         )}
-                                        <TimelineHeader className="relative rounded-xl border border-blue-gray-50 bg-white py-3 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5 border-none">
-                                            <TimelineIcon className="p-0" variant="ghost">
-                                                <Link to={`/user/${issue.user_id}`}>
-                                                <Avatar size="sm" src={import.meta.env.VITE_BASE_URL + '/' + issue.avatar_path} alt="user 1" />
-                                                </Link>
-                                            </TimelineIcon>
-                                            <div className="flex flex-col gap-1">
-                                                <Typography variant="h6" color="blue-gray">
-                                                    {getCollectText(issue.username, issue.collect_type)}
-                                                </Typography>
-                                                <Typography variant="small" color="gray" className="font-normal">
-                                                    {issue.collect_time} 
-                                                </Typography>
-                                            </div>
-                                        </TimelineHeader>
+                                        <Link to={`/book/${issue.book_id}`}>
+                                            <TimelineHeader className="relative rounded-xl border border-blue-gray-50 bg-white py-3 pl-4 pr-8 shadow-lg shadow-blue-gray-900/5 border-none">
+                                                <TimelineIcon className="p-0" variant="ghost">
+                                                    <Avatar size="sm" src={`https://images.weserv.nl/?url=${issue.cover_image_url}`} alt={issue.title} variant="square" />
+                                                </TimelineIcon>
+                                                <div className="flex flex-col gap-1">
+                                                    <Typography variant="h6" color="blue-gray">
+                                                        {issue.content.length > 20
+                                                            ? issue.content.substring(0, 20) + "..."
+                                                            : issue.content}
+                                                    </Typography>
+                                                    <Typography variant="small" color="gray" className="font-normal">
+                                                        {issue.create_time}
+                                                    </Typography>
+                                                </div>
+                                            </TimelineHeader>
+                                        </Link>
+
                                     </TimelineItem>
                                 );
                             })}
@@ -127,6 +119,6 @@ export function BookTimeline({ book_id }) {
     );
 }
 
-BookTimeline.displayName = "@/widgets/stuff/bookTimeLine.jsx";
+CommentTimeline.displayName = "@/widgets/stuff/commentTimeLine.jsx";
 
-export default BookTimeline;
+export default CommentTimeline;

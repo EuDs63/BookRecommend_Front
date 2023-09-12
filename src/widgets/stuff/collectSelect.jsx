@@ -13,6 +13,7 @@ export function CollectSelect({ user_id, book_id, collect_type }) {
         const value = event.target.value;
         setSelectedValue(value);
         addCollect(book_id, user_id, value);
+        window.location.reload();
     };
 
     return (

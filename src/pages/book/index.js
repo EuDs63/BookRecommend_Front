@@ -3,3 +3,5 @@ export * from "@/pages/book/search";
 export * from "@/pages/book/tagsearch";
 export * from "@/pages/book/book_detail";
 export * from "@/pages/book/book_detail_wrapper";
+export * from "@/pages/book/MyEditor";
+export * from "@/pages/book/article";
