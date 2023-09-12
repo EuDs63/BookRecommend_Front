@@ -2,6 +2,11 @@
 
 **此处为前端仓库**
 
+## 参考
+- [SWR](https://swr.vercel.app/zh-CN/docs/getting-started)
+- [Redux](https://redux.js.org/introduction/getting-started)
+
+
 ## 项目说明
 - 项目使用[material-tailwind-dashboard-react](https://github.com/creativetimofficial/material-tailwind-dashboard-react)为基础模板
 - [模板的相关文档](https://www.material-tailwind.com/docs/react/theming)

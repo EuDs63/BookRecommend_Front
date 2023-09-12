@@ -6,11 +6,10 @@ import {
   UserPlusIcon,
   TagIcon,
 } from "@heroicons/react/24/solid";
-import { DashBoard, Tables, Notifications } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
-import { Setting,UserProfileWrapper,WillRead,Reading,HaveRead,UserMainPage,UserComment, UserRating, OtherUserProfile, UserCollect} from "@/pages/user";
+import { Setting, UserProfileWrapper, WillRead, Reading, HaveRead, UserMainPage, UserComment, UserRating, OtherUserProfile, UserCollect } from "@/pages/user";
 
-import { Category, Search, TagSearch,BookDetailWrapper } from "@/pages/book";
+import { Category, Search, TagSearch, BookDetailWrapper,MyEditor,Article } from "@/pages/book";
 import { TouristMainPage } from "@/pages/tourist";
 
 const icon = {
@@ -18,29 +17,6 @@ const icon = {
 };
 
 export const routes = [
-  {
-    layout: "dashboard",
-    pages: [
-      {
-        icon: <HomeIcon {...icon} />,
-        name: "dashboard",
-        path: "/dashboard",
-        element: <DashBoard />,
-      },
-      {
-        icon: <TableCellsIcon {...icon} />,
-        name: "tables",
-        path: "/tables",
-        element: <Tables />,
-      },
-      {
-        icon: <BellIcon {...icon} />,
-        name: "notifactions",
-        path: "/notifactions",
-        element: <Notifications />,
-      },
-    ],
-  },
   {
     title: "auth pages",
     layout: "auth",
@@ -129,9 +105,16 @@ export const routes = [
         path: "/userCollect",
         element: <UserCollect />,
       },
-       { name: "其他用户的首页",
+      {
+        name: "其他用户的首页",
         path: ":user_id",
         element: <OtherUserProfile />,
+      },
+      {
+        icon: <BellIcon {...icon} />,
+        name: "长评展示",
+        path: "/article/:article_id",
+        element: <Article />,
       }
     ],
   },
@@ -162,6 +145,12 @@ export const routes = [
         name: "书籍详情",
         path: ":book_id",
         element: <BookDetailWrapper />,
+      },
+      {
+        icon: <BellIcon {...icon} />,
+        name: "长评书写",
+        path: "/article_review/:book_id",
+        element: <MyEditor />,
       },
     ],
   },
