@@ -8,6 +8,7 @@ import {
     Textarea,
     Button,
     Typography,
+    Input,
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 
@@ -22,7 +23,11 @@ export function MyEditor() {
 
     const book_id = 1;
 
-    const article_title = "test";
+    const [article_title, setArticleTitle] = useState("");
+
+    const handleTitleChange = (e) => {
+        setArticleTitle(e.target.value);
+      };
 
     const handleArticleSubmit = () => {
         addArticle(book_id, user_id, editor.getHtml(), article_title).then((resp) => {
@@ -56,12 +61,15 @@ export function MyEditor() {
         }
     }, [editor])
 
+
+
     return (
         <>
         <div className="flex flex-col">
             <Typography variant="h4" color="blue-gray" className="mb-3">
                 我的长评
             </Typography>
+            <Input label="用户名" size="lg" onChange={handleTitleChange} value={article_title} />
             <div className="border border-gray-300 z-10 mt-4">
                 <Toolbar
                     editor={editor}

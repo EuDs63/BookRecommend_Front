@@ -10,7 +10,7 @@ import { DashBoard, Tables, Notifications } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
 import { Setting, UserProfileWrapper, WillRead, Reading, HaveRead, UserMainPage, UserComment, UserRating, OtherUserProfile, UserCollect } from "@/pages/user";
 
-import { Category, Search, TagSearch, BookDetailWrapper,MyEditor } from "@/pages/book";
+import { Category, Search, TagSearch, BookDetailWrapper,MyEditor,Article } from "@/pages/book";
 import { TouristMainPage } from "@/pages/tourist";
 
 const icon = {
@@ -133,6 +133,12 @@ export const routes = [
         name: "其他用户的首页",
         path: ":user_id",
         element: <OtherUserProfile />,
+      },
+      {
+        icon: <BellIcon {...icon} />,
+        name: "长评展示",
+        path: "/article/:article_id",
+        element: <Article />,
       }
     ],
   },
