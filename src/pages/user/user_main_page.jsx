@@ -9,6 +9,7 @@ import {
   getRecommendByUserId,
 } from "@/utils/api";
 import { useUser } from "@/context/UserContext";
+import service from "@/utils/service";
 
 export function UserMainPage() {
   const { user } = useUser(); // 使用useUser钩子来获取用户状态
@@ -66,28 +67,40 @@ export function UserMainPage() {
       }
     });
   }
-  function getRecommendation(user_id) {
-    const { data } = getRecommendByUserId(user_id);
-    // const issues = data ? [].concat(...data) : [];
-    data.books.map((book) => {
-      const author = book.author;
-      const description = book.description;
-      const book_id = book.book_id;
-      const cover_image_url = book.cover_image_url;
-      const rating_avg = book.rating_avg;
-      const title = book.title;
-      const bookObj = {
-        author,
-        description,
-        book_id,
-        cover_image_url,
-        rating_avg,
-        title,
-      };
-      recommendationBooks.push(bookObj);
-    });
-    setItemRecommendData(recommendationBooks);
+  async function getRecommendation(user_id) {
+    try {
+      getRecommendByUserId(user_id).then((resp) => {
+        //const { data } = await getRecommendByUserId(user_id);
+        console.log(resp.data);
+        console.log("hahaha");
+        const recommendationBooks = [];
+        if (resp.data && resp.data.books) {
+          resp.data.books.map((book) => {
+            const author = book.author;
+            const description = book.description;
+            const book_id = book.book_id;
+            const cover_image_url = book.cover_image_url;
+            const rating_avg = book.rating_avg;
+            const title = book.title;
+            const bookObj = {
+              author,
+              description,
+              book_id,
+              cover_image_url,
+              rating_avg,
+              title,
+            };
+            recommendationBooks.push(bookObj);
+          });
+        setItemRecommendData(recommendationBooks);
+        }
+      });
+    } catch (error) {
+      // 处理错误
+      console.error(error);
+    }
   }
+
   const [selectedTab, setSelectedTab] = useState("culture"); // 初始选中的标签为文化
   const [recommendTab, setRecommendTab] = useState("culture"); // 初始选中的标签为文化
   const [userComments, setUserComments] = useState([]);
@@ -280,8 +293,8 @@ export function UserMainPage() {
           </IconButton>
         )}
       >
-        <BookList books={books.slice(0, 5)} />
-        <BookList books={books.slice(5, 10)} />
+        {/* <BookList books={books.slice(0, 5)} />
+        <BookList books={books.slice(5, 10)} /> */}
       </Carousel>
     );
   }
@@ -433,7 +446,7 @@ export function UserMainPage() {
         <Typography variant="h4" className="mb-2 font-bold text-blue-gray-300">
           猜你想看
         </Typography>
-        <CarouselRecommendation itemRecommendData />
+        <CarouselRecommendation books={itemRecommendData} />
       </div>
       <div className="my-12"></div>{" "}
     </div>
