@@ -6,7 +6,6 @@ import {
   UserPlusIcon,
   TagIcon,
 } from "@heroicons/react/24/solid";
-import { DashBoard, Tables, Notifications } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
 import { Setting, UserProfileWrapper, WillRead, Reading, HaveRead, UserMainPage, UserComment, UserRating, OtherUserProfile, UserCollect } from "@/pages/user";
 
@@ -18,29 +17,6 @@ const icon = {
 };
 
 export const routes = [
-  {
-    layout: "dashboard",
-    pages: [
-      {
-        icon: <HomeIcon {...icon} />,
-        name: "dashboard",
-        path: "/dashboard",
-        element: <DashBoard />,
-      },
-      {
-        icon: <TableCellsIcon {...icon} />,
-        name: "tables",
-        path: "/tables",
-        element: <Tables />,
-      },
-      {
-        icon: <BellIcon {...icon} />,
-        name: "notifactions",
-        path: "/notifactions",
-        element: <Notifications />,
-      },
-    ],
-  },
   {
     title: "auth pages",
     layout: "auth",
@@ -173,7 +149,7 @@ export const routes = [
       {
         icon: <BellIcon {...icon} />,
         name: "长评书写",
-        path: ":book_id/article_review",
+        path: "/article_review/:book_id",
         element: <MyEditor />,
       },
     ],

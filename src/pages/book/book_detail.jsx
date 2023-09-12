@@ -11,7 +11,7 @@ import {
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { ProfileInfoCard, BookCommentsCard,CollectBoxCard } from "@/widgets/cards";
-import { Comment,CategoryRecommend } from "@/widgets/stuff";
+import { Comment,CategoryRecommend,ArticleList } from "@/widgets/stuff";
 import { recommendedBooksData } from "@/data";
 import { getBookInfomation, getAction } from "@/utils/api";
 import { useState, useEffect } from "react";
@@ -42,7 +42,7 @@ export function BookDetail({book_id}) {
   // 组件挂载时，获取该书籍下的已有评论
   useEffect(() => {
     getCommentInfo(book_id);
-  }, []);
+  }, [book_id]);
 
 
   if (isLoading) {
@@ -155,6 +155,7 @@ export function BookDetail({book_id}) {
                 )
               }
             </div>
+            <ArticleList book_id={book_id} />
           </CardBody>
           <CardFooter>
             <Comment book_id ={book_id}/>

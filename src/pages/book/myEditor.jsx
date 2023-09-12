@@ -5,14 +5,22 @@ import { addArticle } from '@/utils/api'
 import { useUser } from "@/context/UserContext";
 import {
     Avatar,
-    Textarea,
     Button,
     Typography,
     Input,
 } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
+import { Link,useParams } from "react-router-dom";
 
 export function MyEditor() {
+    const book_id = useParams().book_id;
+
+    if (book_id === undefined) {
+        return null;
+    }
+    if (book_id === null) {
+        return null;
+    }
+    console.log(book_id);
     const [editor, setEditor] = useState(null) // 存储 editor 实例
     const [html, setHtml] = useState('<p>hello</p>')
     const [statusMessage, setStatusMessage] = useState(""); // 用于显示状态消息
@@ -21,17 +29,17 @@ export function MyEditor() {
     const avatar_url = import.meta.env.VITE_BASE_URL + '/' + user.avatar_path;
     const user_id = user.user_id; 
 
-    const book_id = 1;
-
     const [article_title, setArticleTitle] = useState("");
 
     let savedCommentName = `${book_id}_${user_id}_draftArticle`;
     
-    // 当用户登录状态发生变化时，重新获取评论
+    // 当用户登录状态发生变化时，重新获取标题和内容
     useEffect(() => {
         const savedData = localStorage.getItem(savedCommentName);
         if (savedData) {
-            setHtml(savedData)
+            const article = JSON.parse(savedData);
+            setHtml(article.content);
+            setArticleTitle(article.title);
         }
     }, [user]);
 
@@ -45,8 +53,13 @@ export function MyEditor() {
         setStatusMessage("已取消评论"); // 设置状态消息为已取消评论
     }
     const handleArticleSave = () => {
+        const article = {
+            title: article_title,
+            content: editor.getHtml(),
+        }
+        const article_json = JSON.stringify(article);
         // 将当前表单数据保存到 localStorage
-        localStorage.setItem(savedCommentName, editor.getHtml());
+        localStorage.setItem(savedCommentName, article_json);
         setTimeout(() => {
             setStatusMessage("评论已暂存"); // 设置状态消息为评论已暂存
         }, 1000);
@@ -61,13 +74,6 @@ export function MyEditor() {
             }
         });
     }
-
-    // 模拟 ajax 请求，异步设置 html
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         setHtml('<p>hello&nbsp;<strong>world</strong>.</p>\n<p><br></p>')
-    //     }, 1500)
-    // }, [])
 
     const toolbarConfig = {}
     const editorConfig = {
