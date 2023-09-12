@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, Card, CardBody } from "@material-tailwind/react";
+import { Typography, Card, CardBody, Spinner } from "@material-tailwind/react";
 import { Carousel, IconButton } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -10,12 +10,13 @@ import {
 } from "@/utils/api";
 import { useUser } from "@/context/UserContext";
 import service from "@/utils/service";
-
+const recommendBooks = [];
+const firstFiveItems = [];
+const secondFiveItems = [];
 export function UserMainPage() {
-  const { user } = useUser(); // 使用useUser钩子来获取用户状态
-  const userid = user.user_id; // 获取路由参数
-  const recommendationBooks = [];
-  console.log(user);
+  const { user } = useUser();
+  const userid = user.user_id;
+  //console.log(userid);
   const [newCultureData, setnewCultureData] = useState([]);
   const [newLiteratureData, setnewLiteratureData] = useState([]);
   const [newLifeData, setnewLifeData] = useState([]);
@@ -29,23 +30,96 @@ export function UserMainPage() {
   const [concernTechnologyData, setConcernTechnologyData] = useState([]);
   const [concernManagementData, setConcernManagementData] = useState([]);
   const [itemRecommendData, setItemRecommendData] = useState([]);
+  const [selectedTab, setSelectedTab] = useState("culture");
+  const [recommendTab, setRecommendTab] = useState("culture");
+  const [userComments, setUserComments] = useState([]);
+  const { data, isLoading, isError } = getRecommendByUserId(userid);
+  //console.log(data);
+  //console.log(data);
   useEffect(() => {
-    getCategoryBookInfo(1, setnewLiteratureData, 1);
-    getCategoryBookInfo(2, setnewPopularityData, 1);
-    getCategoryBookInfo(3, setnewCultureData, 1);
-    getCategoryBookInfo(4, setnewLifeData, 1);
-    getCategoryBookInfo(5, setnewManagementData, 1);
-    getCategoryBookInfo(6, setnewTechnologyData, 1);
-    getCategoryBookInfo(1, setConcernLiteratureData, 2);
-    getCategoryBookInfo(2, setConcernPopularityData, 2);
-    getCategoryBookInfo(3, setConcernCultureData, 2);
-    getCategoryBookInfo(4, setConcernLifeData, 2);
-    getCategoryBookInfo(5, setConcernManagementData, 2);
-    getCategoryBookInfo(6, setConcernTechnologyData, 2);
+    // Define a helper function to fetch category book info and update state
+    const fetchCategoryBookInfo = (categoryId, setStateCallback, type) => {
+      getCategoryBookInfo(
+        categoryId,
+        (data) => {
+          setStateCallback(data);
+        },
+        type
+      );
+    };
+
+    // Fetch category book info for various categories
+    fetchCategoryBookInfo(1, setnewLiteratureData, 1);
+    fetchCategoryBookInfo(2, setnewPopularityData, 1);
+    fetchCategoryBookInfo(3, setnewCultureData, 1);
+    fetchCategoryBookInfo(4, setnewLifeData, 1);
+    fetchCategoryBookInfo(5, setnewManagementData, 1);
+    fetchCategoryBookInfo(6, setnewTechnologyData, 1);
+    fetchCategoryBookInfo(1, setConcernLiteratureData, 2);
+    fetchCategoryBookInfo(2, setConcernPopularityData, 2);
+    fetchCategoryBookInfo(3, setConcernCultureData, 2);
+    fetchCategoryBookInfo(4, setConcernLifeData, 2);
+    fetchCategoryBookInfo(5, setConcernManagementData, 2);
+    fetchCategoryBookInfo(6, setConcernTechnologyData, 2);
+
+    // Fetch user comments
     getCommentInfo(userid);
-    getRecommendation(userid);
-    // 继续添加其他范围和对应的数据更新函数
-  }, []);
+  }, [userid]);
+
+  useEffect(() => {
+    // Handle data fetching and processing here
+    if (isLoading) {
+      // Return loading indicator
+    } else if (isError) {
+      console.log(isError);
+      // Return error message
+    } else {
+      // Process the data and update itemRecommendData
+      recommendBooks.push(
+        data.books.map((book) => {
+          const author = book.author;
+          const description = book.description;
+          const book_id = book.book_id;
+          const cover_image_url = book.cover_image_url;
+          const rating_avg = book.rating_avg;
+          const title = book.title;
+          return {
+            author,
+            description,
+            book_id,
+            cover_image_url,
+            rating_avg,
+            title,
+          };
+        })
+      );
+      setItemRecommendData(recommendBooks);
+      //console.log(recommendBooks[0]);
+      //console.log(Array.isArray(recommendBooks[0])); // 这将打印 true 或 false，表示 recommendBooks 是否是一个数组
+      //console.log("hahaha");
+      //setfirstFiveItems(recommendBooks.slice(0, 5));
+      //setsecondFiveItems(recommendBooks.slice(5, 10));
+      //console.log(recommendBooks[0].slice(0, 5));
+      //console.log( recommendBooks.length);
+    }
+  }, [data, isLoading, isError]);
+
+  //   useEffect(() => {
+  //     getCategoryBookInfo(1, setnewLiteratureData, 1);
+  //     getCategoryBookInfo(2, setnewPopularityData, 1);
+  //     getCategoryBookInfo(3, setnewCultureData, 1);
+  //     getCategoryBookInfo(4, setnewLifeData, 1);
+  //     getCategoryBookInfo(5, setnewManagementData, 1);
+  //     getCategoryBookInfo(6, setnewTechnologyData, 1);
+  //     getCategoryBookInfo(1, setConcernLiteratureData, 2);
+  //     getCategoryBookInfo(2, setConcernPopularityData, 2);
+  //     getCategoryBookInfo(3, setConcernCultureData, 2);
+  //     getCategoryBookInfo(4, setConcernLifeData, 2);
+  //     getCategoryBookInfo(5, setConcernManagementData, 2);
+  //     getCategoryBookInfo(6, setConcernTechnologyData, 2);
+  //     getCommentInfo(userid);
+  //     // 继续添加其他范围和对应的数据更新函数
+  //   }, []);
   function getCategoryBookInfo(range, setDataFunction, type) {
     //type=1:新书；type=2:最受关注图书
     getcategorybookInfo(range, 1, 30, type).then((resp) => {
@@ -77,43 +151,6 @@ export function UserMainPage() {
       }
     });
   }
-  async function getRecommendation(user_id) {
-    try {
-      getRecommendByUserId(user_id).then((resp) => {
-        //const { data } = await getRecommendByUserId(user_id);
-        console.log(resp.data);
-        console.log("hahaha");
-        const recommendationBooks = [];
-        if (resp.data && resp.data.books) {
-          resp.data.books.map((book) => {
-            const author = book.author;
-            const description = book.description;
-            const book_id = book.book_id;
-            const cover_image_url = book.cover_image_url;
-            const rating_avg = book.rating_avg;
-            const title = book.title;
-            const bookObj = {
-              author,
-              description,
-              book_id,
-              cover_image_url,
-              rating_avg,
-              title,
-            };
-            recommendationBooks.push(bookObj);
-          });
-        setItemRecommendData(recommendationBooks);
-        }
-      });
-    } catch (error) {
-      // 处理错误
-      console.error(error);
-    }
-  }
-
-  const [selectedTab, setSelectedTab] = useState("culture"); // 初始选中的标签为文化
-  const [recommendTab, setRecommendTab] = useState("culture"); // 初始选中的标签为文化
-  const [userComments, setUserComments] = useState([]);
   function generateContent(selectedTab, type) {
     const tabs = [
       "culture",
@@ -144,7 +181,6 @@ export function UserMainPage() {
         { data: concernTechnologyData, setter: setConcernTechnologyData },
         { data: concernManagementData, setter: setConcernManagementData },
       ];
-    } else {
     }
 
     const index = tabs.indexOf(selectedTab);
@@ -235,7 +271,7 @@ export function UserMainPage() {
     );
   }
 
-  function CarouselRecommendation(books) {
+  function CarouselRecommendation() {
     return (
       <Carousel
         className="rounded-xl"
@@ -303,53 +339,57 @@ export function UserMainPage() {
           </IconButton>
         )}
       >
-        {/* <BookList books={books.slice(0, 5)} />
-        <BookList books={books.slice(5, 10)} /> */}
+        <div></div>
       </Carousel>
     );
   }
 
   function BookList({ books }) {
-    return (
-      <div className="flex justify-between space-x-4">
-        {books.map((book, index) => (
-          <div key={index} className="flex flex-col items-center">
-            <Link to={`/book/${book.book_id}`}>
-              <img
-                src={`https://images.weserv.nl/?url=${book.cover_image_url}`}
-                alt={book.title}
-                className="h-40 w-32 rounded-md"
-              />
-            </Link>
-            <Typography variant="h5" color="gray-500" className="mt-1 mb-2">
-              <span
-                className="max-w-xs overflow-hidden truncate whitespace-nowrap"
-                title={book.title} // 鼠标悬浮时显示完整文本
+    if (!books || books.length === 0) {
+      return <Spinner className="h-16 w-16 text-gray-900/50" />;
+    } else {
+      return (
+        <div className="flex justify-between space-x-4">
+          {books.map((book, index) => (
+            <div key={index} className="flex flex-col items-center">
+              <Link to={`/book/${book.book_id}`}>
+                <img
+                  src={`https://images.weserv.nl/?url=${book.cover_image_url}`}
+                  alt={book.title}
+                  className="h-40 w-32 rounded-md"
+                />
+              </Link>
+              <Typography variant="h5" color="gray-500" className="mt-1 mb-2">
+                <span
+                  className="max-w-xs overflow-hidden truncate whitespace-nowrap"
+                  title={book.title}
+                >
+                  {book.title.length > 5
+                    ? book.title.substr(0, 5) + "..."
+                    : book.title}
+                </span>
+              </Typography>
+              <Typography
+                variant="small"
+                color="gray-500"
+                className="mt-1 mb-2 font-[YourChosenFont]"
               >
-                {book.title.length > 5
-                  ? book.title.substr(0, 5) + "..."
-                  : book.title}
-              </span>
-            </Typography>
-            <Typography
-              variant="small"
-              color="gray-500"
-              className="mt-1 mb-2 font-[YourChosenFont]"
-            >
-              <span
-                className="max-w-xs overflow-hidden truncate whitespace-nowrap"
-                title={book.author} // 鼠标悬浮时显示完整文本
-              >
-                {book.author.length > 10
-                  ? book.author.substr(0, 5) + "..."
-                  : book.author}
-              </span>
-            </Typography>
-          </div>
-        ))}
-      </div>
-    );
+                <span
+                  className="max-w-xs overflow-hidden truncate whitespace-nowrap"
+                  title={book.author}
+                >
+                  {book.author.length > 10
+                    ? book.author.substr(0, 5) + "..."
+                    : book.author}
+                </span>
+              </Typography>
+            </div>
+          ))}
+        </div>
+      );
+    }
   }
+
   function MyTab({ tab, onTabClick }) {
     return (
       <div className="flex">
@@ -465,7 +505,7 @@ export function UserMainPage() {
         <Typography variant="h4" className="mb-2 font-bold text-blue-gray-300">
           猜你想看
         </Typography>
-        <CarouselRecommendation books={itemRecommendData} />
+        <BookList books={recommendBooks[0]}/>
       </div>
       <div className="my-12"></div>{" "}
     </div>
