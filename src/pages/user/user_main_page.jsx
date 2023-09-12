@@ -453,7 +453,7 @@ export function UserMainPage() {
   return (
     <div>
 
-      <div className="mb-4 border-b border-blue-gray-200 p-4 pb-4 shadow-md">
+      <div className="mb-4 border-b border-blue-gray-200 p-4 pb-4 shadow-md ml-4">
         <div className="flex items-center">
             
           <Typography
@@ -480,7 +480,7 @@ export function UserMainPage() {
 
       </div>
 
-      <div className="mb-4 border-b border-blue-gray-200 p-4 pb-4 shadow-md">
+      <div className="mb-4 border-b border-blue-gray-200 p-4 pb-4 shadow-md ml-4">
         <div className="flex items-center">
           <Typography
             variant="h4"
@@ -501,8 +501,8 @@ export function UserMainPage() {
         {/* 添加其他标签对应的内容 */}
       </div>
 
-      <div className="p-4 shadow-md">
-        <Typography variant="h4" className="mb-2 font-bold text-blue-gray-300">
+      <div className="p-4 shadow-md ml-4">
+        <Typography variant="h4" className="mb-2 font-bold text-blue-gray-300 ">
           猜你想看
         </Typography>
         <BookList books={recommendBooks[0]}/>

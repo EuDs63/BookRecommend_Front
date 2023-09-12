@@ -66,7 +66,7 @@ export function TagSearch() {
         })
     }
     return (
-        <div>
+        <div className="container relative z-40 mx-auto p-4">
             <Typography variant="h6" color="black"
                 style={{
                     color: "black",
@@ -75,7 +75,7 @@ export function TagSearch() {
                 }}>
                 搜索结果
             </Typography>
-            <Card>
+            <Card > 
                 {bookInfoData.map((book, index) => (
                     <CardBody
                         key={index}

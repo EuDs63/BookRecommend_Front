@@ -115,19 +115,19 @@ export const routes = [
         name: "长评展示",
         path: "/article/:article_id",
         element: <Article />,
-      }
-    ],
-  },
-  {
-    title: "book pages",
-    layout: "book",
-    pages: [
+      },
       {
         icon: <TagIcon {...icon} />,
         name: "分类浏览",
         path: "/category",
         element: <Category />,
       },
+    ],
+  },
+  {
+    title: "book pages",
+    layout: "book",
+    pages: [
       {
         icon: <BellIcon {...icon} />,
         name: "搜索",
