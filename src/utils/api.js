@@ -115,7 +115,7 @@ export function getCollectByBookId(book_id) {
 }
 
 // 根据user_id获取收藏信息，用于“时光机-collect”
-export function getCollectByUserId(user_id,page_size){
+export function getCollectByUserId(user_id, page_size) {
   const requestUrl = `/action/collect/2/0/${user_id}`
   const {
     data,
@@ -126,8 +126,7 @@ export function getCollectByUserId(user_id,page_size){
     isLoading
   } = useSWRInfinite(
     (index) =>
-      `${requestUrl}?&current_page=${
-        index + 1
+      `${requestUrl}?&current_page=${index + 1
       }&page_size=${page_size}`,
     fetchInfo
   );
@@ -142,7 +141,7 @@ export function getCollectByUserId(user_id,page_size){
 }
 
 // 根据user_id获取评论信息，用于“时光机-comment”
-export function getCommentByUserId(user_id,page_size){
+export function getCommentByUserId(user_id, page_size) {
   const requestUrl = `/action/comment/2/0/${user_id}`
   const {
     data,
@@ -153,8 +152,7 @@ export function getCommentByUserId(user_id,page_size){
     isLoading
   } = useSWRInfinite(
     (index) =>
-      `${requestUrl}?&current_page=${
-        index + 1
+      `${requestUrl}?&current_page=${index + 1
       }&page_size=${page_size}`,
     fetchInfo
   );
@@ -169,7 +167,7 @@ export function getCommentByUserId(user_id,page_size){
 }
 
 // 根据user_id获取评分信息，用于“时光机-rating”
-export function getRatingByUserId(user_id,page_size){
+export function getRatingByUserId(user_id, page_size) {
   const requestUrl = `/action/rating/2/0/${user_id}`
   const {
     data,
@@ -180,8 +178,7 @@ export function getRatingByUserId(user_id,page_size){
     isLoading
   } = useSWRInfinite(
     (index) =>
-      `${requestUrl}?&current_page=${
-        index + 1
+      `${requestUrl}?&current_page=${index + 1
       }&page_size=${page_size}`,
     fetchInfo
   );
@@ -196,7 +193,7 @@ export function getRatingByUserId(user_id,page_size){
 }
 
 // 根据user_id获取评分信息，用于“时光机-comment”
-export function getRating(method,book_id,user_id){
+export function getRating(method, book_id, user_id) {
   const requestUrl = `/action/rating/${method}/${book_id}/${user_id}`
   // 使用 SWR 钩子来获取数据
   const { data, error, isLoading } = useSWR(requestUrl, fetchInfo);
@@ -355,4 +352,19 @@ export function getArticle(article_id) {
     isLoading,
     isError: error,
   };
+}
+
+// 添加article
+export function addArticle(book_id, user_id, content, article_title) {
+  return service({
+    url: `/action/add`,
+    method: "post",
+    data: {
+      type: 4,
+      book_id: book_id,
+      user_id: user_id,
+      content: content,
+      article_title: article_title
+    },
+  });
 }
