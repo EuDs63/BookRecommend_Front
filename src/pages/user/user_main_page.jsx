@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, Card, CardBody, Spinner } from "@material-tailwind/react";
+import { Typography, Spinner } from "@material-tailwind/react";
 import { Carousel, IconButton } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -9,10 +9,7 @@ import {
   getRecommendByUserId,
 } from "@/utils/api";
 import { useUser } from "@/context/UserContext";
-import service from "@/utils/service";
 const recommendBooks = [];
-const firstFiveItems = [];
-const secondFiveItems = [];
 export function UserMainPage() {
   const { user } = useUser();
   const userid = user.user_id;
@@ -34,8 +31,6 @@ export function UserMainPage() {
   const [recommendTab, setRecommendTab] = useState("culture");
   const [userComments, setUserComments] = useState([]);
   const { data, isLoading, isError } = getRecommendByUserId(userid);
-  //console.log(data);
-  //console.log(data);
   useEffect(() => {
     // Define a helper function to fetch category book info and update state
     const fetchCategoryBookInfo = (categoryId, setStateCallback, type) => {
@@ -94,32 +89,10 @@ export function UserMainPage() {
         })
       );
       setItemRecommendData(recommendBooks);
-      //console.log(recommendBooks[0]);
-      //console.log(Array.isArray(recommendBooks[0])); // 这将打印 true 或 false，表示 recommendBooks 是否是一个数组
-      //console.log("hahaha");
-      //setfirstFiveItems(recommendBooks.slice(0, 5));
-      //setsecondFiveItems(recommendBooks.slice(5, 10));
-      //console.log(recommendBooks[0].slice(0, 5));
-      //console.log( recommendBooks.length);
     }
   }, [data, isLoading, isError]);
 
-  //   useEffect(() => {
-  //     getCategoryBookInfo(1, setnewLiteratureData, 1);
-  //     getCategoryBookInfo(2, setnewPopularityData, 1);
-  //     getCategoryBookInfo(3, setnewCultureData, 1);
-  //     getCategoryBookInfo(4, setnewLifeData, 1);
-  //     getCategoryBookInfo(5, setnewManagementData, 1);
-  //     getCategoryBookInfo(6, setnewTechnologyData, 1);
-  //     getCategoryBookInfo(1, setConcernLiteratureData, 2);
-  //     getCategoryBookInfo(2, setConcernPopularityData, 2);
-  //     getCategoryBookInfo(3, setConcernCultureData, 2);
-  //     getCategoryBookInfo(4, setConcernLifeData, 2);
-  //     getCategoryBookInfo(5, setConcernManagementData, 2);
-  //     getCategoryBookInfo(6, setConcernTechnologyData, 2);
-  //     getCommentInfo(userid);
-  //     // 继续添加其他范围和对应的数据更新函数
-  //   }, []);
+
   function getCategoryBookInfo(range, setDataFunction, type) {
     //type=1:新书；type=2:最受关注图书
     getcategorybookInfo(range, 1, 30, type).then((resp) => {
@@ -176,7 +149,7 @@ export function UserMainPage() {
     const index = tabs.indexOf(selectedTab);
 
     if (index !== -1) {
-      const { data, setter } = dataSets[index];
+      const { data } = dataSets[index];
       return Array.from({ length: 5 }, (_, i) => (
         <div key={i}>
           <BookList books={data.slice(i * 5, (i + 1) * 5)} />
@@ -191,7 +164,7 @@ export function UserMainPage() {
     const content = generateContent(selectedTab, type);
     return (
       <Carousel
-        className="rounded-xl"
+        className="rounded-xl "
         navigation={({ setActiveIndex, activeIndex, length }) => (
           <div className="absolute bottom-0 left-2/4 z-50 flex -translate-x-2/4 gap-2">
             {new Array(length).fill("").map((_, i) => (
@@ -261,78 +234,6 @@ export function UserMainPage() {
     );
   }
 
-  function CarouselRecommendation() {
-    return (
-      <Carousel
-        className="rounded-xl"
-        navigation={({ setActiveIndex, activeIndex, length }) => (
-          <div className="absolute bottom-0 left-2/4 z-50 flex -translate-x-2/4 gap-2">
-            {new Array(length).fill("").map((_, i) => (
-              <span
-                key={i}
-                className={`block h-1 cursor-pointer rounded-2xl transition-all content-[''] ${
-                  activeIndex === i
-                    ? "w-8 bg-blue-gray-300 text-white"
-                    : "w-4 bg-blue-gray-100 text-blue-gray-700"
-                }`}
-                onClick={() => setActiveIndex(i)}
-              />
-            ))}
-          </div>
-        )}
-        prevArrow={({ handlePrev }) => (
-          <IconButton
-            variant="text"
-            color="bg-blue-gray-300"
-            size="lg"
-            onClick={handlePrev}
-            className="!absolute top-2/4 left-4 -translate-y-2/4"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="h-6 w-6 text-blue-500" // 按钮的颜色为深蓝色
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
-              />
-            </svg>
-          </IconButton>
-        )}
-        nextArrow={({ handleNext }) => (
-          <IconButton
-            variant="text"
-            color="gray"
-            size="lg"
-            onClick={handleNext}
-            className="!absolute top-2/4 !right-4 -translate-y-2/4"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="h-6 w-6 text-blue-500" // 按钮的颜色为深蓝色
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-              />
-            </svg>
-          </IconButton>
-        )}
-      >
-        <div></div>
-      </Carousel>
-    );
-  }
 
   function BookList({ books }) {
     if (!books || books.length === 0) {

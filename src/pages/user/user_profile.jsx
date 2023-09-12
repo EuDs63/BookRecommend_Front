@@ -14,7 +14,7 @@ import {
   Cog6ToothIcon,
 } from "@heroicons/react/24/solid";
 import React, { useState, useEffect } from "react";
-import {Link,useLocation} from "react-router-dom";
+import {Link} from "react-router-dom";
 import { getAction } from "@/utils/api";
 import { useUser } from "@/context/UserContext";
 
@@ -90,15 +90,9 @@ export function UserProfile() {
   const { user } = useUser(); // 使用useUser钩子来获取用户状态
   const avatar_url = import.meta.env.VITE_BASE_URL + '/' + user.avatar_path;
 
-  //const { search } = useLocation();
-  //const queryParams = new URLSearchParams(search);
   const [willReadBookData, setWillReadBookData] = useState([]);
   const [readingBookData, setReadingBookData] = useState([]);
   const [haveReadBookData, setHaveReadBookData] = useState([]);
-  // const currentPageParam = queryParams.get("page");
-  // const [currentPage, setCurrentPage] = useState(
-  //   currentPageParam ? parseInt(currentPageParam) : 1
-  // );
 
   useEffect(() => {
     // 在组件加载后执行的代码
