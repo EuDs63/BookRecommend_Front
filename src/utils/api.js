@@ -219,13 +219,13 @@ export function getRecommendByBookId(book_id) {
 }
 
 export function getRecommendByUserId(user_id) {
-  return service({
-    url: `/book/getrec`,
-    method: "post",
-    data: {
-      user_id: user_id,
-    },
-  });
+  const requestUrl = `/book/getrec/${user_id}`;
+  const { data, error, isLoading } = useSWR(requestUrl, fetchInfo);
+  return {
+    data,
+    isLoading,
+    isError: error,
+  };
 }
 export function getcategorybookInfo(category_id, page, per_page, order = 0) {
   return service({
