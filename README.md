@@ -5,7 +5,10 @@
 ## 参考
 - [SWR](https://swr.vercel.app/zh-CN/docs/getting-started)
 - [Redux](https://redux.js.org/introduction/getting-started)
-
+- [Material Tailwind](https://www.material-tailwind.com/docs/react/theming)
+- [Tailwind CSS ](https://www.tailwindcss.cn/docs/installation)
+- [HEROICON](https://heroicons.com/)
+- [wangEditor 5](https://www.wangeditor.com/)
 
 ## 项目说明
 - 项目使用[material-tailwind-dashboard-react](https://github.com/creativetimofficial/material-tailwind-dashboard-react)为基础模板
