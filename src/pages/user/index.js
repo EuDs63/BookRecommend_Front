@@ -9,3 +9,4 @@ export * from "@/pages/user/user_comment";
 export * from "@/pages/user/user_rating";
 export * from "@/pages/user/user_collect";
 export * from "@/pages/user/other_user_porifle";
+export * from "@/pages/user/user_mainpage_wrapper";
