@@ -14,7 +14,7 @@ import {
   Cog6ToothIcon,
 } from "@heroicons/react/24/solid";
 import React, { useState, useEffect } from "react";
-import {Link,useLocation} from "react-router-dom";
+import {Link} from "react-router-dom";
 import { getAction } from "@/utils/api";
 import { useUser } from "@/context/UserContext";
 
@@ -22,7 +22,7 @@ import { useUser } from "@/context/UserContext";
 function BookFilter({
   willReadBookNum,
   readingBookNum,
-  haveReadBookNum,}) 
+  haveReadBookNum,})
 {
   return (
     <div className="space-x-4">
@@ -90,15 +90,9 @@ export function UserProfile() {
   const { user } = useUser(); // 使用useUser钩子来获取用户状态
   const avatar_url = import.meta.env.VITE_BASE_URL + '/' + user.avatar_path;
 
-  //const { search } = useLocation();
-  //const queryParams = new URLSearchParams(search);
   const [willReadBookData, setWillReadBookData] = useState([]);
   const [readingBookData, setReadingBookData] = useState([]);
   const [haveReadBookData, setHaveReadBookData] = useState([]);
-  // const currentPageParam = queryParams.get("page");
-  // const [currentPage, setCurrentPage] = useState(
-  //   currentPageParam ? parseInt(currentPageParam) : 1
-  // );
 
   useEffect(() => {
     // 在组件加载后执行的代码
@@ -156,7 +150,7 @@ export function UserProfile() {
 
   return (
     <>
-      <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url(https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80)] bg-cover	bg-center">
+      <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url(https://i0.hippopx.com/photos/20/175/808/mt-fuji-japan-view-from-kitadake-fuji-red-fuji-da2aeb7e36f10303b4853d564100e1d9.jpg)] bg-cover	bg-center">
         <div className="absolute inset-0 h-full w-full bg-blue-500/50" />
       </div>
       <Card className="mx-3 -mt-16 mb-6 lg:mx-4">

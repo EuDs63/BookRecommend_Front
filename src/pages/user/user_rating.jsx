@@ -1,6 +1,3 @@
-/**
- * 个人主页的侧边栏：我的评论记录
- */
 import {
   Timeline,
   TimelineItem,
@@ -14,31 +11,31 @@ import {
   Button,
   ButtonGroup,
 } from "@material-tailwind/react";
-import { useEffect } from "react";
-import { getRatingByUserId } from "@/utils/api";
 import { Link } from "react-router-dom";
+import { getRatingByUserId } from "@/utils/api";
+import { useEffect } from "react";
+import { useUser } from "@/context/UserContext";
 import { RatingStar } from "@/widgets/stuff";
+const PAGE_SIZE = 5;
 
-const PAGE_SIZE = 3;
+export function UserRating() {
+  const { user } = useUser(); // 使用useUser钩子来获取用户状态
+  const user_id = user.user_id; // 获取路由参数
 
-export function RatingTimeline({ user_id }) {
-  if (user_id === undefined) {
+  if (user_id === undefined || user_id === null) {
     return null;
   }
-  if (user_id === null) {
-    return null;
-  }
-  console.log(user_id);
   // size: 页数
   const { data, mutate, size, setSize, isValidating, isLoading } =
     getRatingByUserId(user_id, PAGE_SIZE);
 
-    const issues = data ? [].concat(...data) : [];
-    const isLoadingMore =
-        isLoading || (size > 0 && data && typeof data[size - 1] === "undefined");
-    const isEmpty = data?.[0]?.length === 0;
-    const isReachingEnd =
-        isEmpty || (data && data[data.length - 1]?.length < PAGE_SIZE);
+  const issues = data ? [].concat(...data) : [];
+
+  const isLoadingMore =
+    isLoading || (size > 0 && data && typeof data[size - 1] === "undefined");
+  const isEmpty = data?.[0]?.length === 0;
+  const isReachingEnd =
+    isEmpty || (data && data[data.length - 1]?.length < PAGE_SIZE);
 
   useEffect(() => {
     setSize(1);
@@ -46,13 +43,11 @@ export function RatingTimeline({ user_id }) {
 
   return (
     <div>
-      <Card className="mt-8 ml-5 w-auto ">
-        <CardBody>
-          <Link to={`/user/userRating`}>
-            <Typography variant="h5" color="blue-gray" className="mb-2">
-              我的评分记录
-            </Typography>
-          </Link>
+      <Typography variant="h4" color="blue-gray" className="mb-3">
+        我的评分记录
+      </Typography>
+      <ul className="flex flex-col gap-1">
+        <Card>
           {isEmpty ? <p>没有记录呢</p> : null}
           <div className="w-auto">
             <Timeline>
@@ -92,30 +87,28 @@ export function RatingTimeline({ user_id }) {
               })}
             </Timeline>
           </div>
-        </CardBody>
-        {isEmpty ? null : (
-          <ButtonGroup variant="text" className="w-full" fullWidth>
-            <Button
-              disabled={isLoadingMore || isReachingEnd}
-              onClick={() => setSize(size + 1)}
-              size="sm"
-            >
-              {isLoadingMore
-                ? "loading..."
-                : isReachingEnd
-                ? "无了"
-                : "加载更多"}
-            </Button>
-            <Button disabled={!size} onClick={() => setSize(0)} size="sm">
-              折叠
-            </Button>
-          </ButtonGroup>
-        )}
-      </Card>
+          {isEmpty ? null : (
+            <ButtonGroup variant="text" className="w-full" fullWidth>
+              <Button
+                disabled={isLoadingMore || isReachingEnd}
+                onClick={() => setSize(size + 1)}
+                size="sm"
+              >
+                {isLoadingMore
+                  ? "loading..."
+                  : isReachingEnd
+                  ? "无了"
+                  : "加载更多"}
+              </Button>
+              <Button disabled={!size} onClick={() => setSize(0)} size="sm">
+                折叠
+              </Button>
+            </ButtonGroup>
+          )}
+        </Card>
+      </ul>
     </div>
   );
 }
 
-RatingTimeline.displayName = "@/widgets/stuff/ratingTimeLine.jsx";
-
-export default RatingTimeline;
+export default UserRating;

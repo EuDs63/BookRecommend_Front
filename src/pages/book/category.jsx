@@ -4,6 +4,7 @@ import {
   } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { PopularTags } from "@/widgets/stuff";
 import { gettagbookInfo} from "@/utils/api";
 
 export function Category() {
@@ -54,9 +55,9 @@ export function Category() {
       }      
 
     return(
-        <div>
-            <Card>
-
+        <div style={{ display: 'flex' }}>
+            <div className="w-2/3">
+            <Card className="ml-4" >
             <Typography variant="h6" color="black"
             style={{
                 color: "black",
@@ -187,8 +188,11 @@ export function Category() {
                 <LinkContainer tagId={54} label="编程" />
                 <LinkContainer tagId={55} label="通信" />
             </Typography>
-
             </Card>
+            </div>
+            <div className="w-1/3">
+                < PopularTags />
+            </div>
         </div>
     )
 }

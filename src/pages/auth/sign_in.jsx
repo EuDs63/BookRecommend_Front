@@ -14,7 +14,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { userLogin, userAutoLogin } from "@/utils/api";
 import { useUser } from "../../context/UserContext";
-
+import logoImage from "/img/logo-一本好书.png";
 export function SignIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -54,7 +54,7 @@ export function SignIn() {
 
         // 在计时结束时进行页面跳转
         setTimeout(() => {
-          window.location.href = '/user/main'; 
+          window.location.href = '/user/main';
           clearInterval(timer); // 清除定时器
         }, secondsToShowAlert * 1000);
 

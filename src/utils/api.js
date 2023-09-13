@@ -114,8 +114,27 @@ export function getCollectByBookId(book_id) {
   };
 }
 
+// 根据book_id获取长评
+export function getArticleRecordByBookId(book_id) {
+  const requestUrl = `/action/article/1/${book_id}/0`;
+  const { data, mutate, size, setSize, isValidating, isLoading } =
+    useSWRInfinite(
+      (index) => `${requestUrl}?&current_page=${index + 1}`,
+      fetchInfo
+    );
+  return {
+    data,
+    mutate,
+    size,
+    setSize,
+    isValidating,
+    isLoading,
+  };
+}
+
+
 // 根据user_id获取收藏信息，用于“时光机-collect”
-export function getCollectByUserId(user_id,page_size){
+export function getCollectByUserId(user_id, page_size) {
   const requestUrl = `/action/collect/2/0/${user_id}`
   const {
     data,
@@ -126,8 +145,7 @@ export function getCollectByUserId(user_id,page_size){
     isLoading
   } = useSWRInfinite(
     (index) =>
-      `${requestUrl}?&current_page=${
-        index + 1
+      `${requestUrl}?&current_page=${index + 1
       }&page_size=${page_size}`,
     fetchInfo
   );
@@ -142,7 +160,7 @@ export function getCollectByUserId(user_id,page_size){
 }
 
 // 根据user_id获取评论信息，用于“时光机-comment”
-export function getCommentByUserId(user_id,page_size){
+export function getCommentByUserId(user_id, page_size) {
   const requestUrl = `/action/comment/2/0/${user_id}`
   const {
     data,
@@ -153,8 +171,7 @@ export function getCommentByUserId(user_id,page_size){
     isLoading
   } = useSWRInfinite(
     (index) =>
-      `${requestUrl}?&current_page=${
-        index + 1
+      `${requestUrl}?&current_page=${index + 1
       }&page_size=${page_size}`,
     fetchInfo
   );
@@ -169,7 +186,7 @@ export function getCommentByUserId(user_id,page_size){
 }
 
 // 根据user_id获取评分信息，用于“时光机-rating”
-export function getRatingByUserId(user_id,page_size){
+export function getRatingByUserId(user_id, page_size) {
   const requestUrl = `/action/rating/2/0/${user_id}`
   const {
     data,
@@ -180,8 +197,7 @@ export function getRatingByUserId(user_id,page_size){
     isLoading
   } = useSWRInfinite(
     (index) =>
-      `${requestUrl}?&current_page=${
-        index + 1
+      `${requestUrl}?&current_page=${index + 1
       }&page_size=${page_size}`,
     fetchInfo
   );
@@ -195,7 +211,8 @@ export function getRatingByUserId(user_id,page_size){
   }
 }
 
-export function getRating(method,book_id,user_id){
+// 根据user_id获取评分信息，用于“时光机-comment”
+export function getRating(method, book_id, user_id) {
   const requestUrl = `/action/rating/${method}/${book_id}/${user_id}`
   // 使用 SWR 钩子来获取数据
   const { data, error, isLoading } = useSWR(requestUrl, fetchInfo);
@@ -206,6 +223,26 @@ export function getRating(method,book_id,user_id){
   };
 }
 
+// 根据book_id获取推荐信息
+export function getRecommendByBookId(book_id) {
+  const requestUrl = `/book/recommendationByBookId/${book_id}`;
+  const { data, error, isLoading } = useSWR(requestUrl, fetchInfo);
+  return {
+    data,
+    isLoading,
+    isError: error,
+  };
+}
+
+export function getRecommendByUserId(user_id) {
+  const requestUrl = `/book/getrec/${user_id}`;
+  const { data, error, isLoading } = useSWR(requestUrl, fetchInfo);
+  return {
+    data,
+    isLoading,
+    isError: error,
+  };
+}
 export function getcategorybookInfo(category_id, page, per_page, order = 0) {
   return service({
     url: `/book/category`,
@@ -323,4 +360,31 @@ export function changeAvatar(file, info) {
       console.error("上传失败", error);
       throw error; // 可以抛出错误供上层调用处理
     });
+}
+
+
+// 根据article_id获取长评信息
+export function getArticle(article_id) {
+  const requestUrl = `/action/article/view/${article_id}`;
+  const { data, error, isLoading } = useSWR(requestUrl, fetchInfo);
+  return {
+    data,
+    isLoading,
+    isError: error,
+  };
+}
+
+// 添加article
+export function addArticle(book_id, user_id, content, article_title) {
+  return service({
+    url: `/action/add`,
+    method: "post",
+    data: {
+      type: 4,
+      book_id: book_id,
+      user_id: user_id,
+      content: content,
+      article_title: article_title
+    },
+  });
 }

@@ -11,7 +11,7 @@ import {
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { ProfileInfoCard, BookCommentsCard,CollectBoxCard } from "@/widgets/cards";
-import { Comment } from "@/widgets/stuff";
+import { Comment,CategoryRecommend,ArticleList } from "@/widgets/stuff";
 import { recommendedBooksData } from "@/data";
 import { getBookInfomation, getAction } from "@/utils/api";
 import { useState, useEffect } from "react";
@@ -42,7 +42,7 @@ export function BookDetail({book_id}) {
   // 组件挂载时，获取该书籍下的已有评论
   useEffect(() => {
     getCommentInfo(book_id);
-  }, []);
+  }, [book_id]);
 
 
   if (isLoading) {
@@ -61,7 +61,7 @@ export function BookDetail({book_id}) {
     const book = data.book;
     return (
       <div>
-        <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url(https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80)] bg-cover	bg-center">
+        <div className="relative h-72 w-full overflow-hidden rounded-xl bg-[url(https://i0.hippopx.com/photos/20/175/808/mt-fuji-japan-view-from-kitadake-fuji-red-fuji-da2aeb7e36f10303b4853d564100e1d9.jpg)] bg-cover	bg-center">
           <div className="absolute inset-0 h-full w-full bg-blue-500/50" />
         </div>
         <Card className="mx-3 -mt-16 mb-6 lg:mx-4 ">
@@ -126,89 +126,10 @@ export function BookDetail({book_id}) {
 
             </div>
 
-            <div className="px-4 pb-4 mt-12">
-              <Typography variant="h4" color="blue-gray" className="mb-2">
-                同类别推荐
-              </Typography>
-              <hr className="border-t border-gray-300" />
-              <div className="mt-6 grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-4">
-                {recommendedBooksData.map(
-                  ({
-                    author,
-                    book_id,
-                    cover_image,
-                    title,
-                    description,
-                    rating_avg,
-                    route,
-                    members,
-                  }) => (
-                    <Card key={book_id} color="transparent" shadow={false}>
-                      <CardHeader
-                        floated={false}
-                        color="gray"
-                        className="relative mx-0 mt-0 mb-4 h-48 w-36 overflow-hidden"
-                      >
-                        <img
-                          src={`https://images.weserv.nl/?url=${cover_image}`}
-                          alt={title}
-                          className="h-full w-full object-cover"
-                        />
-                      </CardHeader>
-                      <CardBody className="py-0 px-1">
-                        <Typography
-                          variant="small"
-                          className="font-normal text-blue-gray-500"
-                        >
-                          {rating_avg}分 {author}
-                        </Typography>
-                        <Typography
-                          variant="h5"
-                          color="blue-gray"
-                          className="mt-1 mb-2"
-                        >
-                          {title}
-                        </Typography>
-                        <Typography
-                          variant="small"
-                          className="text-blue-gray-500overflow-hidden font-normal "
-                          style={{ textOverflow: "ellipsis" }}
-                        >
-                          {description.length > 50
-                            ? description.substring(0, 50) + "..."
-                            : description}
-                        </Typography>
-                      </CardBody>
-                      <CardFooter className="mt-6 flex items-center justify-between py-0 px-1">
-                        <div className="flex items-center justify-between">
-                          <Link to={`/book/${book_id}`}>
-                            <Button variant="outlined" size="sm">
-                              查看详情
-                            </Button>
-                          </Link>
-                          <div>
-                            {members.map(({ img, name }, key) => (
-                              <Tooltip key={name} content={name}>
-                                <Avatar
-                                  src={img}
-                                  alt={name}
-                                  size="xs"
-                                  variant="circular"
-                                  className={`cursor-pointer border-2 border-white ${key === 0 ? "" : "-ml-2.5"
-                                    }`}
-                                />
-                              </Tooltip>
-                            ))}
-                          </div>
-                        </div>
-                      </CardFooter>
-                    </Card>
-                  )
-                )}
-              </div>
-            </div>
+            <CategoryRecommend book_id={book_id} />
             <div className="my-12"></div>
-            <div>
+            <ArticleList book_id={book_id} />
+            <div className="mt-5">
               <Typography variant="h4" color="blue-gray" className="mb-3">
                 短评
               </Typography>
@@ -235,6 +156,7 @@ export function BookDetail({book_id}) {
                 )
               }
             </div>
+
           </CardBody>
           <CardFooter>
             <Comment book_id ={book_id}/>

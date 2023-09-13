@@ -31,7 +31,7 @@ export function User() {
     },
     {
       name: "分类浏览",
-      path: "/book/category",
+      path: "/user/category",
       icon: TagIcon,
     },
     {
@@ -47,7 +47,7 @@ export function User() {
       <div className="p-4">
         <DashboardNavbar />
         <Configurator />
-        <div className="container relative z-40 mx-auto p-4">
+        <div className="container relative z-40 p-4" style={{ width: "1125px" }}>
           <Navbar routes={navbarRoutes} />
         </div>
         <div>

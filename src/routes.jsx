@@ -6,10 +6,10 @@ import {
   UserPlusIcon,
   TagIcon,
 } from "@heroicons/react/24/solid";
-import { DashBoard, Tables, Notifications } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
-import { Setting,UserProfileWrapper,WillRead,Reading,HaveRead,UserMainPage,UserComment,OtherUserProfile} from "@/pages/user";
-import { Category, Search, TagSearch,BookDetailWrapper } from "@/pages/book";
+import { Setting, UserProfileWrapper, WillRead, Reading, HaveRead, UserMainPage, UserComment, UserRating, OtherUserProfile, UserCollect,UserMainpageWrapper } from "@/pages/user";
+
+import { Category, Search, TagSearch, BookDetailWrapper,MyEditor,Article } from "@/pages/book";
 import { TouristMainPage } from "@/pages/tourist";
 
 const icon = {
@@ -17,29 +17,6 @@ const icon = {
 };
 
 export const routes = [
-  {
-    layout: "dashboard",
-    pages: [
-      {
-        icon: <HomeIcon {...icon} />,
-        name: "dashboard",
-        path: "/dashboard",
-        element: <DashBoard />,
-      },
-      {
-        icon: <TableCellsIcon {...icon} />,
-        name: "tables",
-        path: "/tables",
-        element: <Tables />,
-      },
-      {
-        icon: <BellIcon {...icon} />,
-        name: "notifactions",
-        path: "/notifactions",
-        element: <Notifications />,
-      },
-    ],
-  },
   {
     title: "auth pages",
     layout: "auth",
@@ -78,7 +55,7 @@ export const routes = [
         icon: <BellIcon {...icon} />,
         name: "用户首页",
         path: "/main",
-        element: <UserMainPage />,
+        element: <UserMainpageWrapper />,
       },
       {
         icon: <BellIcon {...icon} />,
@@ -118,22 +95,39 @@ export const routes = [
       },
       {
         icon: <BellIcon {...icon} />,
+        name: "用户评分",
+        path: "/userRating",
+        element: <UserRating />,
+      },
+      {
+        icon: <BellIcon {...icon} />,
+        name: "用户阅读",
+        path: "/userCollect",
+        element: <UserCollect />,
+      },
+      {
         name: "其他用户的首页",
         path: ":user_id",
         element: <OtherUserProfile />,
-      }
-    ],
-  },
-  {
-    title: "book pages",
-    layout: "book",
-    pages: [
+      },
+      {
+        icon: <BellIcon {...icon} />,
+        name: "长评展示",
+        path: "/article/:article_id",
+        element: <Article />,
+      },
       {
         icon: <TagIcon {...icon} />,
         name: "分类浏览",
         path: "/category",
         element: <Category />,
       },
+    ],
+  },
+  {
+    title: "book pages",
+    layout: "book",
+    pages: [
       {
         icon: <BellIcon {...icon} />,
         name: "搜索",
@@ -151,6 +145,12 @@ export const routes = [
         name: "书籍详情",
         path: ":book_id",
         element: <BookDetailWrapper />,
+      },
+      {
+        icon: <BellIcon {...icon} />,
+        name: "长评书写",
+        path: "/article_review/:book_id",
+        element: <MyEditor />,
       },
     ],
   },
