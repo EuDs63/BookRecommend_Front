@@ -72,7 +72,7 @@ export function PopularTags({ book_id }) {
   }
   return (
     <div>
-      <Card className="mt-8 ml-5 w-auto ">
+      <Card className="mt-0 ml-5 w-auto ">
         <CardBody>
           <Typography variant="h5" color="blue-gray" className="mb-2">
             热门标签
