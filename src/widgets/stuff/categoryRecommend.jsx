@@ -28,7 +28,7 @@ export function CategoryRecommend({book_id}) {
         );
     }
     if (data){
-        const recommendedBooksData = data;
+        const recommendedBooksData = data.slice(0, 4);
 
 
     return (

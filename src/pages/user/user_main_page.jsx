@@ -104,6 +104,16 @@ export function UserMainPage() {
       }
     });
   }
+  function getRecommendBookInfo(user_id) {
+    getrecommend(user_id).then((resp)=>{
+        var code = resp.data["code"].toString();
+        if (code === "0") {
+            console.log(resp.data["book_id"]);
+          } else {
+            console.log("fail!");
+          }
+    })
+  }
   function getCommentInfo(user_id) {
     getAction(2, 2, 0, user_id).then((resp) => {
       var code = resp.data["code"].toString();
@@ -343,27 +353,35 @@ export function UserMainPage() {
 
   return (
     <div>
-      <div className="mb-4 border-b border-blue-gray-200 p-4 pb-4 shadow-md">
+
+      <div className="mb-4 border-b border-blue-gray-200 p-4 pb-4 shadow-md ml-4">
         <div className="flex items-center">
+            
           <Typography
             variant="h4"
             className="mb-2 font-bold text-blue-gray-300"
           >
             新书速递
           </Typography>
+
           <div className="mx-1">
             {/* 中间的空格 */}
             {/* 使用 mx-1 来添加水平间距 */}
           </div>
+
           <MyTab tab={selectedTab} onTabClick={setSelectedTab} />
+
         </div>
+
         <div className="my-3"></div>{" "}
         {/* 使用 my-12 类来添加垂直间距，也可以根据需要调整数字部分 */}
         {/* 根据选中的标签显示不同的内容 */}
         <CarouselDefault selectedTab={selectedTab} type={1} />
         {/* 添加其他标签对应的内容 */}
+
       </div>
-      <div className="mb-4 border-b border-blue-gray-200 p-4 pb-4 shadow-md">
+
+      <div className="mb-4 border-b border-blue-gray-200 p-4 pb-4 shadow-md ml-4">
         <div className="flex items-center">
           <Typography
             variant="h4"
@@ -383,8 +401,9 @@ export function UserMainPage() {
         <CarouselDefault selectedTab={recommendTab} type={2} />
         {/* 添加其他标签对应的内容 */}
       </div>
-      <div className="p-4 shadow-md">
-        <Typography variant="h4" className="mb-2 font-bold text-blue-gray-300">
+
+      <div className="p-4 shadow-md ml-4">
+        <Typography variant="h4" className="mb-2 font-bold text-blue-gray-300 ">
           猜你想看
         </Typography>
         <BookList books={recommendBooks[0]}/>

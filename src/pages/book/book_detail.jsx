@@ -61,7 +61,7 @@ export function BookDetail({book_id}) {
     const book = data.book;
     return (
       <div>
-        <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url(https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80)] bg-cover	bg-center">
+        <div className="relative h-72 w-full overflow-hidden rounded-xl bg-[url(https://i0.hippopx.com/photos/20/175/808/mt-fuji-japan-view-from-kitadake-fuji-red-fuji-da2aeb7e36f10303b4853d564100e1d9.jpg)] bg-cover	bg-center">
           <div className="absolute inset-0 h-full w-full bg-blue-500/50" />
         </div>
         <Card className="mx-3 -mt-16 mb-6 lg:mx-4 ">
@@ -126,7 +126,7 @@ export function BookDetail({book_id}) {
 
             </div>
 
-            <CategoryRecommend book_id={book_id} />        
+            <CategoryRecommend book_id={book_id} />
             <div className="my-12"></div>
             <ArticleList book_id={book_id} />
             <div className="mt-5">

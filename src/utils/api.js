@@ -362,6 +362,7 @@ export function changeAvatar(file, info) {
     });
 }
 
+
 // 根据article_id获取长评信息
 export function getArticle(article_id) {
   const requestUrl = `/action/article/view/${article_id}`;
