@@ -59,7 +59,7 @@ export function Book() {
             <div className="p-4 ">
                 <DashboardNavbar />
 
-                <div className="container relative z-40 mx-auto p-4">
+                <div className="container relative z-40 mx-auto p-4" style={{ width: '100%' }}>
                     <Navbar routes={isLoggedIn ? userNavbarRoutes : visitorNavbarRoutes} />
                 </div>
                 <div className="flex">
