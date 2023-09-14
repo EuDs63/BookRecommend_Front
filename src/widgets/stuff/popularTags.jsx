@@ -87,7 +87,6 @@ export function PopularTags({ book_id }) {
             >
               <LinkContainer tagId={15} label="余华" />
               <LinkContainer tagId={27} label="杜拉斯" />
-              <LinkContainer tagId={30} label="米兰·昆德拉" />
               <LinkContainer tagId={32} label="诗歌" />
               <LinkContainer tagId={37} label="奇幻" />
               <LinkContainer tagId={38} label="悬疑" />

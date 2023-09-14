@@ -25,7 +25,7 @@ export function Tourist() {
     },
     {
       name: "分类浏览",
-      path: "/book/category",
+      path: "/user/category",
       icon: TagIcon,
   },
   ];
