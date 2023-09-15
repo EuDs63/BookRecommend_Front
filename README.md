@@ -1,6 +1,6 @@
 # BookRecommend
 
-**“一本好书图书推荐系统的前端仓库**
+**"一本好书图"书推荐系统的前端仓库**
 
 ## 项目说明
 - 项目使用[material-tailwind-dashboard-react](https://github.com/creativetimofficial/material-tailwind-dashboard-react)为基础模板
