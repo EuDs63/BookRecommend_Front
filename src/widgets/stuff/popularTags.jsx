@@ -1,24 +1,15 @@
 /**
- * 书籍详情页的侧边栏：谁看这本书
+ * 书籍详情页的侧边栏：热门标签
  */
 import {
-  Timeline,
-  TimelineItem,
-  TimelineConnector,
-  TimelineIcon,
+
   Typography,
-  TimelineHeader,
   Card,
   CardBody,
-  Avatar,
-  Button,
-  ButtonGroup,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import { getCollectByBookId } from "@/utils/api";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { gettagbookInfo } from "@/utils/api";
-import { Category } from "@/pages/dashboard";
 
 export function PopularTags({ book_id }) {
   const [recordsArray, setRecordsArray] = useState([]);
