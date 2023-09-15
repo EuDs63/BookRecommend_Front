@@ -1,11 +1,6 @@
 # BookRecommend
 
-**此处为前端仓库**
-
-## 参考
-- [SWR](https://swr.vercel.app/zh-CN/docs/getting-started)
-- [Redux](https://redux.js.org/introduction/getting-started)
-- [React](https://react.dev/learn)
+**“一本好书图书推荐系统的前端仓库**
 
 ## 项目说明
 - 项目使用[material-tailwind-dashboard-react](https://github.com/creativetimofficial/material-tailwind-dashboard-react)为基础模板
@@ -24,7 +19,7 @@
 - [SEUKURISU](https://github.com/SEUKURISU)
 - [71121205](https://github.com/71121205)
 
-## 界面截图
+## 部分界面截图
 1. 用户首页
 - ![用户首页](public/img/user_main.png)
 
@@ -40,3 +35,8 @@
 ## 项目缺陷
 - 主要是对豆瓣、Bangumi等网站的模仿，缺乏自己的特色功能
 - 项目主题为图书推荐系统，但在推荐模块下的功夫较少
+
+## 技术参考
+- [SWR](https://swr.vercel.app/zh-CN/docs/getting-started)
+- [Redux](https://redux.js.org/introduction/getting-started)
+- [React](https://react.dev/learn)
