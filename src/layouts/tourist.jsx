@@ -7,7 +7,6 @@ import {
 } from "@heroicons/react/24/solid";
 import {
   DashboardNavbar,
-  Configurator,
   Footer,
   Navbar,
 } from "@/widgets/layout";
@@ -35,7 +34,6 @@ export function Tourist() {
     <div className="min-h-screen bg-blue-gray-50/50">
       <div className="p-4 xl:mr-80">
         <DashboardNavbar />
-        <Configurator />
         <IconButton
           size="lg"
           color="white"

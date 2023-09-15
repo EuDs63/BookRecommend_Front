@@ -8,7 +8,6 @@ import {
 } from "@heroicons/react/24/solid";
 import {
   DashboardNavbar,
-  Configurator,
   Footer,
   Navbar,
 } from "@/widgets/layout";
@@ -46,7 +45,6 @@ export function User() {
     <div className="min-h-screen bg-blue-gray-50/50">
       <div className="p-4">
         <DashboardNavbar />
-        <Configurator />
         <div className="container relative z-40 p-4" style={{ width: "1125px" }}>
           <Navbar routes={navbarRoutes} />
         </div>
